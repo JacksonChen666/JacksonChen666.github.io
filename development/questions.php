@@ -19,10 +19,11 @@ if($_POST['formSubmit'] == "Ask")
 	$file = fopen("questions.txt", "a") or die("No file open");
 	fwrite($file, $txt);
 	fclose($file);
+	echo "succsessful";
 }
-// if(empty($txt)) {
-// 	$errorMessage .= "<p>no</p>";
-// }
+if(empty($txt)) {
+	echo "it's empty"
+}
 ?>
 
 </body>

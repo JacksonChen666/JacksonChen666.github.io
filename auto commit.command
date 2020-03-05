@@ -1,1 +1,1 @@
-cd ~/phpstormprojects/my-page;git add --all;git commit -m "Automated commit and push";git push -u origin master; echo done;sleep 10;killall Terminal
+cd ~/phpstormprojects/my-page;git add --all;git commit -m "Automated commit and push";git push -u origin master; echo done;sleep 3;killall Terminal
