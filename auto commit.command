@@ -1,0 +1,1 @@
+cd ~/phpstormprojects/my-page;git add --all;git commit -m "Automated commit";git push -u origin master
