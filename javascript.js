@@ -11,3 +11,9 @@ function redirectWaitThenShow() {
 	document.getElementById("homeR").innerHTML = "Redirecting...";
 	document.getElementById("homeR3").innerHTML = "Click here if you aren't being redirected";
 }
+
+function hnav() {
+	$(function(){
+	  $("#includedContent").load("header-and-nav.html"); 
+	});
+}
