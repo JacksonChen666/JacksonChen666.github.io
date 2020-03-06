@@ -15,3 +15,7 @@ function redirectWaitThenShow() {
 function hnav() {
 	  $("#hnav").load("header-and-nav.html"); 
 }
+
+function easterEgg() {
+	document.write("no way")
+}
