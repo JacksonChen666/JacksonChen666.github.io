@@ -7,7 +7,7 @@
 </head>
 <body>
 
-<h1>processing..</h1>
+<h1>processing q..</h1>
 <!-- <button onclick="goBack()">back</button> -->
 <p style="font-size: 5px">(if you see undefined index errors you shouldn't be here)</p>
 
@@ -15,12 +15,11 @@
 $txt = $_POST["question"];
 if($_POST['formSubmit'] == "ASK") {
 	$file = fopen("questions.txt", "a") or die("can't open file F");
-	// echo "file open\n";
+	fwrite($file, time());
+	fwrite($file, ": ");
 	fwrite($file, $txt);
-	fwrite($file, "\n");
-	// echo "q written\n";
+	fwrite($file, "\n\n");
 	fclose($file);
-	// echo "file closed\n";
 	echo "ok done, you can go back :)";
 }
 if(empty($txt)) {
