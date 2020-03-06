@@ -14,6 +14,6 @@ function redirectWaitThenShow() {
 
 function hnav() {
 	$(function(){
-	  $("#includedContent").load("header-and-nav.html"); 
+	  $("#hnav").load("header-and-nav.html"); 
 	});
 }
