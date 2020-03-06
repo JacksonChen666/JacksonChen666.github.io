@@ -13,12 +13,15 @@
 
 <?php
 $txt = $_POST["question"];
-if($_POST['formSubmit'] == "Ask")
-{
+if($_POST['formSubmit'] == "ASK") {
 	$file = fopen("questions.txt", "a") or die("can't open file F");
+	// echo "file open\n";
 	fwrite($file, $txt);
+	fwrite($file, "\n");
+	// echo "q written\n";
 	fclose($file);
-	echo "ok good :)";
+	// echo "file closed\n";
+	echo "ok done, you can go back :)";
 }
 if(empty($txt)) {
 	echo "you must actually ask >:(";
