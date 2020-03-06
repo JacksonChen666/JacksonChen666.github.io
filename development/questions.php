@@ -7,7 +7,7 @@
 </head>
 <body>
 
-<h1>thx for q</h1>
+<h1>processing..</h1>
 <!-- <button onclick="goBack()">back</button> -->
 <p><a href="../questions.html">Go back to questions</a></p>
 
@@ -19,7 +19,7 @@ if($_POST['formSubmit'] == "Ask")
 	$file = fopen("questions.txt", "a") or die("No file open");
 	fwrite($file, $txt);
 	fclose($file);
-	echo "succsessful";
+	echo "ok good saved";
 }
 if(empty($txt)) {
 	echo "it's empty"
