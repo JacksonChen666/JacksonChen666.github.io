@@ -13,7 +13,5 @@ function redirectWaitThenShow() {
 }
 
 function hnav() {
-	$(function(){
 	  $("#hnav").load("header-and-nav.html"); 
-	});
 }
