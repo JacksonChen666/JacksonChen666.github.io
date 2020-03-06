@@ -9,9 +9,7 @@
 
 <h1>processing..</h1>
 <!-- <button onclick="goBack()">back</button> -->
-<p><a href="https://JacksonChen666.github.io/published/questions.html">Go back to questions</a><br>
-if you see undefined index errors you shouldn't be here<br>
-</p>
+<p style="font-size: 5px">(if you see undefined index errors you shouldn't be here)</p>
 
 <?php
 $txt = $_POST["question"];
@@ -26,6 +24,8 @@ if(empty($txt)) {
 	echo "you must actually ask >:(";
 }
 ?>
+
+<p><a href="https://JacksonChen666.github.io/published/questions.html">Go back to questions</a></p>
 
 </body>
 </html>
