@@ -13,16 +13,15 @@
 
 <?php
 $txt = $_POST["question"];
-$errorMessage = "";
 if($_POST['formSubmit'] == "Ask")
 {
 	$file = fopen("questions.txt", "a") or die("No file open");
 	fwrite($file, $txt);
 	fclose($file);
-	echo "ok good saved";
+	echo "ok good :)";
 }
 if(empty($txt)) {
-	echo "it's empty"
+	echo "it's empty :/"
 }
 ?>
 
