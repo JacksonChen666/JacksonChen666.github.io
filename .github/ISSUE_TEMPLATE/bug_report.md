@@ -28,6 +28,11 @@ If applicable, add screenshots to help explain your problem.
  - OS: [e.g. iOS]
  - Browser [e.g. chrome, safari]
  - Version [e.g. 22]
-
+ 
+**Check List**
+-[ ] I have described the bug
+-[ ] I have clearly shown how to repsoduce
+-[ ] I have properly entered device info
+-[ ] The issue is not duplicate
 **Additional context**
 Add any other context about the problem here.
