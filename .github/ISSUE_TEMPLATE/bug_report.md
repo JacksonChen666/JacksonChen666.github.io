@@ -34,5 +34,6 @@ If applicable, add screenshots to help explain your problem.
 - [ ] I have clearly shown how to repsoduce
 - [ ] I have properly entered device info
 - [ ] The issue is not duplicate
+
 **Additional context**
 Add any other context about the problem here.
