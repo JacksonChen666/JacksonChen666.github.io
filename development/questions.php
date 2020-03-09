@@ -9,7 +9,7 @@
 
 <h1>processing q..</h1>
 <!-- <button onclick="goBack()">back</button> -->
-<p><a href="https://github.com/JacksonChen666/JacksonChen666.github.io/issues/new?assignees=&labels=bug&template=bug_report.md&title=question.php%20Problems">Report bugs on this page (errors, and other stuff)</a><br><br></p>
+<p><a href="https://github.com/JacksonChen666/JacksonChen666.github.io/issues/new?assignees=&labels=bug&template=bug_report.md&title=question.php%20Problems">Report bugs on this page (errors, and other stuff)</a></p><br><br>
 
 <?php
 $txt = $_POST["question"];
