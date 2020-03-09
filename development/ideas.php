@@ -9,7 +9,7 @@
 
 <h1>processing idea..</h1>
 <!-- <button onclick="goBack()">back</button> -->
-<p><a href="https://github.com/JacksonChen666/JacksonChen666.github.io/issues/new?assignees=&labels=bug&template=bug_report.md&title=ideas.php%20Problems">Report bugs on this page (errors, and other stuff)</a>
+<p><a href="https://github.com/JacksonChen666/JacksonChen666.github.io/issues/new?assignees=&labels=bug&template=bug_report.md&title=ideas.php%20Problems">Report bugs on this page (errors, and other stuff)</a><br><br></p>
 
 <?php
 $txt = $_POST["ideas"];
@@ -26,7 +26,7 @@ else {
 	echo "done";
 }
 ?>
-<p><a href="https://JacksonChen666.github.io/published/ideas.html">Go back to questions</a></p>
+<p><a href="https://JacksonChen666.github.io/published/ideas.html">Go back to ideas</a></p>
 <p style="font-size= 3px">\(°_o)/¯</p>
 </body>
 </html>
