@@ -3,7 +3,7 @@
 <head>
 <title>JacksonChen666 - Thanks for q</title>
 <!-- <script type="text/javascript" src="../javascript.js"></script> -->
-<link rel="stylesheet" type="text/css" href="./main.css">
+<link rel="stylesheet" type="text/css" href="https://jacksonchen666.github.io/main.css">
 </head>
 <body>
 
@@ -26,6 +26,9 @@ else {
 	echo "done";
 }
 ?>
+<script type="text/javascript">
+// some kind of javascript so i can redirect to a thank you page
+</script>
 <p><a href="https://JacksonChen666.github.io/published/questions.html">Go back to questions</a></p>
 <p style="font-size= 3px">\(°_o)/¯</p>
 </body>
