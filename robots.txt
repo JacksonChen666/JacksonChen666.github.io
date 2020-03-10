@@ -1,7 +1,0 @@
-# www.robotstxt.org/
-
-User-agent: Google
-Disallow: ./lockdown/
-
-User-agent: *
-Disallow: ./
