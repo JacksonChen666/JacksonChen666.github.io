@@ -3,7 +3,7 @@ function test() {
 }
 
 function goBack() {
-	window.history.back()
+    window.location=document.referrer;
 }
 
 function redirectWaitThenShow() {
@@ -18,6 +18,19 @@ function hnav() {
 
 function easterEgg() {
 	document.write("no way")
+}
+
+function forms() {
+    var question_submitted_already = false;     
+        if (question_submitted_already == false) 
+        {
+            question_submitted_already = true;
+            document.forms["ask"].submit(); 
+        }
+        window.addEventListener('pageshow', function(e) {
+            question_submitted_already = false;
+             document.getElementsByName("question")[0].value = "";
+        });
 }
 
 function billWurtzQuestionsJS() {
