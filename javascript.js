@@ -3,7 +3,13 @@ function test() {
 }
 
 function goBack() {
-    window.location.reload(history.back(-2));
+	window.history.back()
+}
+
+function autoRefresh() {
+    if (sessionStorage.getItem("refresh") == "true") {
+        sessionStorage.removeItem("refresh"); window.location.reload()
+    }
 }
 
 function redirectWaitThenShow() {
