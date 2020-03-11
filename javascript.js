@@ -3,7 +3,7 @@ function test() {
 }
 
 function goBack() {
-    window.location=document.referrer;
+    window.location.reload(history.back());
 }
 
 function redirectWaitThenShow() {
