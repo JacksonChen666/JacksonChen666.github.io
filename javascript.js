@@ -20,7 +20,7 @@ function easterEgg() {
 	document.write("no way")
 }
 
-function billWurtzQuestionsJS() {    
+function billWurtzQuestionsJS() {
     var question_submitted_already = false;     
     function submit_question() {
         if (question_submitted_already == false) 

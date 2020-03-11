@@ -13,6 +13,7 @@
 <?php
 $txt = $_POST["question"];
 if(empty($txt)) {
+	header("Location: https://JacksonChen666.github.io/must-do-it.html");
 	echo "you must actually ask ノಠ益ಠノ彡┻━┻";
 }
 else {
@@ -22,12 +23,10 @@ else {
 	fwrite($file, $txt);
 	fwrite($file, "\n\n");
 	fclose($file);
+	header("Location: https://JacksonChen666.github.io/thank-you.html");
 	echo "done";
 }
 ?>
-<script type="text/javascript">
-// some kind of javascript so i can redirect to a thank you page
-</script>
 <p><a href="https://JacksonChen666.github.io/questions.html">Go back to questions</a></p>
 <p><a href="https://github.com/JacksonChen666/JacksonChen666.github.io/issues/new?assignees=&labels=bug&template=bug_report.md&title=question.php%20Problems">Report bugs on this page (errors, and other stuff)</a></p><br><br>
 <p style="font-size= 3px">\(°_o)/¯</p>

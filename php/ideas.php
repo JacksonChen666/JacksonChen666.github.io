@@ -13,6 +13,7 @@
 <?php
 $txt = $_POST["ideas"];
 if(empty($txt)) {
+	header("Location: https://JacksonChen666.github.io/must-do-it.html");
 	echo "you must actually giv idea ノಠ益ಠノ彡┻━┻";
 }
 else {
@@ -22,6 +23,7 @@ else {
 	fwrite($file, $txt);
 	fwrite($file, "\n\n");
 	fclose($file);
+	header("Location: https://JacksonChen666.github.io/thank-you.html");
 	echo "done";
 }
 ?>
