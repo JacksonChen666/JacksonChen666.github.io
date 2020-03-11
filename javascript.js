@@ -23,7 +23,11 @@ function hnav() {
 }
 
 function easterEgg() {
-	document.write("no way")
+	document.write("no way");
+}
+
+function loadAlert() {
+    alert("Loaded element");
 }
 
 function forms() {
@@ -35,7 +39,6 @@ function forms() {
         }
         window.addEventListener('pageshow', function(e) {
             question_submitted_already = false;
-             document.getElementsByName("question")[0].value = "";
         });
 }
 
