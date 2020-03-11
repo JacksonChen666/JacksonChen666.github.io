@@ -16,7 +16,6 @@ $URLhate = "https://JacksonChen666.github.io/must-do-it.html";
 $URLthank = "https://JacksonChen666.github.io/thank-you.html";
 if(empty($txt)) {
 	echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URLhate . '">';
-	echo "you must actually giv idea ノಠ益ಠノ彡┻━┻";
 }
 else {
 	$file = fopen("ideas.txt", "a") or die("can't open file F");
@@ -26,7 +25,6 @@ else {
 	fwrite($file, "\n\n");
 	fclose($file);
 	echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URLthank . '">';
-	echo "done";
 }
 ?>
 <script type="text/javascript">
