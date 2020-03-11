@@ -12,8 +12,10 @@
 
 <?php
 $txt = $_POST["ideas"];
+$URLhate = "https://JacksonChen666.github.io/must-do-it.html";
+$URLthank = "https://JacksonChen666.github.io/thank-you.html";
 if(empty($txt)) {
-	header("Location: https://JacksonChen666.github.io/must-do-it.html");
+	echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URLhate . '">';
 	echo "you must actually giv idea ノಠ益ಠノ彡┻━┻";
 }
 else {
@@ -23,7 +25,7 @@ else {
 	fwrite($file, $txt);
 	fwrite($file, "\n\n");
 	fclose($file);
-	header("Location: https://JacksonChen666.github.io/thank-you.html");
+	echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URLthank . '">';
 	echo "done";
 }
 ?>
