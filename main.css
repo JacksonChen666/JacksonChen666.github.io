@@ -13,6 +13,9 @@ a:link {
 	word-wrap: break-word;
 	hyphens: auto;
 }
+a:click {
+	color: red;
+}
 a:visited {
 	color:black;
 	overflow-wrap: break-word;

@@ -33,7 +33,7 @@
 
 <div id="intro">
     <!-- <p>Self notice: Insert introduction and images if required</p> -->
-    <h3><a name="intro">Hello, My name is Jackson</a></h3>
+    <h3 id="intro" onload="typeWriter()"><a name="intro">Hello, My name is Jackson</a></h3>
     <p>
         Website made by Jackson. Big love and support to Jackson<br>
         <br>
@@ -58,5 +58,18 @@
 <div id="wtfH">
     <p style="font-size: 1000px ; margin-top: 500px;margin-bottom: auto">h</p>
 </div>
+<script>
+var i = 0;
+var txt = 'Lorem ipsum typing effect!'; /* The text */
+var speed = 50; /* The speed/duration of the effect in milliseconds */
+
+function typeWriter() {
+  if (i < txt.length) {
+    document.getElementById("intro").innerHTML += txt.charAt(i);
+    i++;
+    setTimeout(typeWriter, speed);
+  }
+}
+</script>
 </body>
 </html>
