@@ -25,11 +25,11 @@ function writeQ($question) {
 	fwrite($file, $question);
 	fwrite($file, "\n\n");
 	fclose($file);
-	redirectBack("https://JacksonChen666.github.io/thank-you.html")
+	redirectBack("https://JacksonChen666.github.io/thank-you.html");
 }
 
 if(empty($txt)) {
-	redirectBack("https://JacksonChen666.github.io/must-do-it.html")
+	redirectBack("https://JacksonChen666.github.io/must-do-it.html");
 }
 
 else {
