@@ -1,8 +1,14 @@
 /* Body can change background color and text color */
 body {
-	background-color: grey;
+	background-color: gray;
 	color: white;
 	overflow-wrap: break-word;
+	word-wrap: break-word;
+	hyphens: auto;
+}
+p {
+    font-family: "Arial", "Helvetica", sans-serif;
+    overflow-wrap: break-word;
 	word-wrap: break-word;
 	hyphens: auto;
 }
@@ -112,11 +118,28 @@ pre {
 	height: 70px;
 }
 /* Animations */
-@keyframes disappear {
-    from {color:;}
-    to {color: gray;}
-}
 @keyframes appear {
-    from {color: gray;}
-    to {color:white;}
+    from {color: gray; margin-left: -10000px;}
+    to {color:white; margin-left: 0px;}
+}
+@keyframes disappear {
+    from {color: white; margin-left: 0px}
+    to {color:gray; margin-left: 10000px}
+}
+.all-animated {
+    animation: appear;
+    animation-duration: 1s;
+}
+.testing-animation {
+    width: auto;
+    height: auto;
+    animation-name: testing;
+    animation-duration: 1s;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
+}
+.all-animation {
+    animation: appear;
+    animation-duration: 1s;
+    background-color: gray;
 }

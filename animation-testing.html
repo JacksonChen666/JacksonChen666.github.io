@@ -8,25 +8,17 @@
             0% {color: gray;}
             100% {color:white;}
         }
-        .testing-animation {
-            width: auto;
-            height: auto;
-            animation-name: testing;
-            animation-duration: 1s;
-            animation-direction: alternate;
-            animation-iteration-count: infinite;
-        }
     </style>
 </head>
 <body>
-<div id="header-and-nav">
+<div id="header-and-nav" class="all-animation" id="all-animation">
     <h1>Jackson Chen</h1>
 
-    <div name="navigation">
+    <div name="navigation" class="all-animation" id="all-animation">
         <nav>
             <hr>
             <p style="margin:0px; text-align: center">
-                <a href="./index.html" title="Home Page">Home</a> &nbsp;
+                <a href="./" title="Home Page">Home</a> &nbsp;
                 <a href="./life.html" title="My Life">My life</a> &nbsp;
                 <!-- <a href="./contact" title="Contact me">Contact</a> &nbsp; -->
                 <a href="./questions.html" title="Questions">Questions</a> &nbsp;
@@ -40,10 +32,12 @@
         </nav>
     </div>
 </div>
-<div class="testing-animation">
+    
+<div class="testing-animation" id="testing-animation">
 	<p>Testing the animations<br>
 	Let's see if this is awesome<br>
     (You can look at the source code of this page)</p>
 </div>
+<script src='./animations.js'></script>
 </body>
 </html>
