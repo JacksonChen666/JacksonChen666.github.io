@@ -11,27 +11,33 @@
 <!-- <button onclick="goBack()">back</button> -->
 
 <?php
-$txt = $_POST["ideas"];
-$URLhate = "https://JacksonChen666.github.io/must-do-it.html";
-$URLthank = "https://JacksonChen666.github.io/thank-you.html";
-if(empty($txt)) {
-	echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URLhate . '">';
+
+$thingy = "ideas";
+$txtExtension = ".txt";
+$txt = $_POST[$thingy];
+
+function redirectTo($URLToRedirect = "") {
+	echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URLToRedirect . '">';
 }
-else {
-	$file = fopen("ideas.txt", "a") or die("can't open file F");
+
+function writeFile($TextToWrite) {
+	$file = fopen($thingy . $txtExtension, "a") or die("can't open file F");
 	fwrite($file, time());
 	fwrite($file, ": ");
-	fwrite($file, $txt);
+	fwrite($file, $TextToWrite);
 	fwrite($file, "\n\n");
 	fclose($file);
-	echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URLthank . '">';
 }
+
+if(empty($txt)) {
+	redirectTo("https://JacksonChen666.github.io/must-do-it.html");
+}
+
+else {
+	writeFile($txt);
+	redirectTo("https://JacksonChen666.github.io/thank-you.html");
+}
+
 ?>
-<script type="text/javascript">
-// some kind of javascript so i can redirect to a thank you page
-</script>
-<!-- <p><a href="https://JacksonChen666.github.io/ideas.html">Go back to ideas</a></p>
-<p><a href="https://github.com/JacksonChen666/JacksonChen666.github.io/issues/new?assignees=&labels=bug&template=bug_report.md&title=ideas.php%20Problems">Report bugs on this page (errors, and other stuff)</a><br><br></p>
-<p style="font-size= 3px">\(°_o)/¯</p> -->
 </body>
 </html>

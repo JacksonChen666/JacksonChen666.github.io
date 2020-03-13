@@ -12,33 +12,32 @@
 
 <?php
 
-$txt = $_POST["question"];
+$thingy = "questions";
+$txtExtension = ".txt";
+$txt = $_POST[$thingy];
 
-function redirectBack($URLToRedirect = "") {
+function redirectTo($URLToRedirect = "") {
 	echo '<META HTTP-EQUIV="refresh" content="0;URL=' . $URLToRedirect . '">';
 }
 
-function writeQ($question) {
-	$file = fopen("questions.txt", "a") or die("can't open file F");
+function writeFile($TextToWrite) {
+	$file = fopen($thingy . $txtExtension, "a") or die("can't open file F");
 	fwrite($file, time());
 	fwrite($file, ": ");
-	fwrite($file, $question);
+	fwrite($file, $TextToWrite);
 	fwrite($file, "\n\n");
 	fclose($file);
-	redirectBack("https://JacksonChen666.github.io/thank-you.html");
 }
 
 if(empty($txt)) {
-	redirectBack("https://JacksonChen666.github.io/must-do-it.html");
+	redirectTo("https://JacksonChen666.github.io/must-do-it.html");
 }
 
 else {
-	writeQ($txt);
+	writeFile($txt);
+	redirectTo("https://JacksonChen666.github.io/thank-you.html");
 }
 
 ?>
-<!-- <p><a href="https://JacksonChen666.github.io/questions.html">Go back to questions</a></p>
-<p><a href="https://github.com/JacksonChen666/JacksonChen666.github.io/issues/new?assignees=&labels=bug&template=bug_report.md&title=question.php%20Problems">Report bugs on this page (errors, and other stuff)</a></p><br><br>
-<p style="font-size= 3px">\(°_o)/¯</p> -->
 </body>
 </html>
