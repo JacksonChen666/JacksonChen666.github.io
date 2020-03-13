@@ -111,3 +111,12 @@ pre {
 	width: 150px;
 	height: 70px;
 }
+/* Animations */
+@keyframes disappear {
+    from {color:;}
+    to {color: gray;}
+}
+@keyframes appear {
+    from {color: gray;}
+    to {color:white;}
+}
