@@ -130,14 +130,6 @@ pre {
     animation: appear;
     animation-duration: 1s;
 }
-.testing-animation {
-    width: auto;
-    height: auto;
-    animation-name: testing;
-    animation-duration: 1s;
-    animation-direction: alternate;
-    animation-iteration-count: infinite;
-}
 .all-animation {
     animation: appear;
     animation-duration: 1s;
