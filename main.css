@@ -5,9 +5,7 @@ body {
 	overflow-wrap: break-word;
 	word-wrap: break-word;
 	hyphens: auto;
-}
-p {
-    font-family: "Arial", "Helvetica", sans-serif;
+	font-family: "Arial";
 	font-size:18px;
 }
 /* Hyperlink and achors stuff */
@@ -18,29 +16,9 @@ a:clicked {
 	color: red;
 }
 a:visited {
-	color:black;
+	color: red;
 }
 /*a {font-family: "Arial", "Helvetica", sans-serif}*/
-
-/* Texts */
-h1 {
-	font-family: "Arial", "Helvetica", sans-serif;
-}
-h2 {
-	font-family: "Arial", "Helvetica", sans-serif;
-}
-h3 {
-	font-family: "Arial", "Helvetica", sans-serif;
-}
-h4 {
-	font-family: "Arial", "Helvetica", sans-serif;
-}
-h5 {
-	font-family: "Arial", "Helvetica", sans-serif;
-}
-h6 {
-	font-family: "Arial", "Helvetica", sans-serif;
-}
 /* Other stuff */
 hr {
 	color: white;
