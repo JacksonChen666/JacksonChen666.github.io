@@ -1,6 +1,6 @@
 /* Body can change background color and text color */
 body {
-	background-color: gray;
+	background-color: black;
 	color: white;
 	overflow-wrap: break-word;
 	word-wrap: break-word;
@@ -11,6 +11,7 @@ p {
     overflow-wrap: break-word;
 	word-wrap: break-word;
 	hyphens: auto;
+	font-size:18px;
 }
 /* Hyperlink and achors stuff */
 a:link {
@@ -119,19 +120,19 @@ pre {
 }
 /* Animations */
 @keyframes appear {
-    from {color: gray; margin-left: -10000px;}
+    from {color: gray; margin-left: -2500px;}
     to {color:white; margin-left: 0px;}
 }
 @keyframes disappear {
     from {color: white; margin-left: 0px}
-    to {color:gray; margin-left: 10000px}
+    to {color:gray; margin-left: 2500px}
 }
 .all-animated {
     animation: appear;
-    animation-duration: 1s;
+    animation-duration: 0.25s;
 }
 .all-animation {
     animation: appear;
-    animation-duration: 1s;
+    animation-duration: 0.25s;
     background-color: gray;
 }
