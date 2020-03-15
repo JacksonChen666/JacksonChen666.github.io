@@ -1,6 +1,6 @@
-/* Body can change background color and text color */
+/* Site structure?? */
 body {
-	background-color: black;
+	background-color: darkslategray;
 	color: white;
 	overflow-wrap: break-word;
 	word-wrap: break-word;
@@ -8,34 +8,16 @@ body {
 	font-family: "Arial";
 	font-size:18px;
 }
-/* Hyperlink and achors stuff */
-a:link {
-	color:blue;
-}
-a:clicked {
-	color: red;
-}
-a:visited {
-	color: red;
-}
-/*a {font-family: "Arial", "Helvetica", sans-serif}*/
-/* Other stuff */
-hr {
-	color: white;
-}
-/* Classes, applying styles to specific text without fiddling around the HTML file */
-/*.class {stuff}*/
+a:link {color: rgb(0, 155, 245);}
+a:visited {color: orange;}
+/*{font-family: "Arial", "Helvetica", sans-serif}*/
+hr {color: white;}
 /*@import url('https://css.gg/c');*/
-
 /* Animations */
 @keyframes appear {
-    from {color: gray; margin-left: -2500px;}
-    to {color:white; margin-left: 0px;}
+    from {margin-left: -2500px;}
+    to {margin-left: 0px;}
 }
-/*@keyframes disappear {
-    from {color: white; margin-left: 0px}
-    to {color:gray; margin-left: 2500px}
-}*/
 .all-animation {
     animation: appear;
     animation-duration: 0.25s;
