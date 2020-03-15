@@ -61,5 +61,4 @@ hr {
 .all-animation {
     animation: appear;
     animation-duration: 0.25s;
-    background-color: gray;
 }
