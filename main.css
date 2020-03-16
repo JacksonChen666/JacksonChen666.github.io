@@ -11,7 +11,7 @@ body {
 a:link {color: rgb(255, 230, 0);}
 a:visited {color: rgb(146, 255, 0);}
 a:hover {color: rgb(255, 230, 20);}
-a:active {color: rgb(235, 210, 0);}
+a:active {color: rgb(235, 180, 0);}
 
 /*{font-family: "Arial", "Helvetica", sans-serif}*/
 hr {color: white;}
