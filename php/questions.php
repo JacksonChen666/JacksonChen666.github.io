@@ -26,7 +26,7 @@ function writeFile($TextToWrite) {
 	// fwrite($file, ": ");
 	// fwrite($file, $TextToWrite);
 	// fwrite($file, "\n\n");
-	fwrite($file, "{time()},{$TextToWrite},\n")
+	fwrite($file, "{time()},{$TextToWrite},\n");
 	fclose($file);
 }
 
