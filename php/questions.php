@@ -13,7 +13,7 @@
 <?php
 
 $thingy = "questions";
-$txtExtension = ".txt";
+$extension = ".csv";
 $txt = $_POST[$thingy];
 
 function redirectTo($URLToRedirect = "") {
@@ -21,11 +21,12 @@ function redirectTo($URLToRedirect = "") {
 }
 
 function writeFile($TextToWrite) {
-	$file = fopen($thingy . $txtExtension, "a") or die("can't open file F");
-	fwrite($file, time());
-	fwrite($file, ": ");
-	fwrite($file, $TextToWrite);
-	fwrite($file, "\n\n");
+	$file = fopen($thingy . $extension, "a") or die("can't open file F");
+	// fwrite($file, time());
+	// fwrite($file, ": ");
+	// fwrite($file, $TextToWrite);
+	// fwrite($file, "\n\n");
+	fwrite($file, "{time()},{$TextToWrite},\n")
 	fclose($file);
 }
 
