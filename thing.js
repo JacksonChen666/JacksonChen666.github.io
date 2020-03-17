@@ -48,6 +48,11 @@ function sleep(milliseconds) {
   } while (currentDate - date < milliseconds);
 }
 
+function removeNav() {
+	document.getElementById("header-and-nav").innerHTML = "";
+	document.getElementById("remove-han").innerHTML = "Header and nav removed";
+}
+
 spacebarGame();
 var presses = document.querySelector( '.time' );
 document.body.onkeyup = function(e) {
