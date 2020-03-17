@@ -1,3 +1,4 @@
+// Main JS
 function autoRefresh() {
     if (sessionStorage.getItem("refresh") == "true") {
         sessionStorage.removeItem("refresh"); window.location.reload()
@@ -71,4 +72,54 @@ function billWurtzQuestionsJS() {
             question_submitted_already = false;
              document.getElementsByName("question")[0].value = "";
         });
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// thing JS
+function coolReset() {
+    while (true) {
+    if (time > 0) {
+        console.log("Over")
+        time -= 1;
+        setTimeout(spacebarGame(),10)
+    }
+    else {
+        if (time < 0) {
+            console.log("under")
+            time = 0;
+            setTimeout(spacebarGame(),10)
+        }
+        else {return}
+        }
+    }
+}
+
+function sleep(milliseconds) {
+  const date = Date.now();
+  let currentDate = null;
+  do {
+    currentDate = Date.now();
+  } while (currentDate - date < milliseconds);
 }
