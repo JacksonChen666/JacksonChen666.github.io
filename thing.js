@@ -1,18 +1,15 @@
 // Ideas:
-// Allow custom numbers (with history)
+// Allow custom numbers (with history, basiclly cheat)
 // undo reset
-// preventn change
 
 var time = 0;
+var timeB = 0;
+var previousReset = 0;
 var text1 = "You have pressed the space bar";
 var text2 = "times";
-var text1B = text1;
-var text2B = text2;
 var space = " ";
-var cheat = 0;
-var prompts = 0;
 
-async function spacebarGame() {
+function spacebarGame() {
 	document.getElementById("text1").innerHTML = text1 + space + time + space + text2;
 }
 
@@ -27,32 +24,26 @@ function remove() {
 }
 
 function reset() {
+	previousReset = timeB;
 	time = 0;
+	timeB = 0;
 	spacebarGame();
 }
 
-function set() {
-	prompts = prompt("How much do you want to add?")
-	if (prompts == null) {
-		return
-	}
-	else {
-		cheat += prompts;
-		time += prompts;
-		console.log("Cheater! Your number changed by " + cheat);
-		console.log("Debug" + prompts + space + cheat + space + time)
-		prompts = 0;
-		parseInt(cheat);
-		cheat = 0;
-		parseInt(time);
-		time = time;
+function undoReset() {
+	console.log(previousReset)
+	if (previousReset > 0) {
+		time = previousReset;
+		timeB = previousReset;
+		previousReset = 0;
 		spacebarGame();
 	}
+	else {return}
 }
 
 function destruction () {
 	while (true) {
-		true
+		true;
 	}
 }
 
@@ -79,15 +70,13 @@ async function cText() {
 }
 
 function load() {
-	text1 = text1B;
-	text2 = text2B;
 	spacebarGame();
-	var presses = document.querySelector( '.time' );
 	document.body.onkeyup = function(e) {
 		if (e.keyCode == 32) {
-			add()
+			timeB += 1;
+			add();
 		}
 	}
 	console.log("Loaded!");
 }
-load()
+load();
