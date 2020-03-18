@@ -1,6 +1,4 @@
 // Ideas:
-// Allow custom numbers (with history, basiclly cheat)
-// undo reset
 
 var time = 0;
 var timeB = 0;
@@ -14,21 +12,38 @@ var check = false;
 
 function spacebarGame() {
 	document.getElementById("text1").innerHTML = text1 + space + time + space + text2;
+	cheatCheck(time,timeB)
 }
 
-function hardReset() {
-	location.reload(true); // forceget is reload from server
+function hardReset(forceGet) {
+	location.reload(forceGet); // forceget is reload from server
+}
+
+function cheatCheck(bigger,smaller) {
+	if (bigger > smaller) {document.getElementById("cheatText").innerHTML = "Actual current number: " + smaller;}
+	else {document.getElementById("cheatText").innerHTML = "";}
+}
+
+function set() {
+	var a = 1;
+	a = prompt("What do you want to set to?", time);
+	time = a;
+	spacebarGame();
 }
 
 function add() {
 	time += 1;
-	spacebarGame();
+	if (timeB = time) {
+		spacebarGame();
+	}
+	else {cheatCheck(time,timeB);}
 }
 
 function reset() {
 	previousReset = timeB;
 	time = 0;
 	timeB = 0;
+	document.getElementById("cheatText").innerHTML = "";
 	spacebarGame();
 }
 
@@ -71,27 +86,26 @@ async function cText() {
 	else {spacebarGame();}
 }
 
-function loadDesktop() {
-	var a = document.getElementById("mobileCount");
-	a.parentNode.removeChild(a)
-	spacebarGame();
+function keyDetection(keycode) {
 	document.body.onkeyup = function(e) {
-		if (e.keyCode == 32) {
+		if (e.keyCode == keycode) {
 			timeB += 1;
 			add();
 		}
 	}
+}
+
+function loadDesktop() {
+	var a = document.getElementById("mobileCount");
+	a.parentNode.removeChild(a)
+	spacebarGame();
+	keyDetection(32);
 	console.log("Loaded Desktop Version!");
 }
 
 function loadMobile() {
 	spacebarGame();
-	document.body.onkeyup = function(e) {
-		if (e.keyCode == 32) {
-			timeB += 1;
-			add();
-		}
-	}
+	keyDetection(32);
 	console.log("Loaded Mobile Version!");
 }
 
