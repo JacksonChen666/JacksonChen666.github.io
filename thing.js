@@ -1,3 +1,4 @@
+// Mozilla/5.0 (iPhone; CPU iPhone OS 13_3_1 like Mac OS X) AppleWebKit/60.1.15 (KHTML, like Gecko) Version/13.0.5 Mobile/15E148 Safari/604.1
 // Ideas:
 
 var time = 0;
