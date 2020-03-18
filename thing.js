@@ -35,6 +35,7 @@ function set() {
 function add() {
 	time += 1;
 	if (timeB = time) {
+		sleep(1/60)
 		spacebarGame();
 	}
 	else {cheatCheck(time,timeB);}
@@ -123,5 +124,13 @@ window.mobileAndTabletcheck = function() {
   }
   return check;
 };
+
+function sleep(milliseconds) {
+  const date = Date.now();
+  let currentDate = null;
+  do {
+    currentDate = Date.now();
+  } while (currentDate - date < milliseconds);
+}
 
 mobileAndTabletcheck();
