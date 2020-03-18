@@ -123,3 +123,8 @@ function sleep(milliseconds) {
     currentDate = Date.now();
   } while (currentDate - date < milliseconds);
 }
+
+function remove() {
+    time -= 1;
+    spacebarGame();
+}
