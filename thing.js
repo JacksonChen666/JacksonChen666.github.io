@@ -1,5 +1,6 @@
 // Mozilla/5.0 (iPhone; CPU iPhone OS 13_3_1 like Mac OS X) AppleWebKit/60.1.15 (KHTML, like Gecko) Version/13.0.5 Mobile/15E148 Safari/604.1
 // Ideas:
+// leaderboard and submit score
 
 var time = 0;
 var timeB = 0;
@@ -25,20 +26,21 @@ function cheatCheck(bigger,smaller) {
 	else {document.getElementById("cheatText").innerHTML = "";}
 }
 
+function submit() {
+	true
+}
+
 function set() {
 	var a = 1;
 	a = prompt("What do you want to set to?", time);
-	time = a;
+	time += a;
 	spacebarGame();
 }
 
 function add() {
 	time += 1;
-	if (timeB = time) {
-		sleep(1/60)
-		spacebarGame();
-	}
-	else {cheatCheck(time,timeB);}
+	sleep(1/60)
+	spacebarGame();
 }
 
 function reset() {
