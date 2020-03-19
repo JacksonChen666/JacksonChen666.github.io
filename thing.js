@@ -13,6 +13,7 @@ var space = " ";
 var check = false;
 
 function spacebarGame() {
+	time = time;
 	document.getElementById("text1").innerHTML = text1 + space + time + space + text2;
 	cheatCheck(time,timeB)
 }
@@ -22,7 +23,10 @@ function hardReset(forceGet) {
 }
 
 function cheatCheck(bigger,smaller) {
-	if (bigger > smaller) {document.getElementById("cheatText").innerHTML = "Actual current number: " + smaller;}
+	if (bigger > smaller) {
+		document.getElementById("cheatText").innerHTML = "Actual current number: " + smaller;
+		timeB = time;
+	}
 	else {document.getElementById("cheatText").innerHTML = "";}
 }
 
