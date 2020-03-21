@@ -7,6 +7,7 @@ body {
 	hyphens: auto;
 	font-family: "Arial";
 	font-size:18px;
+    margin: 0px;
 }
 a:link {color: rgb(255, 230, 0);}
 a:visited {color: rgb(255,230,0);}
@@ -28,3 +29,5 @@ hr {color: white;}
 .header-and-nav {
 	position: fixed;
 }
+
+/* top navigation!!!!! */
