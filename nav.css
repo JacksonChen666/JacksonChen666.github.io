@@ -6,7 +6,7 @@ h1,h2,h3,h4,h5,h6,p {
     to {background-color: gray; color:cadetblue;}
 }
 @keyframes unhover {
-    from {background-color: gray;}
+    from {background-color: gray;color:cadetblue}
     to {}
 }
 @keyframes active {
@@ -20,12 +20,12 @@ h1,h2,h3,h4,h5,h6,p {
     top: 0;
     background-color: black;
     list-style-type: none;
-    padding: 3px 6px 3px 6px;
+    padding: 3px 0px 3px 0px;
 }
 li a {
     display: block;
     width: calc(100% / 10);
-    margin-left: 7px;
+    margin-left: 8px;
     padding: 0px 6px 0px 0px;
     color: black;
     text-align: center;
@@ -46,6 +46,7 @@ li a:active {
     animation: active;
     animation-duration: 0.25s;
 }
+
 @media screen and (max-width: 150px) {
     body {font-size: 10px;}
     li a, .nav {width: 100%;}

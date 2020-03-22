@@ -9,8 +9,9 @@ body {
 	font-size:18px;
     margin: 0px;
 }
+p, pre, a, h1, h2 {margin-left: 10px}
 a:link {color: rgb(255, 230, 0);}
-a:visited {color: rgb(255,230,0);}
+a:visited {color: rgb(255, 230, 0);}
 a:hover {color: rgb(255, 230, 20);}
 a:active {color: rgb(235, 180, 0);}
 
@@ -28,6 +29,7 @@ hr {color: white;}
 }
 .header-and-nav {
 	position: fixed;
+    margin-left: 5px;
 }
 
-/* top navigation!!!!! refer to testing.html */
+/* top navigation!!!!! refer to nav.css */
