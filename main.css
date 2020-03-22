@@ -9,7 +9,8 @@ body {
 	font-size:18px;
     margin: 0px;
 }
-p, pre, a, h1, h2 {margin-left: 10px}
+pre, a, h1, h2 {margin-left: 10px}
+p {margin-left: 10px}
 a:link {color: rgb(255, 230, 0);}
 a:visited {color: rgb(255, 230, 0);}
 a:hover {color: rgb(255, 230, 20);}
@@ -31,5 +32,66 @@ hr {color: white;}
 	position: fixed;
     margin-left: 5px;
 }
-
 /* top navigation!!!!! refer to nav.css */
+@keyframes hover {
+    from {background-color: black;color:rgb(255,230,0);}
+    to {background-color: gray; color:cadetblue;}
+}
+@keyframes unhover {
+    from {background-color: gray;color:cadetblue}
+    to {}
+}
+@keyframes active {
+    from {}
+    to {color: brown;}
+}
+.nav {
+    align-items: center;
+    position: sticky;
+    position: -webkit-sticky; /* Safari */
+    top: 0;
+    background-color: black;
+    list-style-type: none;
+    padding: 3px 0px 3px 0px;
+}
+li a {
+    display: block;
+    width: calc(100% / 10);
+    margin-left: 8px;
+    padding: 0px 6px 0px 0px;
+    color: black;
+    text-align: center;
+    text-decoration: none;
+    background-color: black;
+    animation: unhover;
+    animation-duration: 0.5s;
+    float: left;
+}
+li a:hover {
+    color: cadetblue;
+    background-color: gray;
+    animation: hover;
+    animation-duration: 0.25s;
+}
+li a:active {
+    color:brown;
+    animation: active;
+    animation-duration: 0.25s;
+}
+
+@media screen and (max-width: 150px) {
+    body {font-size: 10px;}
+    li a, .nav {width: 100%;}
+    .nav {padding-bottom: 75px}
+}
+@media screen and (max-width: 800px) {
+    li a, .nav {width:100%;margin-top:0px;margin-left: -1px;float:top;margin-bottom: 0px;}
+    .nav {padding-bottom: 85px;padding-right: 5px;}
+}
+@media screen and (min-width: 1030px) {
+    li a {margin-left: 6px;}
+}
+@media screen and (min-width: 1450px) {
+    li a {margin-left: 8px;}
+    body {font-size: 20px;}
+}
