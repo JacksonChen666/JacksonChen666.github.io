@@ -1,6 +1,3 @@
-h1,h2,h3,h4,h5,h6,p {
-    margin-left: 10px;
-}
 @keyframes hover {
     from {background-color: black;color:rgb(255,230,0);}
     to {background-color: gray; color:cadetblue;}
@@ -13,53 +10,52 @@ h1,h2,h3,h4,h5,h6,p {
     from {}
     to {color: brown;}
 }
-.nav {
-    align-items: center;
-    position: sticky;
-    position: -webkit-sticky; /* Safari */
+.gg-close {
+    position: absolute;
     top: 0;
-    background-color: black;
-    list-style-type: none;
-    padding: 3px 0px 3px 0px;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
 }
-li a {
-    display: block;
-    width: calc(100% / 10);
-    margin-left: 8px;
-    padding: 0px 6px 0px 0px;
-    color: black;
-    text-align: center;
+.nav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+    margin-top: 0px;
+    padding-left: 0px;
+    
+    overflow-wrap: none;
+	word-wrap: none;
+	hyphens: none;
+}
+.nav li a {
+    padding: 8px 8px 8px 32px;
     text-decoration: none;
-    background-color: black;
-    animation: unhover;
-    animation-duration: 0.5s;
-    float: left;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.5s;
+    
+    overflow-wrap: none;
+	word-wrap: none;
+	hyphens: none;
 }
-li a:hover {
-    color: cadetblue;
-    background-color: gray;
+.nav li a:hover {
     animation: hover;
-    animation-duration: 0.25s;
+    animation-duration: 0.5s;
+    background-color: gray; 
+    color:cadetblue;
 }
-li a:active {
-    color:brown;
+.nav li a:active {
     animation: active;
-    animation-duration: 0.25s;
-}
-
-@media screen and (max-width: 150px) {
-    body {font-size: 10px;}
-    li a, .nav {width: 100%;}
-    .nav {padding-bottom: 75px}
-}
-@media screen and (max-width: 800px) {
-    li a, .nav {width:100%;margin-top:0px;margin-left: -1px;float:top;margin-bottom: 0px;}
-    .nav {padding-bottom: 85px;padding-right: 5px;}
-}
-@media screen and (min-width: 1030px) {
-    li a {margin-left: 6px;}
-}
-@media screen and (min-width: 1450px) {
-    li a {margin-left: 8px;}
-    body {font-size: 23px;}
+    animation-duration: 0.5s;
+    background-color: gray;
+    color:cadetblue
 }
