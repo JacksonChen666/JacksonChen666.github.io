@@ -52,13 +52,13 @@ hr {color: white;}
     top: 0;
     background-color: black;
     list-style-type: none;
-    padding: 3px 0px 3px 0px;
+    padding: 1px 1px 5px 0px;
 }
 li a {
+    background-color: white;
     display: block;
-    width: calc(100% / 10);
-    margin-left: 8px;
-    padding: 0px 6px 0px 0px;
+    margin: 0px 0px 0px 0px;
+    padding: 10px 10px 10px 10px;
     color: black;
     text-align: center;
     text-decoration: none;
@@ -71,7 +71,7 @@ li a:hover {
     color: cadetblue;
     background-color: gray;
     animation: hover;
-    animation-duration: 0.25s;
+    animation-duration: 0.5s;
 }
 li a:active {
     color:brown;
@@ -85,8 +85,8 @@ li a:active {
     .nav {padding-bottom: 75px}
 }
 @media screen and (max-width: 800px) {
-    li a, .nav {width:100%;margin-top:0px;margin-left: -1px;float:top;margin-bottom: 0px;}
-    .nav {padding-bottom: 85px;padding-right: 5px;}
+    li a, .nav {width:100%;float:top;padding: 1px 0px 10px 0px;margin-top: 3px}
+     .nav {padding-right: 5px;padding-bottom: 133px;margin-top: 0px;} 
 }
 @media screen and (min-width: 1030px) {
     li a {margin-left: 6px;}
