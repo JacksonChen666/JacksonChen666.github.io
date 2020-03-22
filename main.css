@@ -9,7 +9,7 @@ body {
 	font-size:18px;
     margin: 0px;
 }
-pre, h1, h2, i, form, p {margin-left: 10px}
+pre, h1, h2, h3, i, form, p, a {margin-left: 10px}
 a:link {color: rgb(255, 230, 0);}
 a:visited {color: rgb(255, 230, 0);}
 a:hover {color: rgb(255, 230, 20);}
