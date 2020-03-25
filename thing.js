@@ -31,7 +31,7 @@ function cheatCheck(bigger,smaller) {
 }
 
 function submit() {
-	true
+	console.log("unsupported!!!!!!!!!!! be patient!!!!!!!!!!!")
 }
 
 function set() {

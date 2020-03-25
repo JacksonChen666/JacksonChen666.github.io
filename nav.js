@@ -4,3 +4,13 @@ function openNav() {
 function closeNav() {
     document.getElementById("nav").style.width = "0";
 }
+
+// javascript animations? refer to animations.js
+function leaveAnimation() {
+    document.getElementById('all-animation').style.animation = "leave";
+}
+function clickLink(link) {
+    closeNav();
+    leaveAnimation();
+    window.location.href = link;
+}

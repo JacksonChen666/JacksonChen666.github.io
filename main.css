@@ -9,6 +9,12 @@ body {
 	font-size:18px;
     margin: 0px;
 }
+/*
+* {
+    background-color: black;
+    color: darkred;
+}
+*/
 pre, h1, h2, h3, i, form, p, a {margin-left: 10px}
 a:link {color: rgb(255, 230, 0);}
 a:visited {color: rgb(255, 230, 0);}
@@ -23,12 +29,16 @@ hr {color: white;}
     from {margin-left: -2500px;}
     to {margin-left: 0px;}
 }
+@keyframes leave {
+    from {padding-left: 0px;}
+    to {padding-left: 2500px;}
+}
 .all-animation {
     animation: appear;
     animation-duration: 0.25s;
 }
 .header-and-nav {
-	position: fixed;
+	position: absolute;
     margin-left: 5px;
 }
 /* menu icon from css.gg */
@@ -43,8 +53,8 @@ hr {color: white;}
     display: block;
     width: 20px;
     height: 2px;
-    border-radius: 3px;
-    background: currentColor
+    border-radius: 4px;
+    background: currentColor;
 }
 .gg-menu::after,
 .gg-menu::before {
