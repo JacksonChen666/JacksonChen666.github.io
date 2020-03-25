@@ -9,8 +9,8 @@ function closeNav() {
 function leaveAnimation() {
     document.getElementById('all-animation').style.animation = "leave";
 }
-function clickLink(link) {
+function clickLink(rLink) {
     closeNav();
     leaveAnimation();
-    window.location.href = link;
+    window.location.href = rLink;
 }
