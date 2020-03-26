@@ -41,29 +41,14 @@ hr {color: white;}
 	position: absolute;
     margin-left: 5px;
 }
-/* menu icon from css.gg */
-.gg-menu {
-    transform: scale(var(--ggs,1))
-}
-.gg-menu,
-.gg-menu::after,
-.gg-menu::before {
-    box-sizing: border-box;
-    position: relative;
-    display: block;
-    width: 20px;
+/* menu icon (css.gg) */
+div .menu-icon {
+    width: 25px;
     height: 2px;
-    border-radius: 4px;
-    background: currentColor;
-}
-.gg-menu::after,
-.gg-menu::before {
-    content: "";
-    position: absolute;
-    top: -6px
-}
-.gg-menu::after {
-    top: 6px
+    background-color: currentColor;
+    margin: 5px 0px 0px 10px;
+    border-radius: 40px;
+    border: 1px solid transparent;
 }
 
 .gg-close {
@@ -82,11 +67,11 @@ hr {color: white;}
     display: block;
     box-sizing: border-box;
     position: absolute;
-    width: 16px;
-    height: 2px;
+    width: 20px;
+    height: 3px;
     background: currentColor;
     transform: rotate(45deg);
-    border-radius: 5px;
+    border-radius: 40px;
     top: 8px;
     left: 1px
 }
@@ -95,7 +80,7 @@ hr {color: white;}
 }
 /* top navigation!!!!! refer to nav.css */
 @keyframes hover {
-    from {background-color: black;color:rgb(255,230,0);}
+    from {}
     to {background-color: gray; color:cadetblue;}
 }
 @keyframes unhover {
@@ -122,7 +107,7 @@ hr {color: white;}
     left: 0;
     background-color: #111;
     overflow-x: hidden;
-    transition: 0.5s;
+    transition-duration: 0.5s;
     padding-top: 60px;
     margin-top: 0px;
     padding-left: 0px;
@@ -140,6 +125,7 @@ hr {color: white;}
     transition: 0.5s;
     
     overflow-wrap: none;
+    width: 200px;
 	word-wrap: none;
 	hyphens: none;
 }
