@@ -13,7 +13,7 @@
 	<body>
     <h1>URL Encoder</h1>
     <form action="./urlencode.php" method="POST">
-        <textarea name="encode" cols="100" rows="80" for='urlencode' placeholder="Enter text"></textarea><br>
+        <textarea name="encode" cols="100" rows="40" for='urlencode' placeholder="Enter text"></textarea><br>
         <input type="submit" value="Convert" name="formSubmit" for='submit'><br>
     </form>
     <br>
