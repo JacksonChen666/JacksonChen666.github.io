@@ -16,6 +16,7 @@ body {
 }
 */
 pre, h1, h2, h3, i, form, p, a {margin-left: 10px}
+h1 {margin: 10px;}
 a:link {color: rgb(255, 230, 0);}
 a:visited {color: rgb(255, 230, 0);}
 a:hover {color: rgb(255, 230, 20);}
@@ -48,7 +49,6 @@ div .menu-icon {
     background-color: currentColor;
     margin: 5px 0px 0px 10px;
     border-radius: 40px;
-    border: 1px solid transparent;
 }
 
 .gg-close {
