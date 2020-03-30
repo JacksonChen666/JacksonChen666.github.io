@@ -1,18 +1,26 @@
 <html>
 	<head>
-		<title>Real Time Editor</title>
+		<title>Live HTML Editor</title>
 		<meta name="viewport" content="width=device-width initial-scale=1">
 		<script>
+			var time = new Date();
+			function statusRefresh(text){
+				time = new Date();
+				console.log(text + " " + time);
+			}
+
 			var wideLocalStorageName = "RTE_HTML";
 			function refresh(){
 				var textContent = document.getElementById('editor-textarea').value;
 				document.getElementById('viewer').srcdoc = textContent;
+				statusRefresh("Refreshed");
 				saveLocal();
 			}
 
 			function saveLocal(localStorageName = wideLocalStorageName){
 				var textContent = document.getElementById('editor-textarea').value;
 				localStorage.setItem(localStorageName, textContent);
+				statusRefresh("Saved");
 			}
 
 			function loadLocal(){
@@ -23,6 +31,7 @@
 				} else {
 					document.getElementById('editor-textarea').value = localStorage.RTE_HTML;
 					refresh();
+					statusRefresh("Loaded");
 					return localStorage.RTE_HTML;
 				}
 			}
@@ -37,9 +46,9 @@
 				} else {
 					document.getElementById('editor-textarea').value = localStorage.oldLocalStorageName;
 					refresh();
-					console.log("Loaded from old local storage! " + localStorage.oldLocalStorageName);
+					statusRefresh("Loaded from old local storage! " + localStorage.oldLocalStorageName);
 					localStorage.setItem(oldLocalStorageName, undefined);
-					console.log("Converted from old local storage! " + oldLocalStorageName);
+					statusRefresh("Converted from old local storage! " + oldLocalStorageName);
 				}
 			}
 
@@ -65,7 +74,7 @@
 			}
 			.main {
 				width: 100%;
-				height: calc(100vh - 80px); /* Dynamic screen height of verticle screen height */
+				height: calc(100vh - 95px); /* Dynamic screen height of verticle screen height */
 				margin-bottom: 0px;
 				display: inline-flex;
 			}
@@ -82,7 +91,7 @@
 				font-family:Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace; /* Monospace */
 			}
 			#viewer {
-				background-color: #808080; /* #303030 dark mode, #fff light mode */
+				background-color: #606060; /* #707070 dark mode, #fff light mode */
 				min-width: 100px;
 				border: none;
 				min-height: 30px;
@@ -94,10 +103,10 @@
 		</style>
 	</head>
 	<body>
-		<noscript style="font-size: 200px;">Enable JavaScript to run this page</noscript>
+		<noscript style="font-size: 300px;">Enable JavaScript</noscript>
 		<div class="extra" id="extra">
-			<h1 style="font-size: 24px;">Real Time HTML Editor</h1>
-			<a href="https://www.youtube.com/watch?v=onLsz9BwP7M" style="font-size: 12px;">Original creator and code</a>&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" onclick="allOfOldLoadLocal()">Load from old local storage</a><br>
+			<h1 style="font-size: 24px;">Live HTML Editor</h1>
+			<a href="https://www.youtube.com/watch?v=onLsz9BwP7M" style="font-size: 12px;">Original creator and code</a>&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" onclick="allOfOldLoadLocal()">Load from old local storage</a>&nbsp;&nbsp;&nbsp;<a href="./LHE-FAQ.html" style="font-size: 12px;">FAQ</a><br>
 			<p style="font-size: 8px;">Background color is not affected unless set | Tab indent unsupported</p>
 		</div>
 		<div class="main" id="main">
