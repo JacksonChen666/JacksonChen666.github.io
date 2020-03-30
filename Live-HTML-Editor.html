@@ -8,9 +8,13 @@
 				time = new Date();
 				console.log(text + " " + time);
 			}
-
+			var main;
 			var wideLocalStorageName = "RTE_HTML";
 			function refresh(){
+				window.clearTimeout(main);
+				main = setTimeout(refreshING,500);
+			}
+			function refreshING(){
 				var textContent = document.getElementById('editor-textarea').value;
 				document.getElementById('viewer').srcdoc = textContent;
 				statusRefresh("Refreshed");
