@@ -139,4 +139,8 @@ function sleep(milliseconds) {
   } while (currentDate - date < milliseconds);
 }
 
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 mobileAndTabletcheck();

@@ -1,22 +1,82 @@
+<!-- 
+To Do:
+Title of iframe to actual webpage
+Full screen of iframe (not full screen mode)
+SYNTAX HIGHLIGHTING (CAP LOCKS I HATE YOU)
+
+-->
 <html>
 	<head>
 		<title>Live HTML Editor</title>
 		<meta name="viewport" content="width=device-width initial-scale=1">
 		<script>
 			var time = new Date();
-			function statusRefresh(text){
-				time = new Date();
-				console.log(text + " " + time);
+			var instantRefresh;
+			function instantRefreshCheck() {
+				if (typeof localStorage.instantRefresh === 'undefined') {
+					instantRefresh = false;
+					localStorage.setItem("instantRefresh",false);
+					return localStorage.instantRefresh;
+				} else if (typeof localStorage.instantRefresh === 'null') {
+					instantRefresh = false;
+					localStorage.setItem("instantRefresh",false);
+					return localStorage.instantRefresh;
+				} else {
+					instantRefresh = localStorage.instantRefresh;
+					if (localStorage.instantRefresh == 'false') {
+						document.getElementById('instant-refresh-btn').innerHTML = "Enable Instant Refresh";
+						localStorage.setItem("instantRefresh", false);
+						instantRefresh = false;
+						return localStorage.instantRefresh;
+					} else if (localStorage.instantRefresh == 'true') {
+						document.getElementById('instant-refresh-btn').innerHTML = "Disable Instant Refresh";
+						localStorage.setItem("instantRefresh", true);
+						instantRefresh = true;
+						return localStorage.instantRefresh;
+					} 
+				}
 			}
+
+			function waitThenExecute(timeInMS,functionName,setVar,msg = undefined){
+				window.clearTimeout(setVar);
+				console.log(msg)
+				var setVar = setInterval(functionName, timeInMS);
+			}
+
+			function toggleInstantRefresh() {
+				if (instantRefresh === true) {
+					document.getElementById('instant-refresh-btn').innerHTML = "Enable Instant Refresh";
+					instantRefresh = false;
+					localStorage.setItem("instantRefresh", false);
+					return instantRefresh;
+				} else {
+					document.getElementById('instant-refresh-btn').innerHTML = "Disable Instant Refresh";
+					instantRefresh = true;
+					localStorage.setItem("instantRefresh", true);
+					return instantRefresh;
+				}
+			}
+
+			function statusRefresh(text){
+				console.log(text)
+			}
+
 			var main;
 			var wideLocalStorageName = "RTE_HTML";
-			function refresh(){
-				window.clearTimeout(main);
-				main = setTimeout(refreshING,500);
+			function refresh(time){
+				if (instantRefresh) {
+					refreshING();
+				} else {
+					window.clearTimeout(main);
+					statusRefresh("Detected typing");
+					main = setTimeout(refreshING,time);
+				}
 			}
 			function refreshING(){
 				var textContent = document.getElementById('editor-textarea').value;
+				var iFraming = document.getElementById('viewer');
 				document.getElementById('viewer').srcdoc = textContent;
+				statusRefresh("");
 				statusRefresh("Refreshed");
 				saveLocal();
 			}
@@ -25,6 +85,7 @@
 				var textContent = document.getElementById('editor-textarea').value;
 				localStorage.setItem(localStorageName, textContent);
 				statusRefresh("Saved");
+				statusRefresh("");
 			}
 
 			function loadLocal(){
@@ -32,13 +93,36 @@
 					return localStorage.RTE_HTML;
 				} else if (typeof localStorage.RTE_HTML === 'null') {
 					return localStorage.RTE_HTML;
+				} else if (localStorage.RTE_HTML == '') {
+					return localStorage.RTE_HTML;
 				} else {
 					document.getElementById('editor-textarea').value = localStorage.RTE_HTML;
-					refresh();
 					statusRefresh("Loaded");
+					refreshING();
 					return localStorage.RTE_HTML;
 				}
 			}
+
+
+
+			function downloadHTML(){
+				download("myHTML.html", document.getElementById('editor-textarea').value);
+			}
+
+			function download(filename, text) { // https://stackoverflow.com/questions/3665115/how-to-create-a-file-in-memory-for-user-to-download-but-not-through-server
+			  var element = document.createElement('a');
+			  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+			  element.setAttribute('download', filename);
+
+			  element.style.display = 'none';
+			  document.body.appendChild(element);
+
+			  element.click();
+
+			  document.body.removeChild(element);
+			}
+
+
 
 			function oldLoadLocal(oldLocalStorageName){
 				if (typeof localStorage.oldLocalStorageName === 'undefined'){
@@ -60,17 +144,29 @@
 				oldLoadLocal("RTE_HTML_File");
 			}
 
+			function resetText(){
+				document.getElementById('editor-textarea').value = "";
+				refreshING();
+			}
+
 			function load(){
+				console.clear()
+				statusRefresh("Loading");
 				loadLocal();
-				saveLocal();
+				refreshING();
+				instantRefreshCheck();
+				statusRefresh("Finished loading");
 			}
 		</script>
 		<style>
 			* {
 				margin: 0;
-				padding: 0;
 				color: white;
 				background-color: #202020;/* #202020 dark mode, #bdc3c7 light mode */
+			}
+			button {
+				background-color: white;
+				color: black;
 			}
 			.extra {
 				padding-top: 5px;
@@ -78,7 +174,7 @@
 			}
 			.main {
 				width: 100%;
-				height: calc(100vh - 95px); /* Dynamic screen height of verticle screen height */
+				height: calc(100vh - 120px); /* Dynamic screen height of verticle screen height */
 				margin-bottom: 0px;
 				display: inline-flex;
 			}
@@ -104,17 +200,46 @@
 				margin: 10px;
 				border: 1px solid #3498db;
 			}
+			#buttons {
+				text-align: center;
+				margin: -10 0 0 0;
+			}
 		</style>
 	</head>
 	<body>
 		<noscript style="font-size: 300px;">Enable JavaScript</noscript>
 		<div class="extra" id="extra">
 			<h1 style="font-size: 24px;">Live HTML Editor</h1>
-			<a href="https://www.youtube.com/watch?v=onLsz9BwP7M" style="font-size: 12px;">Original creator and code</a>&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" onclick="allOfOldLoadLocal()">Load from old local storage</a>&nbsp;&nbsp;&nbsp;<a href="./LHE-FAQ.html" style="font-size: 12px;">FAQ</a><br>
+			<a href="https://www.youtube.com/watch?v=onLsz9BwP7M" style="font-size: 12px;">Original creator and code</a>&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" onclick="allOfOldLoadLocal()">Load from old local storage</a>&nbsp;&nbsp;&nbsp;<a href="./LHE-FAQ.html" style="font-size: 12px;">FAQ</a>&nbsp;&nbsp;&nbsp;<br>
 			<p style="font-size: 8px;">Background color is not affected unless set | Tab indent unsupported</p>
+			<br>
+		</div>
+		<div id="buttons">
+			<button onclick="downloadHTML()">Save as file</button>
+			<button onclick="refreshING()">Force Refresh</button>
+			<button onclick="toggleInstantRefresh()" id="instant-refresh-btn">Enable Instant Refresh</button>
 		</div>
 		<div class="main" id="main">
-			<textarea id="editor-textarea" onkeyup="refresh()" style="font-size: 15px;" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" autofocus="true" placeholder="HTML code (JS and CSS included, spellcheck off)"></textarea>
+			<textarea id="editor-textarea" onkeyup="refresh(750)" onkeydown="refresh(750)" style="font-size: 15px;" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" autofocus="true" placeholder="HTML code (JS and CSS included, spellcheck off)"><html>
+<!-- Learn HTML: https://www.w3schools.com/html/default.asp  -->
+<head>
+<title>Your Title Here</title>
+<link rel="stylesheet" type="text/css" href="">
+<!-- Tags not required to be visible (e.g. Style sheets, titles, scripts) -->
+</head>
+
+
+<body>
+<!-- Visible elements -->
+</body>
+
+
+<script>
+// Javascript
+</script>
+
+
+</html></textarea>
 			<iframe id="viewer"></iframe>
 		</div>
 	<script type="text/javascript">
