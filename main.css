@@ -15,7 +15,7 @@ body {
     color: darkred;
 }
 */
-pre, h1, h2, h3, i, form, p, a {margin-left: 10px}
+pre, h1, h2, h3, i, form, p, a {margin-left: 10px} /* Change to 'body *' */
 h1 {margin: 10px;}
 a:link {color: rgb(255, 230, 0);}
 a:visited {color: rgb(255, 230, 0);}
@@ -30,13 +30,8 @@ hr {color: white;}
     from {margin-left: -2500px;}
     to {margin-left: 0px;}
 }
-@keyframes leave {
-    from {padding-left: 0px;}
-    to {padding-left: 2500px;}
-}
-.all-animation {
-    animation: appear;
-    animation-duration: 0.25s;
+#all-animation {
+    /*animation: appear 0.25s 1 0 1 normal forwards running;*/
 }
 .header-and-nav {
 	position: absolute;

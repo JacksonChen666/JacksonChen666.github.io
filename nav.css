@@ -1,5 +1,5 @@
 @keyframes hover {
-    from {background-color: black;color:rgb(255,230,0);}
+    from {}
     to {background-color: gray; color:cadetblue;}
 }
 @keyframes unhover {
@@ -26,14 +26,14 @@
     left: 0;
     background-color: #111;
     overflow-x: hidden;
-    transition: 0.5s;
+    transition-duration: 0.5s;
     padding-top: 60px;
     margin-top: 0px;
     padding-left: 0px;
     
     overflow-wrap: none;
-	word-wrap: none;
-	hyphens: none;
+    word-wrap: none;
+    hyphens: none;
 }
 .nav li a {
     padding: 8px 8px 8px 32px;
@@ -44,8 +44,9 @@
     transition: 0.5s;
     
     overflow-wrap: none;
-	word-wrap: none;
-	hyphens: none;
+    width: 200px;
+    word-wrap: none;
+    hyphens: none;
 }
 .nav li a:hover {
     animation: hover;
