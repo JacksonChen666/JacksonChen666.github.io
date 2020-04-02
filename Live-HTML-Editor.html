@@ -1,23 +1,47 @@
 <!-- 
 To Do:
-Title of iframe to actual webpage
-Full screen of iframe (not full screen mode)
-SYNTAX HIGHLIGHTING (CAP LOCKS I HATE YOU)
+SYNTAX HIGHLIGHTING (CAP LOCKS I HATE YOU, might be impossible)
+Allow switching from files to files (have to figure out the loadLocal params first)
+Allow stop auto refresh
+Long wait time refresh
+fix undefined local storage randomly appearing
+don't backup default html
+
+Off topic ideas:
+CSS that can be easily used with class names
 -->
 <html>
 	<head>
-		<title>Live HTML Editor</title>
+		<title id="webpage-title">Live HTML Editor</title>
 		<meta name="viewport" content="width=device-width initial-scale=1">
 		<link rel='icon' href='https://www.mcpcsystems.co.uk/wp-content/uploads/2018/10/Clipboard-Icon.png'>
 		<script>
 			var time = new Date();
 			var instantRefresh;
+			var saved = false; // As an actual file
+			var fileName;
+
+			// https://www.abeautifulsite.net/adding-and-removing-elements-on-the-fly-using-javascript
+			function addElement(parentId, elementTag, elementId, html) {
+			    // Adds an element to the document
+			    var p = document.getElementById(parentId);
+			    var newElement = document.createElement(elementTag);
+			    newElement.setAttribute('id', elementId);
+			    newElement.innerHTML = html;
+			    p.appendChild(newElement);
+			}
+			function removeElement(elementId) {
+			    // Removes an element from the document
+			    var element = document.getElementById(elementId);
+			    element.parentNode.removeChild(element);
+			}
+
+			function changeTiming(time){
+				// Change attribute of thing
+			}
+
 			function instantRefreshCheck() {
-				if (typeof localStorage.instantRefresh === 'undefined') {
-					instantRefresh = false;
-					localStorage.setItem("instantRefresh",false);
-					return localStorage.instantRefresh;
-				} else if (typeof localStorage.instantRefresh === 'null') {
+				if (typeof localStorage.instantRefresh === 'undefined' || typeof localStorage.instantRefresh === 'null') {
 					instantRefresh = false;
 					localStorage.setItem("instantRefresh",false);
 					return localStorage.instantRefresh;
@@ -57,86 +81,132 @@ SYNTAX HIGHLIGHTING (CAP LOCKS I HATE YOU)
 				}
 			}
 
-			function statusRefresh(text){
-				console.log(text)
-			}
-
-			var main;
-			var wideLocalStorageName = "RTE_HTML";
-			function refresh(time){
+			var wideLocalStorageName = "RTE_HTML"; // Let's just stick with it
+			var mainFunctions = [];
+			function refresh(time,downUp){
+				saved = false;
 				if (instantRefresh) {
 					refreshING();
+					eRefreshING();
 				} else {
-					window.clearTimeout(main);
-					statusRefresh("Detected typing");
-					main = setTimeout(refreshING,time);
+					mainFunctions.forEach(clearTimeout); // https://stackoverflow.com/questions/54277835/how-to-stop-calling-a-function-js/54277902#54277902
+					mainFunctions.length = 0;
+					console.log("Detected " + downUp + " typing");
+					mainFunctions.push(setTimeout(refreshING,time));
+					mainFunctions.push(setTimeout(eRefreshING,time));
 				}
 			}
 			function refreshING(){
 				var textContent = document.getElementById('editor-textarea').value;
-				var iFraming = document.getElementById('viewer');
-				document.getElementById('viewer').srcdoc = textContent;
-				statusRefresh("");
-				statusRefresh("Refreshed");
+				try {
+					document.getElementById('viewer').srcdoc = textContent;
+				} catch(err) {
+					return err;
+				}
+				emptyAndLog("Refreshed");
 				saveLocal();
+			}
+
+			var windowExternalWindow;
+			var windowFeatures = "menubar=yes,location=no,resizable=yes,scrollbars=yes,status=yes,fullscreen=yes";
+			var childWindowChecking;
+			function childWindowCheck() {
+				if (windowExternalWindow.closed) {
+					saveLocal();
+					reloading();
+				}
+			}
+
+			function openExternalWindow(){
+				if (typeof windowExternalWindow === 'undefined') {
+					childWindowChecking = setInterval(childWindowCheck,500);
+					windowExternalWindow = window.open(
+						"about:blank",
+		 				"External HTML Live View",
+						windowFeatures);
+					windowExternalWindow.document.write("<style>body {margin: 0px; overflow: hidden;} iframe {width: 100%;height: 100%}</style> <script>function confirmExit(){return '';}window.onbeforeunload=confirmExit;<\/script> <iframe id=\"e-viewer\"></iframe>");
+					removeElement("viewer");
+					eRefreshING();
+				}
+			}
+
+			function eRefreshING(){
+				var textContent = document.getElementById('editor-textarea').value;
+				try {
+					windowExternalWindow.document.getElementById('e-viewer').srcdoc = textContent;
+				} catch(err) {
+					return err;
+				}
+				
+				emptyAndLog("Refreshed Externally");
+				saveLocal();
+			}
+
+			function reloading(){
+				windowExternalWindow.close();
+				location.reload(true);
 			}
 
 			function saveLocal(localStorageName = wideLocalStorageName){
 				var textContent = document.getElementById('editor-textarea').value;
 				localStorage.setItem(localStorageName, textContent);
-				statusRefresh("Saved");
-				statusRefresh("");
+				logAndEmpty("Saved");
 			}
 
 			function loadLocal(){
-				if (typeof localStorage.RTE_HTML === 'undefined') {
-					return localStorage.RTE_HTML;
-				} else if (typeof localStorage.RTE_HTML === 'null') {
-					return localStorage.RTE_HTML;
-				} else if (localStorage.RTE_HTML == '') {
+				if (typeof localStorage.RTE_HTML === 'undefined' || typeof localStorage.RTE_HTML === 'null' || localStorage.RTE_HTML == '') {
 					return localStorage.RTE_HTML;
 				} else {
 					document.getElementById('editor-textarea').value = localStorage.RTE_HTML;
-					statusRefresh("Loaded");
+					console.log("Loaded");
 					refreshING();
 					return localStorage.RTE_HTML;
 				}
 			}
 
 
-
 			function downloadHTML(){
-				download("myHTML.html", document.getElementById('editor-textarea').value);
+				fileName = prompt("Choose a name for your file","myHTML");
+				if (fileName == 'null') {
+					return;
+				} else {
+					download(fileName + ".html", document.getElementById('editor-textarea').value);
+					return;
+				}
+			}
+
+			function backupHTML(){
+				if (saved) {
+					return;
+				} else {
+					download("backupHTML.html", document.getElementById('editor-textarea').value);
+					return;
+				}
 			}
 
 			function download(filename, text) { // https://stackoverflow.com/questions/3665115/how-to-create-a-file-in-memory-for-user-to-download-but-not-through-server
 			  var element = document.createElement('a');
 			  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
 			  element.setAttribute('download', filename);
-
 			  element.style.display = 'none';
 			  document.body.appendChild(element);
-
 			  element.click();
-
 			  document.body.removeChild(element);
+			  saved = true;
 			}
 
 
 
 			function oldLoadLocal(oldLocalStorageName){
-				if (typeof localStorage.oldLocalStorageName === 'undefined'){
-					console.log('Old local storage not found! ' + oldLocalStorageName);
-					return(oldLocalStorageName);
-				} else if (typeof localStorage.oldLocalStorageName === 'null'){
+				if (typeof localStorage.oldLocalStorageName === 'undefined' || typeof localStorage.oldLocalStorageName === 'null'){
 					console.log('Old local storage not found! ' + oldLocalStorageName);
 					return(oldLocalStorageName);
 				} else {
 					document.getElementById('editor-textarea').value = localStorage.oldLocalStorageName;
 					refresh();
-					statusRefresh("Loaded from old local storage! " + localStorage.oldLocalStorageName);
+					console.log("Loaded from old local storage! " + localStorage.oldLocalStorageName);
 					localStorage.setItem(oldLocalStorageName, undefined);
-					statusRefresh("Converted from old local storage! " + oldLocalStorageName);
+					console.log("Converted from old local storage! " + oldLocalStorageName);
 				}
 			}
 
@@ -145,24 +215,66 @@ SYNTAX HIGHLIGHTING (CAP LOCKS I HATE YOU)
 			}
 
 			function resetText(){
-				document.getElementById('editor-textarea').value = "";
+				backupHTML();
+				editor.reset();
 				refreshING();
 			}
 
+			function emptyAndLog(text){
+				console.log('');
+				console.log(text);
+			}
+
+			function logAndEmpty(text){
+				console.log(text);
+				console.log('');
+			}
+
+
+			// https://www.html5rocks.com/en/tutorials/file/dndfiles/
+			// Check for the various File API support.
+			console.time("fileAPICheck");
+			if (window.File && window.FileReader && window.FileList && window.Blob) {
+				// API is supported!
+			} else {
+				alert('The File APIs are not fully supported in this browser. The open file function might not work correctly.');
+			}
+
+			// Open the file
+			// https://www.javascripture.com/FileReader
+			var openFile = function(event) {
+			    var input = event.target;
+			    backupHTML();
+			    var reader = new FileReader();
+			    reader.onload = function(){
+			      var text = reader.result;
+			      var editor = document.getElementById('editor-textarea');
+			      editor.value = text;
+			      refreshING();
+			      fileForm.reset(); // https://www.geeksforgeeks.org/how-to-reset-a-form-using-jquery-with-reset-method/
+			    };
+			    reader.readAsText(input.files[0]);
+			  };
+
+
+
 			function load(){
-				console.clear()
-				statusRefresh("Loading");
+				console.clear();
+				console.log("Loading");
 				loadLocal();
-				refreshING();
 				instantRefreshCheck();
-				statusRefresh("Finished loading");
+				console.log("Finished loading");
 			}
 		</script>
 		<style>
+			body {
+				overflow: hidden;
+			}
 			* {
 				margin: 0;
 				color: white;
 				background-color: #202020;/* #202020 dark mode, #bdc3c7 light mode */
+				/*font-family: Arial;*/ /* sometimes such simple things can cause such big problems */
 			}
 			button {
 				background-color: white;
@@ -174,7 +286,7 @@ SYNTAX HIGHLIGHTING (CAP LOCKS I HATE YOU)
 			}
 			.main {
 				width: 100%;
-				height: calc(100vh - 120px); /* Dynamic screen height of verticle screen height */
+				height: calc(100vh - 110px); /* Dynamic screen height of verticle screen height */
 				margin-bottom: 0px;
 				display: inline-flex;
 			}
@@ -204,28 +316,57 @@ SYNTAX HIGHLIGHTING (CAP LOCKS I HATE YOU)
 				text-align: center;
 				margin: -10 0 0 0;
 			}
+			h1 {font-size: 24px;}
+			.medium {font-size: 16px;}
+			.small {font-size: 12px;}
+			.mini {font-size: 8px;}
+			.no-margin {margin: 0px}
+			.no-padding {padding: 0px;}
+
+			@media screen and (max-width: 530px) {
+				h1 {font-size: 20px;}
+				.medium {font-size: 12px;}
+				.small {font-size: 8px;}
+				.mini {font-size: 4px;}
+				button {font-size: 8px;}
+			}
+			@media screen and (max-width: 430px) {
+				h1 {font-size: 16px;}
+				.medium {font-size: 10px;}
+				.small {font-size: 6px;}
+				.mini {font-size: 3px;}
+				button {font-size: 6px;}
+			}
+			#file {display: none;}
 		</style>
 	</head>
-	<body>
+	<body onbeforeunload="reloading();">
 		<noscript style="font-size: 300px;">Enable JavaScript</noscript>
 		<div class="extra" id="extra">
-			<h1 style="font-size: 24px;">Live HTML Editor</h1>
-			<a href="https://www.youtube.com/watch?v=onLsz9BwP7M" style="font-size: 12px;">Original creator and code</a>&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" onclick="allOfOldLoadLocal()">Load from old local storage</a>&nbsp;&nbsp;&nbsp;<a href="./LHE-FAQ.html" style="font-size: 12px;">FAQ</a>&nbsp;&nbsp;&nbsp;<br>
-			<p style="font-size: 8px;">Background color is not affected unless set | Tab indent unsupported</p>
+			<h1>Live HTML Editor</h1>
+			<a href="https://www.youtube.com/watch?v=onLsz9BwP7M" class="small">Original creator and code</a>&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" onclick="allOfOldLoadLocal()" class="medium">Load from old local storage</a>&nbsp;&nbsp;&nbsp;<a href="./LHE-FAQ.html" class="small">FAQ</a>&nbsp;&nbsp;&nbsp;<br>
+			<p class="mini">Background color is not affected unless set | Tab indent unsupported</p>
 			<br>
 		</div>
 		<div id="buttons">
-			<button onclick="downloadHTML()">Save as file</button>
-			<button onclick="refreshING()">Force Refresh</button>
+			<button onclick="document.getElementById('file').click();" id="open">Open...</button>
+			<button onclick="downloadHTML()" id="save">Save as file</button>
+			<button onclick="refresh(0, 'forced')" id="refresh">Force Refresh</button>
 			<button onclick="toggleInstantRefresh()" id="instant-refresh-btn">Enable Instant Refresh</button>
+			<button onclick="openExternalWindow();" id="e-iframe">Open iframe externally</button>
+			<button onclick="resetText()" id="reset">Reset</button>
+			<form name="fileForm">
+				<input type="file" id='file' name='file[]' onchange="openFile(event)" accept=".HTML" />
+			</form>
 		</div>
+		<form name='editor'>
 		<div class="main" id="main">
-			<textarea id="editor-textarea" onkeyup="refresh(750)" onkeydown="refresh(750)" style="font-size: 15px;" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" autofocus="true" placeholder="HTML code (JS and CSS included, spellcheck off)"><html>
+			<textarea id="editor-textarea" onkeyup="refresh(750,'up')" onkeydown="refresh(750, 'down')" style="font-size: 15px;" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" autofocus="true" placeholder="HTML code (JS and CSS included, spellcheck off)"><html>
 <!-- Learn HTML: https://www.w3schools.com/html/default.asp  -->
 <head>
 <title>Your Title Here</title>
-<link rel="stylesheet" type="text/css" href="">
-<!-- Tags not required to be visible (e.g. Style sheets, titles, scripts) -->
+<link rel="stylesheet" type="text/css" href="/path/to/stylesheet">
+<!-- Invisible elements -->
 </head>
 
 
@@ -240,6 +381,7 @@ SYNTAX HIGHLIGHTING (CAP LOCKS I HATE YOU)
 
 
 </html></textarea>
+</form>
 			<iframe id="viewer"></iframe>
 		</div>
 	<script type="text/javascript">
