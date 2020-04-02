@@ -1,9 +1,7 @@
 /* Site structure?? */
 body {
-    /*
 	background-color: darkslategray;
 	color: white;
-    */
     background-color: black;
     color: darkred;
 	overflow-wrap: break-word;
@@ -12,11 +10,6 @@ body {
 	font-family: "Arial";
 	font-size:18px;
     margin: 0px;
-}
-
-* {
-    background-color: black;
-    color: darkred;
 }
 
 pre, h1, h2, h3, i, form, p, a {margin-left: 10px} /* Change to 'body *' */
