@@ -2,13 +2,11 @@
 To Do:
 SYNTAX HIGHLIGHTING (CAP LOCKS I HATE YOU, might be impossible)
 Allow switching from files to files (have to figure out the loadLocal params first)
-Allow stop auto refresh
-Long wait time refresh
-fix undefined local storage randomly appearing
-don't backup default html
-
-Off topic ideas:
-CSS that can be easily used with class names
+Fix undefined local storage randomly appearing
+Set refresh
+Detect low performance and set delay for every specific milliseconds
+Prevent main page refresh
+Update FAQ
 -->
 <html>
 	<head>
@@ -20,6 +18,12 @@ CSS that can be easily used with class names
 			var instantRefresh;
 			var saved = false; // As an actual file
 			var fileName;
+			var wideLocalStorageName = "RTE_HTML"; // Let's just stick with it
+			var mainFunctions = [];
+			var windowExternalWindow;
+			var windowFeatures = "menubar=yes,location=no,resizable=yes,scrollbars=no,status=yes,fullscreen=yes";
+			var childWindowChecking;
+			var allowRefresh = sessionStorage.allowRefresh;
 
 			// https://www.abeautifulsite.net/adding-and-removing-elements-on-the-fly-using-javascript
 			function addElement(parentId, elementTag, elementId, html) {
@@ -36,28 +40,30 @@ CSS that can be easily used with class names
 			    element.parentNode.removeChild(element);
 			}
 
-			function changeTiming(time){
-				// Change attribute of thing
+			function antiLag() {
+				// Uses change timing function to reduce lag between typing if it takes over 100ms or more to finish reloading the page or toggle instant refresh
+				// Can be enabled or disabled by the user
+			}
+
+			function changeAttribute(elementID,AttributeName,Attribute){
+				document.getElementById(elementID).setAttribute(AttributeName,Attribute);
+			}
+
+			function changeKeyAttributes(functionName = "refresh",time = 750){
+				document.getElementById('editor-textarea').setAttribute("onkeydown",functionName + "(" + time +")");
+				document.getElementById('editor-textarea').setAttribute("onkeyup",functionName + "(" + time +")");
 			}
 
 			function instantRefreshCheck() {
-				if (typeof localStorage.instantRefresh === 'undefined' || typeof localStorage.instantRefresh === 'null') {
+				if (typeof localStorage.instantRefresh === 'undefined' || typeof localStorage.instantRefresh === 'null' || localStorage.instantRefresh == 'false') {
 					instantRefresh = false;
 					localStorage.setItem("instantRefresh",false);
 					return localStorage.instantRefresh;
-				} else {
-					instantRefresh = localStorage.instantRefresh;
-					if (localStorage.instantRefresh == 'false') {
-						document.getElementById('instant-refresh-btn').innerHTML = "Enable Instant Refresh";
-						localStorage.setItem("instantRefresh", false);
-						instantRefresh = false;
-						return localStorage.instantRefresh;
-					} else if (localStorage.instantRefresh == 'true') {
-						document.getElementById('instant-refresh-btn').innerHTML = "Disable Instant Refresh";
-						localStorage.setItem("instantRefresh", true);
-						instantRefresh = true;
-						return localStorage.instantRefresh;
-					} 
+				} else { 
+					document.getElementById('instant-refresh-btn').innerHTML = "Disable Instant Refresh";
+					localStorage.setItem("instantRefresh", true);
+					instantRefresh = true;
+					return localStorage.instantRefresh;
 				}
 			}
 
@@ -68,35 +74,43 @@ CSS that can be easily used with class names
 			}
 
 			function toggleInstantRefresh() {
+				var instanceHTML = document.getElementById('instant-refresh-btn').innerHTML;
+				var Word = "Instant Refresh";
 				if (instantRefresh === true) {
-					document.getElementById('instant-refresh-btn').innerHTML = "Enable Instant Refresh";
+					instanceHTML = "Enable " + Word;
 					instantRefresh = false;
 					localStorage.setItem("instantRefresh", false);
-					return instantRefresh;
 				} else {
-					document.getElementById('instant-refresh-btn').innerHTML = "Disable Instant Refresh";
+					instanceHTML = "Disable " + Word;
 					instantRefresh = true;
 					localStorage.setItem("instantRefresh", true);
-					return instantRefresh;
 				}
+				document.getElementById('instant-refresh-btn').innerHTML = instanceHTML;
 			}
-
-			var wideLocalStorageName = "RTE_HTML"; // Let's just stick with it
-			var mainFunctions = [];
+			
 			function refresh(time,downUp){
 				saved = false;
-				if (instantRefresh) {
+				if (allowRefresh) {
+					if (instantRefresh) {
+						refreshING();
+						eRefreshING();
+					} else {
+						mainFunctions.forEach(clearTimeout); // https://stackoverflow.com/questions/54277835/how-to-stop-calling-a-function-js/54277902#54277902
+						mainFunctions.length = 0;
+						console.log("Detected " + downUp + " typing");
+						mainFunctions.push(setTimeout(refreshING,time));
+						mainFunctions.push(setTimeout(eRefreshING,time));
+					}
+				} else if (downUp == 'forced') {
 					refreshING();
 					eRefreshING();
 				} else {
-					mainFunctions.forEach(clearTimeout); // https://stackoverflow.com/questions/54277835/how-to-stop-calling-a-function-js/54277902#54277902
-					mainFunctions.length = 0;
-					console.log("Detected " + downUp + " typing");
-					mainFunctions.push(setTimeout(refreshING,time));
-					mainFunctions.push(setTimeout(eRefreshING,time));
+					saveLocal();
+					return;
 				}
 			}
 			function refreshING(){
+				saved = false;
 				var textContent = document.getElementById('editor-textarea').value;
 				try {
 					document.getElementById('viewer').srcdoc = textContent;
@@ -106,31 +120,8 @@ CSS that can be easily used with class names
 				emptyAndLog("Refreshed");
 				saveLocal();
 			}
-
-			var windowExternalWindow;
-			var windowFeatures = "menubar=yes,location=no,resizable=yes,scrollbars=yes,status=yes,fullscreen=yes";
-			var childWindowChecking;
-			function childWindowCheck() {
-				if (windowExternalWindow.closed) {
-					saveLocal();
-					reloading();
-				}
-			}
-
-			function openExternalWindow(){
-				if (typeof windowExternalWindow === 'undefined') {
-					childWindowChecking = setInterval(childWindowCheck,500);
-					windowExternalWindow = window.open(
-						"about:blank",
-		 				"External HTML Live View",
-						windowFeatures);
-					windowExternalWindow.document.write("<style>body {margin: 0px; overflow: hidden;} iframe {width: 100%;height: 100%}</style> <script>function confirmExit(){return '';}window.onbeforeunload=confirmExit;<\/script> <iframe id=\"e-viewer\"></iframe>");
-					removeElement("viewer");
-					eRefreshING();
-				}
-			}
-
 			function eRefreshING(){
+				saved = false;
 				var textContent = document.getElementById('editor-textarea').value;
 				try {
 					windowExternalWindow.document.getElementById('e-viewer').srcdoc = textContent;
@@ -141,62 +132,53 @@ CSS that can be easily used with class names
 				emptyAndLog("Refreshed Externally");
 				saveLocal();
 			}
-
 			function reloading(){
-				windowExternalWindow.close();
-				location.reload(true);
+				try {
+					windowExternalWindow.close();
+					saveLocal();
+					location.reload(true);
+				} catch (err) {
+					return err;
+				}
+			}
+			function stopRefresh(){
+				if (allowRefresh) {
+					allowRefresh = false;
+					sessionStorage.setItem("allowRefresh",allowRefresh);
+					document.getElementById("stopRefresh").innerHTML = "Start Auto Refresh";
+					return allowRefresh;
+				} else {
+					allowRefresh = true;
+					sessionStorage.setItem("allowRefresh",allowRefresh);
+					document.getElementById('stopRefresh').innerHTML = "Stop Auto Refresh";
+					return allowRefresh;
+				}
+			}
+			function setRefreshTime(){
+				var timeOfRefresh = prompt("How long until refresh?", 750);
+				if (typeof timeOfRefresh === 'null') {
+					return;
+				}
+				changeKeyAttributes("refresh",timeOfRefresh);
 			}
 
 			function saveLocal(localStorageName = wideLocalStorageName){
 				var textContent = document.getElementById('editor-textarea').value;
 				localStorage.setItem(localStorageName, textContent);
 				logAndEmpty("Saved");
-			}
-
+			}		
 			function loadLocal(){
 				if (typeof localStorage.RTE_HTML === 'undefined' || typeof localStorage.RTE_HTML === 'null' || localStorage.RTE_HTML == '') {
+					saved = true;
 					return localStorage.RTE_HTML;
 				} else {
+					saved = false;
 					document.getElementById('editor-textarea').value = localStorage.RTE_HTML;
 					console.log("Loaded");
 					refreshING();
 					return localStorage.RTE_HTML;
 				}
 			}
-
-
-			function downloadHTML(){
-				fileName = prompt("Choose a name for your file","myHTML");
-				if (fileName == 'null') {
-					return;
-				} else {
-					download(fileName + ".html", document.getElementById('editor-textarea').value);
-					return;
-				}
-			}
-
-			function backupHTML(){
-				if (saved) {
-					return;
-				} else {
-					download("backupHTML.html", document.getElementById('editor-textarea').value);
-					return;
-				}
-			}
-
-			function download(filename, text) { // https://stackoverflow.com/questions/3665115/how-to-create-a-file-in-memory-for-user-to-download-but-not-through-server
-			  var element = document.createElement('a');
-			  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
-			  element.setAttribute('download', filename);
-			  element.style.display = 'none';
-			  document.body.appendChild(element);
-			  element.click();
-			  document.body.removeChild(element);
-			  saved = true;
-			}
-
-
-
 			function oldLoadLocal(oldLocalStorageName){
 				if (typeof localStorage.oldLocalStorageName === 'undefined' || typeof localStorage.oldLocalStorageName === 'null'){
 					console.log('Old local storage not found! ' + oldLocalStorageName);
@@ -209,40 +191,24 @@ CSS that can be easily used with class names
 					console.log("Converted from old local storage! " + oldLocalStorageName);
 				}
 			}
-
 			function allOfOldLoadLocal(){
 				oldLoadLocal("RTE_HTML_File");
 			}
 
-			function resetText(){
-				backupHTML();
-				editor.reset();
-				refreshING();
-			}
-
-			function emptyAndLog(text){
-				console.log('');
-				console.log(text);
-			}
-
-			function logAndEmpty(text){
-				console.log(text);
-				console.log('');
-			}
-
-
 			// https://www.html5rocks.com/en/tutorials/file/dndfiles/
 			// Check for the various File API support.
-			console.time("fileAPICheck");
 			if (window.File && window.FileReader && window.FileList && window.Blob) {
-				// API is supported!
+				// ok supported
 			} else {
-				alert('The File APIs are not fully supported in this browser. The open file function might not work correctly.');
+				alert('The File APIs are not fully supported in this browser. The file functions might not work correctly.');
 			}
 
 			// Open the file
 			// https://www.javascripture.com/FileReader
+			
 			var openFile = function(event) {
+				fileName = document.getElementById('file').value.replace("C:\\fakepath\\","");
+				console.log(fileName);
 			    var input = event.target;
 			    backupHTML();
 			    var reader = new FileReader();
@@ -255,26 +221,143 @@ CSS that can be easily used with class names
 			    };
 			    reader.readAsText(input.files[0]);
 			  };
+			function downloadHTML(fileNames = fileName){
+				fileNames = prompt("Choose a name for your file", fileNames);
+				if (fileNames == 'null') {
+					return;
+				} else {
+					download(fileNames + ".html", document.getElementById('editor-textarea').value);
+					return;
+				}
+			}
+			function backupHTML(){
+				if (saved) {
+					return;
+				} else {
+					download("backupHTML.html", document.getElementById('editor-textarea').value);
+					return;
+				}
+			}
+			function download(filename, text) { // https://stackoverflow.com/questions/3665115/how-to-create-a-file-in-memory-for-user-to-download-but-not-through-server
+			  var element = document.createElement('a');
+			  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+			  element.setAttribute('download', filename);
+			  element.style.display = 'none';
+			  document.body.appendChild(element);
+			  element.click();
+			  document.body.removeChild(element);
+			  saved = true;
+			}
+			
+			function openExternalWindow(){
+				if (typeof windowExternalWindow === 'undefined') {
+					childWindowChecking = setInterval(childWindowCheck,500);
+					windowExternalWindow = window.open(
+						"about:blank",
+		 				"External HTML Live View",
+						windowFeatures);
+					windowExternalWindow.document.write("<style>body {margin: 0px; overflow: hidden;} iframe {width: 100%;height: 100%;border:0px;}</style> <script>function confirmExit(){return '';}window.onbeforeunload=confirmExit;<\/script> <iframe id=\"e-viewer\"></iframe>");
+					removeElement("viewer");
+					eRefreshING();
+				}
+			}
+			function childWindowCheck() {
+				if (windowExternalWindow.closed) {
+					saveLocal();
+					reloading();
+				}
+			}
 
+			function resetText(){
+				backupHTML();
+				editor.reset();
+				refreshING();
+			}
 
+			function emptyAndLog(text){
+				console.log('');
+				console.log(text);
+			}
+			function logAndEmpty(text){
+				console.log(text);
+				console.log('');
+			}
+
+			function setIndentSize(){
+				var indentSize = prompt("How many spaces for indenting?",4);
+				document.body.style.tabSize = indentSize;
+			}
+
+			function insertAtCaret(areaId, text) { // https://stackoverflow.com/questions/1064089/inserting-a-text-where-cursor-is-using-javascript-jquery
+			  var txtarea = document.getElementById(areaId);
+			  if (!txtarea) {
+			    return;
+			  }
+
+			  var scrollPos = txtarea.scrollTop;
+			  var strPos = 0;
+			  var br = ((txtarea.selectionStart || txtarea.selectionStart == '0') ?
+			    "ff" : (document.selection ? "ie" : false));
+			  if (br == "ie") {
+			    txtarea.focus();
+			    var range = document.selection.createRange();
+			    range.moveStart('character', -txtarea.value.length);
+			    strPos = range.text.length;
+			  } else if (br == "ff") {
+			    strPos = txtarea.selectionStart;
+			  }
+
+			  var front = (txtarea.value).substring(0, strPos);
+			  var back = (txtarea.value).substring(strPos, txtarea.value.length);
+			  txtarea.value = front + text + back;
+			  strPos = strPos + text.length;
+			  if (br == "ie") {
+			    txtarea.focus();
+			    var ieRange = document.selection.createRange();
+			    ieRange.moveStart('character', -txtarea.value.length);
+			    ieRange.moveStart('character', strPos);
+			    ieRange.moveEnd('character', 0);
+			    ieRange.select();
+			  } else if (br == "ff") {
+			    txtarea.selectionStart = strPos;
+			    txtarea.selectionEnd = strPos;
+			    txtarea.focus();
+			  }
+
+			  txtarea.scrollTop = scrollPos;
+			}
+
+			function preventKeyPress(elementID,keyCode,text){
+				document.getElementById(elementID).addEventListener("keydown",function(event){
+					if (event.keyCode == keyCode){
+						event.preventDefault();
+						insertAtCaret(elementID,text);
+						console.log("Key: " + event.keyCode);
+					} else {
+						return;
+					}
+				});
+			}
 
 			function load(){
 				console.clear();
 				console.log("Loading");
 				loadLocal();
 				instantRefreshCheck();
+				preventKeyPress('editor-textarea',9,"	");
 				console.log("Finished loading");
 			}
 		</script>
 		<style>
 			body {
 				overflow: hidden;
+				font-family: Arial, sans-serif;
+				tab-size: 4;
 			}
 			* {
 				margin: 0;
 				color: white;
 				background-color: #202020;/* #202020 dark mode, #bdc3c7 light mode */
-				/*font-family: Arial;*/ /* sometimes such simple things can cause such big problems */
 			}
 			button {
 				background-color: white;
@@ -291,19 +374,19 @@ CSS that can be easily used with class names
 				display: inline-flex;
 			}
 			#editor-textarea {
-				background-color: #303030; /* #303030 dark mode, #fff light mode */
+				background-color: #333; /* #333 dark mode, #fff light mode */
 				height: 100%;
 				min-width: 30px;
 				color: white;
-				resize: none;
 				outline: none;
 				width: 100%;
 				margin: 10px;
 				padding: 5px;
 				font-family:Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace; /* Monospace */
+				resize: none;
 			}
 			#viewer {
-				background-color: #606060; /* #707070 dark mode, #fff light mode */
+				background-color: #666; /* #666 dark mode, #fff light mode */
 				min-width: 100px;
 				border: none;
 				min-height: 30px;
@@ -345,14 +428,17 @@ CSS that can be easily used with class names
 		<div class="extra" id="extra">
 			<h1>Live HTML Editor</h1>
 			<a href="https://www.youtube.com/watch?v=onLsz9BwP7M" class="small">Original creator and code</a>&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" onclick="allOfOldLoadLocal()" class="medium">Load from old local storage</a>&nbsp;&nbsp;&nbsp;<a href="./LHE-FAQ.html" class="small">FAQ</a>&nbsp;&nbsp;&nbsp;<br>
-			<p class="mini">Background color is not affected unless set | Tab indent unsupported</p>
+			<p class="mini">Background color is not affected unless set</p>
 			<br>
 		</div>
 		<div id="buttons">
-			<button onclick="document.getElementById('file').click();" id="open">Open...</button>
+			<button onclick="document.getElementById('file').click();" id="open">Open</button>
 			<button onclick="downloadHTML()" id="save">Save as file</button>
-			<button onclick="refresh(0, 'forced')" id="refresh">Force Refresh</button>
+			<button onclick="refresh(0, 'forced')" id="refresh">Refresh</button>
+			<button onclick="setRefreshTime()" id="setRefresh">Set Refresh Time</button>
+			<button onclick="stopRefresh()" id="stopRefresh">Stop Auto Refresh</button>
 			<button onclick="toggleInstantRefresh()" id="instant-refresh-btn">Enable Instant Refresh</button>
+			<button onclick="setIndentSize()" id="indentSize">Set Tab Size</button>
 			<button onclick="openExternalWindow();" id="e-iframe">Open iframe externally</button>
 			<button onclick="resetText()" id="reset">Reset</button>
 			<form name="fileForm">
@@ -361,22 +447,22 @@ CSS that can be easily used with class names
 		</div>
 		<form name='editor'>
 		<div class="main" id="main">
-			<textarea id="editor-textarea" onkeyup="refresh(750,'up')" onkeydown="refresh(750, 'down')" style="font-size: 15px;" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" autofocus="true" placeholder="HTML code (JS and CSS included, spellcheck off)"><html>
+		<textarea id="editor-textarea" onkeyup="refresh(750,'up')" onkeydown="refresh(750, 'down')" style="font-size: 15px;" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" autofocus="true" placeholder="HTML code (JS and CSS included, spellcheck off)"><html>
 <!-- Learn HTML: https://www.w3schools.com/html/default.asp  -->
 <head>
-<title>Your Title Here</title>
-<link rel="stylesheet" type="text/css" href="/path/to/stylesheet">
-<!-- Invisible elements -->
+	<title>Your Title Here</title>
+	<link rel="stylesheet" type="text/css" href="./path/to/stylesheet">
+	<!-- Invisible elements -->
 </head>
 
 
 <body>
-<!-- Visible elements -->
+	<!-- Visible elements -->
 </body>
 
 
 <script>
-// Javascript
+	// Javascript
 </script>
 
 
