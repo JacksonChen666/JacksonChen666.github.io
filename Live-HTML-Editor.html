@@ -3,10 +3,9 @@ To Do:
 SYNTAX HIGHLIGHTING (CAP LOCKS I HATE YOU, might be impossible)
 Allow switching from files to files (have to figure out the loadLocal params first)
 Fix undefined local storage randomly appearing
-Set refresh
 Detect low performance and set delay for every specific milliseconds
-Prevent main page refresh
-Update FAQ
+Allow other types of files by allowing removal of iframe
+Save settings on specific saves
 -->
 <html>
 	<head>
@@ -14,6 +13,14 @@ Update FAQ
 		<meta name="viewport" content="width=device-width initial-scale=1">
 		<link rel='icon' href='https://www.mcpcsystems.co.uk/wp-content/uploads/2018/10/Clipboard-Icon.png'>
 		<script>
+			var dSettings = {
+				'refreshInterval':750,
+				'autoRefresh':true,
+				'instantRefresh':false,
+				'tabSize':4,
+				'fontSize':15
+			}
+			var settings = dSettings;
 			var time = new Date();
 			var instantRefresh;
 			var saved = false; // As an actual file
@@ -24,6 +31,28 @@ Update FAQ
 			var windowFeatures = "menubar=yes,location=no,resizable=yes,scrollbars=no,status=yes,fullscreen=yes";
 			var childWindowChecking;
 			var allowRefresh = sessionStorage.allowRefresh;
+
+			function settingsCheck(){
+				if (typeof localStorage.settings === 'null' || typeof localStorage.settings === 'undefined') {
+					localStorage.setItem("settings", JSON.stringify(dSettings));
+					return dSettings;
+				} else {
+					var TempSettings = localStorage.getItem("settings");
+					settings = JSON.parse(TempSettings); // https://stackoverflow.com/a/2010948/13104233
+				}
+			}
+			function settingsSave(){
+				localStorage.setItem("settings", JSON.stringify(settings));
+				return settings;
+			}
+			function settingsReset(){
+				localStorage.removeItem("settings");
+				location.reload(true);
+			}
+			function settingsChange(num,value){
+				settings[num] = value;
+				settingsSave();
+			}
 
 			// https://www.abeautifulsite.net/adding-and-removing-elements-on-the-fly-using-javascript
 			function addElement(parentId, elementTag, elementId, html) {
@@ -49,21 +78,18 @@ Update FAQ
 				document.getElementById(elementID).setAttribute(AttributeName,Attribute);
 			}
 
-			function changeKeyAttributes(functionName = "refresh",time = 750){
+			function changeKeyAttributes(functionName = "refresh",time = settings[0]){
 				document.getElementById('editor-textarea').setAttribute("onkeydown",functionName + "(" + time +")");
 				document.getElementById('editor-textarea').setAttribute("onkeyup",functionName + "(" + time +")");
+				settingsChange(0,time);
 			}
 
 			function instantRefreshCheck() {
-				if (typeof localStorage.instantRefresh === 'undefined' || typeof localStorage.instantRefresh === 'null' || localStorage.instantRefresh == 'false') {
-					instantRefresh = false;
-					localStorage.setItem("instantRefresh",false);
-					return localStorage.instantRefresh;
-				} else { 
+				if (settings[2]){
 					document.getElementById('instant-refresh-btn').innerHTML = "Disable Instant Refresh";
-					localStorage.setItem("instantRefresh", true);
-					instantRefresh = true;
-					return localStorage.instantRefresh;
+					return settings[2];
+				} else {
+					return settings[2];
 				}
 			}
 
@@ -76,22 +102,20 @@ Update FAQ
 			function toggleInstantRefresh() {
 				var instanceHTML = document.getElementById('instant-refresh-btn').innerHTML;
 				var Word = "Instant Refresh";
-				if (instantRefresh === true) {
+				if (settings[2]){
 					instanceHTML = "Enable " + Word;
-					instantRefresh = false;
-					localStorage.setItem("instantRefresh", false);
-				} else {
+					settingsChange(2,false)
+				} else if (settings[2] == false){
 					instanceHTML = "Disable " + Word;
-					instantRefresh = true;
-					localStorage.setItem("instantRefresh", true);
+					settingsChange(2,true)
 				}
 				document.getElementById('instant-refresh-btn').innerHTML = instanceHTML;
 			}
 			
 			function refresh(time,downUp){
 				saved = false;
-				if (allowRefresh) {
-					if (instantRefresh) {
+				if (settings[1]) {
+					if (settings[2]) {
 						refreshING();
 						eRefreshING();
 					} else {
@@ -142,16 +166,16 @@ Update FAQ
 				}
 			}
 			function stopRefresh(){
-				if (allowRefresh) {
-					allowRefresh = false;
-					sessionStorage.setItem("allowRefresh",allowRefresh);
-					document.getElementById("stopRefresh").innerHTML = "Start Auto Refresh";
-					return allowRefresh;
+				if (settings[1]){
+					settings[1] = false;
+					document.getElementById('stopRefresh').innerHTML = "Start Auto Refresh";
+					settingsSave();
+					return settings[1];
 				} else {
-					allowRefresh = true;
-					sessionStorage.setItem("allowRefresh",allowRefresh);
+					settings[1] = true;
 					document.getElementById('stopRefresh').innerHTML = "Stop Auto Refresh";
-					return allowRefresh;
+					settingsSave();
+					return settings[1];
 				}
 			}
 			function setRefreshTime(){
@@ -286,6 +310,16 @@ Update FAQ
 			function setIndentSize(){
 				var indentSize = prompt("How many spaces for indenting?",4);
 				document.body.style.tabSize = indentSize;
+				settings[3] = indentSize;
+				settingsSave();
+				return settings[3];
+			}
+			function fontSize(){
+				var fontSize = prompt("What would you like the font size to be?", 15);
+				document.getElementById('editor-textarea').style.fontSize = fontSize;
+				settings[4] = fontSize;
+				settingsSave();
+				return settings[4];
 			}
 
 			function insertAtCaret(areaId, text) { // https://stackoverflow.com/questions/1064089/inserting-a-text-where-cursor-is-using-javascript-jquery
@@ -327,16 +361,22 @@ Update FAQ
 			  txtarea.scrollTop = scrollPos;
 			}
 
-			function preventKeyPress(elementID,keyCode,text){
+			function changeKeyPress(elementID,keyCode,text){
 				document.getElementById(elementID).addEventListener("keydown",function(event){
 					if (event.keyCode == keyCode){
 						event.preventDefault();
 						insertAtCaret(elementID,text);
-						console.log("Key: " + event.keyCode);
 					} else {
 						return;
 					}
 				});
+			}
+
+			function specialBackground(){
+				document.getElementById('editor-textarea').style.backgroundImage = "linear-gradient(to right, #333, #666)"
+				document.getElementById('viewer').style.backgroundImage = "linear-gradient(to right, #666, #333)"
+				document.body.style.backgroundImage = "linear-gradient(to right, #333, #666, #333)"
+					
 			}
 
 			function load(){
@@ -344,38 +384,39 @@ Update FAQ
 				console.log("Loading");
 				loadLocal();
 				instantRefreshCheck();
-				preventKeyPress('editor-textarea',9,"	");
+				changeKeyPress('editor-textarea',9,"	");
+				settingsCheck();
+				console.log(settings);
 				console.log("Finished loading");
 			}
 		</script>
 		<style>
 			body {
-				overflow: hidden;
+				/* overflow: hidden; */
 				font-family: Arial, sans-serif;
 				tab-size: 4;
+				margin: 0;
+				overflow: hidden;
+				background-color: #202020; /* #202020 dark mode, #bdc3c7 light mode */
+				/*background-image: linear-gradient(to right, #333, #666, #333);*/
 			}
 			* {
 				margin: 0;
 				color: white;
-				background-color: #202020;/* #202020 dark mode, #bdc3c7 light mode */
 			}
 			button {
 				background-color: white;
 				color: black;
 			}
-			.extra {
-				padding-top: 5px;
-				text-align: center;
-			}
 			.main {
 				width: 100%;
-				height: calc(100vh - 110px); /* Dynamic screen height of verticle screen height */
+				height: 93vh; /* Dynamic screen height */
 				margin-bottom: 0px;
 				display: inline-flex;
 			}
 			#editor-textarea {
 				background-color: #333; /* #333 dark mode, #fff light mode */
-				height: 100%;
+				height: 100.3%;
 				min-width: 30px;
 				color: white;
 				outline: none;
@@ -384,9 +425,11 @@ Update FAQ
 				padding: 5px;
 				font-family:Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace; /* Monospace */
 				resize: none;
+				/*background-image: linear-gradient(to right, #333, #666);*/
 			}
 			#viewer {
 				background-color: #666; /* #666 dark mode, #fff light mode */
+				/*background-image: linear-gradient(to right, #666, #333);*/
 				min-width: 100px;
 				border: none;
 				min-height: 30px;
@@ -404,7 +447,20 @@ Update FAQ
 			.small {font-size: 12px;}
 			.mini {font-size: 8px;}
 			.no-margin {margin: 0px}
+			.mini-margin {margin: 5px;}
 			.no-padding {padding: 0px;}
+			.middle {text-align: center;}
+			#header {
+				margin-bottom: -40px;
+				margin-top: 10px;
+				transition: 3s ease-out;
+				transition-delay: 0s;
+			}
+			#header:hover {
+				transform: rotate(18000deg);
+				transition: 5s ease-in-out;
+				transition-delay: 1s;
+			}
 
 			@media screen and (max-width: 530px) {
 				h1 {font-size: 20px;}
@@ -421,33 +477,102 @@ Update FAQ
 				button {font-size: 6px;}
 			}
 			#file {display: none;}
+			#filesMenu {margin-left: 10px;}
+            
+            /* https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_js_dropdown_hover */
+            .dropbtn {
+              background-color: #555;
+              margin-top: 10px;
+              outline: none;
+              color: white;
+              padding: 8px 16px 8px 16px;
+              font-size: 16px;
+              margin-right: -5px;
+              border: none;
+            }
+            .dropdown {
+              position: relative;
+              display: inline-block;
+            }
+            .dropdown-content {
+              display: none;
+              position: absolute;
+              background-color: #999;
+              min-width: 160px;
+              box-shadow: 0px 2px 16px 0px rgba(0,0,0,0.2);
+              z-index: 1;
+            }
+            .dropdown-content a {
+              color: white;
+              padding: 12px 16px;
+              text-decoration: none;
+              display: block;
+              transition: 0.25s ease;
+            }
+            .dropdown-content hr {
+            	margin: 5px;
+            	border-radius: 50px;
+            	border-width: 2px;
+            	border: 1px solid white;
+            }
+            .dropdown-content a:hover {background-color: #777;}
+            .dropdown:hover .dropdown-content {display: block;}
+            .dropdown .dropbtn {transition: 0.25s ease}
+            .dropdown:hover .dropbtn {background-color: #777}
 		</style>
 	</head>
 	<body onbeforeunload="reloading();">
 		<noscript style="font-size: 300px;">Enable JavaScript</noscript>
-		<div class="extra" id="extra">
-			<h1>Live HTML Editor</h1>
-			<a href="https://www.youtube.com/watch?v=onLsz9BwP7M" class="small">Original creator and code</a>&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" onclick="allOfOldLoadLocal()" class="medium">Load from old local storage</a>&nbsp;&nbsp;&nbsp;<a href="./LHE-FAQ.html" class="small">FAQ</a>&nbsp;&nbsp;&nbsp;<br>
-			<p class="mini">Background color is not affected unless set</p>
-			<br>
-		</div>
-		<div id="buttons">
-			<button onclick="document.getElementById('file').click();" id="open">Open</button>
-			<button onclick="downloadHTML()" id="save">Save as file</button>
-			<button onclick="refresh(0, 'forced')" id="refresh">Refresh</button>
-			<button onclick="setRefreshTime()" id="setRefresh">Set Refresh Time</button>
-			<button onclick="stopRefresh()" id="stopRefresh">Stop Auto Refresh</button>
-			<button onclick="toggleInstantRefresh()" id="instant-refresh-btn">Enable Instant Refresh</button>
-			<button onclick="setIndentSize()" id="indentSize">Set Tab Size</button>
-			<button onclick="openExternalWindow();" id="e-iframe">Open iframe externally</button>
-			<button onclick="resetText()" id="reset">Reset</button>
-			<form name="fileForm">
-				<input type="file" id='file' name='file[]' onchange="openFile(event)" accept=".HTML" />
-			</form>
-		</div>
+        <form name="fileForm">
+            <input type="file" id='file' name='file[]' onchange="openFile(event)" accept=".HTML" />
+        </form>
+
+        <div class="middle mini-margin" id="header">
+        	<h1>Live HTML Editor</h1>
+        </div>
+        
+        <div class="dropdown" id="filesMenu">
+            <button class="dropbtn">File</button>
+            <div class="dropdown-content">
+                <a href="javascript:void(0)" onclick="document.getElementById('file').click();" id="open">Open...</a>
+                <a href="javascript:void(0)" onclick="downloadHTML()" id="save">Save...</a>
+            </div>
+        </div>
+        
+        <div class="dropdown" id="viewMenu">
+            <button class="dropbtn">View</button>
+            <div class="dropdown-content">
+                <a href="javascript:void(0)" onclick="refresh(0, 'forced')" id="refresh">Refresh</a>
+                <a href="javascript:void(0)" onclick="setRefreshTime()" id="setRefresh">Set Refresh time...</a>
+                <a href="javascript:void(0)" onclick="stopRefresh()" id="stopRefresh">Stop Auto Refresh</a>
+                <a href="javascript:void(0)" onclick="toggleInstantRefresh()" id="instant-refresh-btn">Enable Instant Refresh</a>
+                <hr>
+                <a href="javascript:void(0)" onclick="openExternalWindow();" id="e-iframe">Open Iframe externally</a>
+                <hr>
+                <a href="javascript:void(0)" onclick="setIndentSize()" id="indentSize">Set Tab Size...</a>
+                <a href="javascript:void(0)" onclick="fontSize()" id="fontSize">Set Font Size...</a>
+                <hr>
+                <a href="javascript:void(0)" onclick="specialBackground()">Special Background</a>
+                
+            </div>
+        </div>
+
+        <div class="dropdown" id="otherMenu">
+        	<button class="dropbtn">Misc</button>
+        	<div class="dropdown-content">
+        		<a href="javascript:void(0)" onclick="allOfOldLoadLocal()">Load from old local storage</a>
+        		<a href="./LHE-FAQ.html">FAQ</a>
+        		<hr>
+        		<a href="https://www.youtube.com/watch?v=onLsz9BwP7M">Original</a>
+        		<hr>
+        		<a href="javascript:void(0)" onclick="settingsReset()">Reset Settings</a>
+        	</div>
+        </div>
+        
 		<form name='editor'>
 		<div class="main" id="main">
-		<textarea id="editor-textarea" onkeyup="refresh(750,'up')" onkeydown="refresh(750, 'down')" style="font-size: 15px;" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" autofocus="true" placeholder="HTML code (JS and CSS included, spellcheck off)"><html>
+		<textarea id="editor-textarea" onkeyup="refresh(750,'up')" onkeydown="refresh(750, 'down')" style="font-size: 15px;" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" autofocus="true" placeholder="HTML code (JS and CSS included, spellcheck off)">
+<html>
 <!-- Learn HTML: https://www.w3schools.com/html/default.asp  -->
 <head>
 	<title>Your Title Here</title>
@@ -466,9 +591,10 @@ Update FAQ
 </script>
 
 
-</html></textarea>
-</form>
-			<iframe id="viewer"></iframe>
+</html>
+			</textarea>
+			</form>
+		<iframe id="viewer"></iframe>
 		</div>
 	<script type="text/javascript">
 		load();

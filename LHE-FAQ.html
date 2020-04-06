@@ -11,6 +11,9 @@ padding: 0;
 color: white;
 background-color: #202020;
 }
+ul {
+	list-style-type: circle;
+}
 </style>
 </head>
 <body>
@@ -18,29 +21,23 @@ background-color: #202020;
 <a style="font-size: 12px;" href="./Live-HTML-Editor.html">Return to editing</a>
 <p>
 Q: How is this made?<br>
-A: This was inspired by the Real Time HTML editor by someone else who had alread made. <a href="https://www.youtube.com/watch?v=onLsz9BwP7M">You can find it here.</a>
+A: This was inspired by the Real Time HTML editor by someone else who had already made. <a href="https://www.youtube.com/watch?v=onLsz9BwP7M">You can find it here.</a>
 </p>
 <p>
 Q: Why do I need to enable JavaScript to run?<br>
-A: This was originally created on JavaScript, and the only way to change elements in HTML is using JavaScript.
+A: This was originally created on JavaScript. There's nothing else within HTML that I can use to even replicate this.
 </p>
 <p>
 Q: How are the files saved?<br>
-A: The editor heavily relies on local storage. Clearing your local storage will clear all text entered on the editor, and switching to another browser shows an empty box instead. Text you entered on one site does not transfer to another site. You can now also save the HTML code as file.
-</p>
-<p>
-Q: Why does tab indenting not work?<br>
-A: I have been attempting to allow tab indenting, but it seems like that the methods I have been trying does not work.
+A: Local storage. Clearing it will remove any text saved. This also means switching between devices won't be the same.
 </p>
 <p>
 Q: What are the limitations of this live editor?<br>
 A: Limitations: 
 </
-<ul style="list-style-type: circle;">
-<li>It only works with HTML</li>
-<li>You can't open files</li>
-<li>The data only gets saved on to the specific site. If you transfer to another website, it's not saved.</li>
-<li>Tab indenting doesn't work</li>
+<ul>
+<li>You can only edit HTML</li>
+<li>The data only gets saved on to the specific site. If you transfer to another website, it's not saved unless you open a file.</li>
 <li>No Syntax Highlighting (better remember those syntax)</li>
 <li>No code suggestions</li>
 </ul>
@@ -50,10 +47,9 @@ Q: When does the editor save the changes?<br>
 A: After refreshing which is after 750 MS of inactivity only after a key release.<br>
 </p>
 <p>
-Q: Why would you create a save and open feature if you already have a way to save automaticlly?<br>
-A: The open from file and save to file is used for some who need to save the HTML to an actual file.
+Q: The editor on the site I was using removed the editor and I have important stuff on there! What do I do?<br>
+A: This might not be easy. Go to the site, open inspect element (<a href="https://adao.co.uk/blog/inspect-element-on-safari-on-iphone-mobile/" target="_blank">iPhone and Safari</a>, <a href="https://developers.google.com/web/tools/chrome-devtools/remote-debugging?utm_campaign=2016q3&utm_medium=redirect&utm_source=dcc" target="_blank">Android Chrome</a>), application, local storage, and copy the text from the "RTE_HTML" key. (Remember, the data is most likely save only on one browser!)
 </p>
-
 
 </body>
 </html>
