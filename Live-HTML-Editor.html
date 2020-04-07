@@ -5,7 +5,6 @@ Allow switching from files to files (have to figure out the loadLocal params fir
 Fix undefined local storage randomly appearing
 Detect low performance and set delay for every specific milliseconds
 Allow other types of files by allowing removal of iframe
-Save settings on specific saves
 -->
 <html>
 	<head>
@@ -19,7 +18,7 @@ Save settings on specific saves
 				'instantRefresh':false,
 				'tabSize':4,
 				'fontSize':15
-			}
+			};
 			var settings = dSettings;
 			var time = new Date();
 			var instantRefresh;
@@ -39,6 +38,7 @@ Save settings on specific saves
 				} else {
 					var TempSettings = localStorage.getItem("settings");
 					settings = JSON.parse(TempSettings); // https://stackoverflow.com/a/2010948/13104233
+					instantRefreshCheck();
 				}
 			}
 			function settingsSave(){
@@ -49,73 +49,54 @@ Save settings on specific saves
 				localStorage.removeItem("settings");
 				location.reload(true);
 			}
-			function settingsChange(num,value){
-				settings[num] = value;
+			function settingsChange(setting,value){
+				settings[setting] = value;
 				settingsSave();
+				console.log("Settings changed");
+				console.log(settings);
+			}
+
+			function instantRefreshCheck() {
+				if (settings["instantRefresh"]){
+					document.getElementById('instant-refresh-btn').innerHTML = "Disable Instant Refresh";
+					return settings["instantRefresh"];
+				} else {
+					return settings["instantRefresh"];
+				}
 			}
 
 			// https://www.abeautifulsite.net/adding-and-removing-elements-on-the-fly-using-javascript
-			function addElement(parentId, elementTag, elementId, html) {
-			    // Adds an element to the document
-			    var p = document.getElementById(parentId);
-			    var newElement = document.createElement(elementTag);
-			    newElement.setAttribute('id', elementId);
-			    newElement.innerHTML = html;
-			    p.appendChild(newElement);
-			}
 			function removeElement(elementId) {
 			    // Removes an element from the document
 			    var element = document.getElementById(elementId);
 			    element.parentNode.removeChild(element);
 			}
 
-			function antiLag() {
+			function antiLag() { // Use not found, but still not made
 				// Uses change timing function to reduce lag between typing if it takes over 100ms or more to finish reloading the page or toggle instant refresh
 				// Can be enabled or disabled by the user
 			}
 
-			function changeAttribute(elementID,AttributeName,Attribute){
-				document.getElementById(elementID).setAttribute(AttributeName,Attribute);
-			}
-
-			function changeKeyAttributes(functionName = "refresh",time = settings[0]){
-				document.getElementById('editor-textarea').setAttribute("onkeydown",functionName + "(" + time +")");
-				document.getElementById('editor-textarea').setAttribute("onkeyup",functionName + "(" + time +")");
-				settingsChange(0,time);
-			}
-
-			function instantRefreshCheck() {
-				if (settings[2]){
-					document.getElementById('instant-refresh-btn').innerHTML = "Disable Instant Refresh";
-					return settings[2];
-				} else {
-					return settings[2];
-				}
-			}
-
-			function waitThenExecute(timeInMS,functionName,setVar,msg = undefined){
-				window.clearTimeout(setVar);
-				console.log(msg)
-				var setVar = setInterval(functionName, timeInMS);
-			}
+			
 
 			function toggleInstantRefresh() {
-				var instanceHTML = document.getElementById('instant-refresh-btn').innerHTML;
-				var Word = "Instant Refresh";
-				if (settings[2]){
-					instanceHTML = "Enable " + Word;
-					settingsChange(2,false)
-				} else if (settings[2] == false){
-					instanceHTML = "Disable " + Word;
-					settingsChange(2,true)
+				if (settings["instantRefresh"]){
+					document.getElementById('instant-refresh-btn').innerHTML = "Enable Instant Refresh";
+					settingsChange("instantRefresh",false);
+				} else if (settings["instantRefresh"] == false){
+					document.getElementById('instant-refresh-btn').innerHTML = "Disable Instant Refresh";
+					if (settings["autoRefresh"] == false){
+						stopRefresh();
+					}
+					settingsChange("instantRefresh",true);
+					return settings["instantRefresh"];
 				}
-				document.getElementById('instant-refresh-btn').innerHTML = instanceHTML;
 			}
 			
 			function refresh(time,downUp){
 				saved = false;
-				if (settings[1]) {
-					if (settings[2]) {
+				if (settings["autoRefresh"]) {
+					if (settings["instantRefresh"]) {
 						refreshING();
 						eRefreshING();
 					} else {
@@ -152,7 +133,6 @@ Save settings on specific saves
 				} catch(err) {
 					return err;
 				}
-				
 				emptyAndLog("Refreshed Externally");
 				saveLocal();
 			}
@@ -166,24 +146,25 @@ Save settings on specific saves
 				}
 			}
 			function stopRefresh(){
-				if (settings[1]){
-					settings[1] = false;
+				if (settings["autoRefresh"]){
+					settingsChange("autoRefresh",false);
 					document.getElementById('stopRefresh').innerHTML = "Start Auto Refresh";
-					settingsSave();
-					return settings[1];
+					if (settings["instantRefresh"]){
+						toggleInstantRefresh();
+					}
+					return settings["autoRefresh"];
 				} else {
-					settings[1] = true;
+					settingsChange("autoRefresh",true);
 					document.getElementById('stopRefresh').innerHTML = "Stop Auto Refresh";
-					settingsSave();
-					return settings[1];
+					return settings["autoRefresh"];
 				}
 			}
 			function setRefreshTime(){
-				var timeOfRefresh = prompt("How long until refresh?", 750);
+				var timeOfRefresh = parseInt(prompt("How long until refresh?", 750));
 				if (typeof timeOfRefresh === 'null') {
-					return;
+					return timeOfRefresh;
 				}
-				changeKeyAttributes("refresh",timeOfRefresh);
+				settingsChange("refreshInterval",timeOfRefresh);
 			}
 
 			function saveLocal(localStorageName = wideLocalStorageName){
@@ -229,7 +210,6 @@ Save settings on specific saves
 
 			// Open the file
 			// https://www.javascripture.com/FileReader
-			
 			var openFile = function(event) {
 				fileName = document.getElementById('file').value.replace("C:\\fakepath\\","");
 				console.log(fileName);
@@ -244,7 +224,7 @@ Save settings on specific saves
 			      fileForm.reset(); // https://www.geeksforgeeks.org/how-to-reset-a-form-using-jquery-with-reset-method/
 			    };
 			    reader.readAsText(input.files[0]);
-			  };
+			};
 			function downloadHTML(fileNames = fileName){
 				fileNames = prompt("Choose a name for your file", fileNames);
 				if (fileNames == 'null') {
@@ -285,7 +265,7 @@ Save settings on specific saves
 					eRefreshING();
 				}
 			}
-			function childWindowCheck() {
+			function childWindowCheck() { // Use not found, but is used
 				if (windowExternalWindow.closed) {
 					saveLocal();
 					reloading();
@@ -308,18 +288,16 @@ Save settings on specific saves
 			}
 
 			function setIndentSize(){
-				var indentSize = prompt("How many spaces for indenting?",4);
+				var indentSize = parseInt(prompt("How many spaces for indenting?",4));
 				document.body.style.tabSize = indentSize;
-				settings[3] = indentSize;
-				settingsSave();
-				return settings[3];
+				settingsChange("tabSize",indentSize);
+				return settings["tabSize"];
 			}
 			function fontSize(){
-				var fontSize = prompt("What would you like the font size to be?", 15);
+				var fontSize = parseInt(prompt("What would you like the font size to be?", 15));
 				document.getElementById('editor-textarea').style.fontSize = fontSize;
-				settings[4] = fontSize;
-				settingsSave();
-				return settings[4];
+				settingsChange("fontSize",fontSize);
+				return settings["fontSize"];
 			}
 
 			function insertAtCaret(areaId, text) { // https://stackoverflow.com/questions/1064089/inserting-a-text-where-cursor-is-using-javascript-jquery
@@ -373,17 +351,32 @@ Save settings on specific saves
 			}
 
 			function specialBackground(){
-				document.getElementById('editor-textarea').style.backgroundImage = "linear-gradient(to right, #333, #666)"
-				document.getElementById('viewer').style.backgroundImage = "linear-gradient(to right, #666, #333)"
-				document.body.style.backgroundImage = "linear-gradient(to right, #333, #666, #333)"
-					
+				document.getElementById('editor-textarea').style.backgroundImage = "linear-gradient(to right, #333, #666)";
+				document.getElementById('viewer').style.backgroundImage = "linear-gradient(to right, #666, #333)";
+				document.body.style.backgroundImage = "linear-gradient(to right, #333, #666, #333)";	
 			}
+
+			$('textarea').on('keydown', function(e) { // Adds indenting on paste https://stackoverflow.com/a/60444147/13104233
+			    if (e.which == 13) { // [ENTER] key
+			      event.preventDefault();  // We will add newline ourselves.
+
+			      var start = this.selectionStart;
+			      var currentLine = this.value.slice(0, start).split('\n').pop();
+			      var newlineIndent = '\n' + currentLine.match(/^\s*/)[0];
+
+			      if (!document.execCommand('insertText', false, newlineIndent)) {
+			          // Add fallback for Firefox browser:
+			          // Modify this.value and update cursor position as per solution by Endless.
+			      }
+			    }
+			  
+
+			});
 
 			function load(){
 				console.clear();
 				console.log("Loading");
 				loadLocal();
-				instantRefreshCheck();
 				changeKeyPress('editor-textarea',9,"	");
 				settingsCheck();
 				console.log(settings);
@@ -416,7 +409,7 @@ Save settings on specific saves
 			}
 			#editor-textarea {
 				background-color: #333; /* #333 dark mode, #fff light mode */
-				height: 100.3%;
+				height: 100.1%;
 				min-width: 30px;
 				color: white;
 				outline: none;
@@ -450,31 +443,8 @@ Save settings on specific saves
 			.mini-margin {margin: 5px;}
 			.no-padding {padding: 0px;}
 			.middle {text-align: center;}
-			#header {
-				margin-bottom: -40px;
-				margin-top: 10px;
-				transition: 3s ease-out;
-				transition-delay: 0s;
-			}
-			#header:hover {
-				transform: rotate(18000deg);
-				transition: 5s ease-in-out;
-				transition-delay: 1s;
-			}
-
-			@media screen and (max-width: 530px) {
-				h1 {font-size: 20px;}
-				.medium {font-size: 12px;}
-				.small {font-size: 8px;}
-				.mini {font-size: 4px;}
-				button {font-size: 8px;}
-			}
-			@media screen and (max-width: 430px) {
-				h1 {font-size: 16px;}
-				.medium {font-size: 10px;}
-				.small {font-size: 6px;}
-				.mini {font-size: 3px;}
-				button {font-size: 6px;}
+			@media screen and (max-height: 810px){
+				.main {height: 90vh;}
 			}
 			#file {display: none;}
 			#filesMenu {margin-left: 10px;}
@@ -526,16 +496,14 @@ Save settings on specific saves
         <form name="fileForm">
             <input type="file" id='file' name='file[]' onchange="openFile(event)" accept=".HTML" />
         </form>
-
-        <div class="middle mini-margin" id="header">
-        	<h1>Live HTML Editor</h1>
-        </div>
         
         <div class="dropdown" id="filesMenu">
             <button class="dropbtn">File</button>
             <div class="dropdown-content">
                 <a href="javascript:void(0)" onclick="document.getElementById('file').click();" id="open">Open...</a>
                 <a href="javascript:void(0)" onclick="downloadHTML()" id="save">Save...</a>
+                <hr>
+                <a href="javascript:void(0)" onclick="resetText()" id="resetText">Reset text</a>
             </div>
         </div>
         
@@ -545,7 +513,7 @@ Save settings on specific saves
                 <a href="javascript:void(0)" onclick="refresh(0, 'forced')" id="refresh">Refresh</a>
                 <a href="javascript:void(0)" onclick="setRefreshTime()" id="setRefresh">Set Refresh time...</a>
                 <a href="javascript:void(0)" onclick="stopRefresh()" id="stopRefresh">Stop Auto Refresh</a>
-                <a href="javascript:void(0)" onclick="toggleInstantRefresh()" id="instant-refresh-btn">Enable Instant Refresh</a>
+                <a href="javascript:void(0)" onclick="toggleInstantRefresh();" id="instant-refresh-btn">Enable Instant Refresh</a>
                 <hr>
                 <a href="javascript:void(0)" onclick="openExternalWindow();" id="e-iframe">Open Iframe externally</a>
                 <hr>
@@ -569,35 +537,34 @@ Save settings on specific saves
         	</div>
         </div>
         
+        <div>
+
+        </div>
 		<form name='editor'>
 		<div class="main" id="main">
-		<textarea id="editor-textarea" onkeyup="refresh(750,'up')" onkeydown="refresh(750, 'down')" style="font-size: 15px;" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" autofocus="true" placeholder="HTML code (JS and CSS included, spellcheck off)">
+		<textarea id="editor-textarea" onkeyup="refresh(settings['refreshInterval'],'up')" onkeydown="refresh(settings['refreshInterval'], 'down')" style="font-size: 15px;" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" autofocus="true" placeholder="HTML code (JS and CSS included, spellcheck off)">
 <html>
-<!-- Learn HTML: https://www.w3schools.com/html/default.asp  -->
-<head>
-	<title>Your Title Here</title>
-	<link rel="stylesheet" type="text/css" href="./path/to/stylesheet">
-	<!-- Invisible elements -->
-</head>
+	<!-- Learn HTML: https://www.w3schools.com/html/default.asp -->
+	<head>
+		<title>Your Title Here</title>
+		<link rel="stylesheet" type="text/css" href="./path/to/stylesheet">
+		<!-- Metadata and stuff -->
+	</head>
 
+	<body>
+		<!-- Elements -->
+	</body>
 
-<body>
-	<!-- Visible elements -->
-</body>
-
-
-<script>
-	// Javascript
-</script>
-
-
-</html>
-			</textarea>
+	<script>
+		// Javascript
+	</script>
+</html></textarea>
 			</form>
 		<iframe id="viewer"></iframe>
 		</div>
 	<script type="text/javascript">
 		load();
 	</script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" />
 	</body>
 </html>
