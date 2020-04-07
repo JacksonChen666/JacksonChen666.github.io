@@ -542,7 +542,8 @@ Allow other types of files by allowing removal of iframe
         </div>
 		<form name='editor'>
 		<div class="main" id="main">
-		<textarea id="editor-textarea" onkeyup="refresh(settings['refreshInterval'],'up')" onkeydown="refresh(settings['refreshInterval'], 'down')" style="font-size: 15px;" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" autofocus="true" placeholder="HTML code (JS and CSS included, spellcheck off)" data-gramm_editor="false"> <!-- Grammarly disabled https://stackoverflow.com/a/46777787/13104233 -->
+			<!-- Grammarly disabled https://stackoverflow.com/a/46777787/13104233 -->
+			<textarea id="editor-textarea" onkeyup="refresh(settings['refreshInterval'],'up')" onkeydown="refresh(settings['refreshInterval'], 'down')" style="font-size: 15px;" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" autofocus="true" placeholder="HTML code (JS and CSS included, spellcheck off)" data-gramm_editor="false">
 <html>
 	<!-- Learn HTML: https://www.w3schools.com/html/default.asp -->
 	<head>
@@ -558,9 +559,8 @@ Allow other types of files by allowing removal of iframe
 	<script>
 		// Javascript
 	</script>
-</html></textarea>
-			</form>
-		<iframe id="viewer"></iframe>
+</html></textarea></form>
+			<iframe id="viewer"></iframe>
 		</div>
 	<script type="text/javascript">
 		load();
