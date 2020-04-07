@@ -510,17 +510,17 @@ Allow other types of files by allowing removal of iframe
         <div class="dropdown" id="viewMenu">
             <button class="dropbtn">View</button>
             <div class="dropdown-content">
-                <a href="javascript:void(0)" onclick="refresh(0, 'forced')" id="refresh">Refresh</a>
-                <a href="javascript:void(0)" onclick="setRefreshTime()" id="setRefresh">Set Refresh time...</a>
-                <a href="javascript:void(0)" onclick="stopRefresh()" id="stopRefresh">Stop Auto Refresh</a>
+                <a href="javascript:void(0)" onclick="refresh(0, 'forced');" id="refresh">Refresh</a>
+                <a href="javascript:void(0)" onclick="setRefreshTime();" id="setRefresh">Set Refresh time...</a>
+                <a href="javascript:void(0)" onclick="stopRefresh();" id="stopRefresh">Stop Auto Refresh</a>
                 <a href="javascript:void(0)" onclick="toggleInstantRefresh();" id="instant-refresh-btn">Enable Instant Refresh</a>
                 <hr>
                 <a href="javascript:void(0)" onclick="openExternalWindow();" id="e-iframe">Open Iframe externally</a>
                 <hr>
-                <a href="javascript:void(0)" onclick="setIndentSize()" id="indentSize">Set Tab Size...</a>
-                <a href="javascript:void(0)" onclick="fontSize()" id="fontSize">Set Font Size...</a>
+                <a href="javascript:void(0)" onclick="setIndentSize();" id="indentSize">Set Tab Size...</a>
+                <a href="javascript:void(0)" onclick="fontSize();" id="fontSize">Set Font Size...</a>
                 <hr>
-                <a href="javascript:void(0)" onclick="specialBackground()">Special Background</a>
+                <a href="javascript:void(0)" onclick="specialBackground();">Special Background</a>
                 
             </div>
         </div>
@@ -542,7 +542,7 @@ Allow other types of files by allowing removal of iframe
         </div>
 		<form name='editor'>
 		<div class="main" id="main">
-		<textarea id="editor-textarea" onkeyup="refresh(settings['refreshInterval'],'up')" onkeydown="refresh(settings['refreshInterval'], 'down')" style="font-size: 15px;" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" autofocus="true" placeholder="HTML code (JS and CSS included, spellcheck off)">
+		<textarea id="editor-textarea" onkeyup="refresh(settings['refreshInterval'],'up')" onkeydown="refresh(settings['refreshInterval'], 'down')" style="font-size: 15px;" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" autofocus="true" placeholder="HTML code (JS and CSS included, spellcheck off)" data-gramm_editor="false"> <!-- Grammarly disabled https://stackoverflow.com/a/46777787/13104233 -->
 <html>
 	<!-- Learn HTML: https://www.w3schools.com/html/default.asp -->
 	<head>
