@@ -5,6 +5,7 @@ Allow switching from files to files (have to figure out the loadLocal params fir
 Fix undefined local storage randomly appearing
 Detect low performance and set delay for every specific milliseconds
 Allow other types of files by allowing removal of iframe
+auto complete with css and javascript and allow choosing 
 -->
 <html>
 	<head>
@@ -39,6 +40,8 @@ Allow other types of files by allowing removal of iframe
 					var TempSettings = localStorage.getItem("settings");
 					settings = JSON.parse(TempSettings); // https://stackoverflow.com/a/2010948/13104233
 					instantRefreshCheck();
+					document.getElementById('editor-textarea').style.fontSize = settings["fontSize"];
+					document.getElementById('editor-textarea').style.tabSize = settings["tabSize"];
 				}
 			}
 			function settingsSave(){
@@ -76,7 +79,6 @@ Allow other types of files by allowing removal of iframe
 				// Uses change timing function to reduce lag between typing if it takes over 100ms or more to finish reloading the page or toggle instant refresh
 				// Can be enabled or disabled by the user
 			}
-
 			
 
 			function toggleInstantRefresh() {
@@ -288,13 +290,13 @@ Allow other types of files by allowing removal of iframe
 			}
 
 			function setIndentSize(){
-				var indentSize = parseInt(prompt("How many spaces for indenting?",4));
-				document.body.style.tabSize = indentSize;
+				var indentSize = parseInt(prompt("How many spaces for indenting?",settings["tabSize"]));
+				document.getElementById('editor-textarea').style.tabSize = indentSize;
 				settingsChange("tabSize",indentSize);
 				return settings["tabSize"];
 			}
 			function fontSize(){
-				var fontSize = parseInt(prompt("What would you like the font size to be?", 15));
+				var fontSize = parseInt(prompt("What would you like the font size to be?", settings["fontSize"]));
 				document.getElementById('editor-textarea').style.fontSize = fontSize;
 				settingsChange("fontSize",fontSize);
 				return settings["fontSize"];
@@ -356,29 +358,12 @@ Allow other types of files by allowing removal of iframe
 				document.body.style.backgroundImage = "linear-gradient(to right, #333, #666, #333)";	
 			}
 
-			$('textarea').on('keydown', function(e) { // Adds indenting on paste https://stackoverflow.com/a/60444147/13104233
-			    if (e.which == 13) { // [ENTER] key
-			      event.preventDefault();  // We will add newline ourselves.
-
-			      var start = this.selectionStart;
-			      var currentLine = this.value.slice(0, start).split('\n').pop();
-			      var newlineIndent = '\n' + currentLine.match(/^\s*/)[0];
-
-			      if (!document.execCommand('insertText', false, newlineIndent)) {
-			          // Add fallback for Firefox browser:
-			          // Modify this.value and update cursor position as per solution by Endless.
-			      }
-			    }
-			  
-
-			});
-
 			function load(){
 				console.clear();
 				console.log("Loading");
 				loadLocal();
-				changeKeyPress('editor-textarea',9,"	");
 				settingsCheck();
+				changeKeyPress('editor-textarea',9,"	");
 				console.log(settings);
 				console.log("Finished loading");
 			}
@@ -489,6 +474,33 @@ Allow other types of files by allowing removal of iframe
             .dropdown:hover .dropdown-content {display: block;}
             .dropdown .dropbtn {transition: 0.25s ease}
             .dropdown:hover .dropbtn {background-color: #777}
+
+            .autocomplete-items {
+              position: absolute;
+              border: 1px solid #d4d4d4;
+              border-bottom: none;
+              border-top: none;
+              z-index: 99;
+              /*position the autocomplete items to be the same width as the container:*/
+              top: 100%;
+              left: 0;
+              right: 0;
+            }
+            .autocomplete-items div {
+              padding: 10px;
+              cursor: pointer;
+              background-color: #fff;
+              border-bottom: 1px solid #d4d4d4;
+            }
+            .autocomplete-items div:hover {
+              /*when hovering an item:*/
+              background-color: #e9e9e9;
+            }
+            .autocomplete-active {
+              /*when navigating through the items using the arrow keys:*/
+              background-color: DodgerBlue !important;
+              color: #ffffff;
+            }
 		</style>
 	</head>
 	<body onbeforeunload="reloading();">
@@ -549,6 +561,9 @@ Allow other types of files by allowing removal of iframe
 	<head>
 		<title>Your Title Here</title>
 		<link rel="stylesheet" type="text/css" href="./path/to/stylesheet">
+		<style>
+
+		</style>
 		<!-- Metadata and stuff -->
 	</head>
 
