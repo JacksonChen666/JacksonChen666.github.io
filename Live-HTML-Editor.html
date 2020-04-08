@@ -2,372 +2,14 @@
 To Do:
 SYNTAX HIGHLIGHTING (CAP LOCKS I HATE YOU, might be impossible)
 Allow switching from files to files (have to figure out the loadLocal params first)
-Fix undefined local storage randomly appearing
 Detect low performance and set delay for every specific milliseconds
 Allow other types of files by allowing removal of iframe
-auto complete with css and javascript and allow choosing 
 -->
 <html>
 	<head>
 		<title id="webpage-title">Live HTML Editor</title>
 		<meta name="viewport" content="width=device-width initial-scale=1">
 		<link rel='icon' href='https://www.mcpcsystems.co.uk/wp-content/uploads/2018/10/Clipboard-Icon.png'>
-		<script>
-			var dSettings = {
-				'refreshInterval':750,
-				'autoRefresh':true,
-				'instantRefresh':false,
-				'tabSize':4,
-				'fontSize':15
-			};
-			var settings = dSettings;
-			var time = new Date();
-			var instantRefresh;
-			var saved = false; // As an actual file
-			var fileName;
-			var wideLocalStorageName = "RTE_HTML"; // Let's just stick with it
-			var mainFunctions = [];
-			var windowExternalWindow;
-			var windowFeatures = "menubar=yes,location=no,resizable=yes,scrollbars=no,status=yes,fullscreen=yes";
-			var childWindowChecking;
-			var allowRefresh = sessionStorage.allowRefresh;
-
-			function settingsCheck(){
-				if (typeof localStorage.settings === 'null' || typeof localStorage.settings === 'undefined') {
-					localStorage.setItem("settings", JSON.stringify(dSettings));
-					return dSettings;
-				} else {
-					var TempSettings = localStorage.getItem("settings");
-					settings = JSON.parse(TempSettings); // https://stackoverflow.com/a/2010948/13104233
-					instantRefreshCheck();
-					document.getElementById('editor-textarea').style.fontSize = settings["fontSize"];
-					document.getElementById('editor-textarea').style.tabSize = settings["tabSize"];
-				}
-			}
-			function settingsSave(){
-				localStorage.setItem("settings", JSON.stringify(settings));
-				return settings;
-			}
-			function settingsReset(){
-				localStorage.removeItem("settings");
-				location.reload(true);
-			}
-			function settingsChange(setting,value){
-				settings[setting] = value;
-				settingsSave();
-				console.log("Settings changed");
-				console.log(settings);
-			}
-
-			function instantRefreshCheck() {
-				if (settings["instantRefresh"]){
-					document.getElementById('instant-refresh-btn').innerHTML = "Disable Instant Refresh";
-					return settings["instantRefresh"];
-				} else {
-					return settings["instantRefresh"];
-				}
-			}
-
-			// https://www.abeautifulsite.net/adding-and-removing-elements-on-the-fly-using-javascript
-			function removeElement(elementId) {
-			    // Removes an element from the document
-			    var element = document.getElementById(elementId);
-			    element.parentNode.removeChild(element);
-			}
-
-			function antiLag() { // Use not found, but still not made
-				// Uses change timing function to reduce lag between typing if it takes over 100ms or more to finish reloading the page or toggle instant refresh
-				// Can be enabled or disabled by the user
-			}
-			
-
-			function toggleInstantRefresh() {
-				if (settings["instantRefresh"]){
-					document.getElementById('instant-refresh-btn').innerHTML = "Enable Instant Refresh";
-					settingsChange("instantRefresh",false);
-				} else if (settings["instantRefresh"] == false){
-					document.getElementById('instant-refresh-btn').innerHTML = "Disable Instant Refresh";
-					if (settings["autoRefresh"] == false){
-						stopRefresh();
-					}
-					settingsChange("instantRefresh",true);
-					return settings["instantRefresh"];
-				}
-			}
-			
-			function refresh(time,downUp){
-				saved = false;
-				if (settings["autoRefresh"]) {
-					if (settings["instantRefresh"]) {
-						refreshING();
-						eRefreshING();
-					} else {
-						mainFunctions.forEach(clearTimeout); // https://stackoverflow.com/questions/54277835/how-to-stop-calling-a-function-js/54277902#54277902
-						mainFunctions.length = 0;
-						console.log("Detected " + downUp + " typing");
-						mainFunctions.push(setTimeout(refreshING,time));
-						mainFunctions.push(setTimeout(eRefreshING,time));
-					}
-				} else if (downUp == 'forced') {
-					refreshING();
-					eRefreshING();
-				} else {
-					saveLocal();
-					return;
-				}
-			}
-			function refreshING(){
-				saved = false;
-				var textContent = document.getElementById('editor-textarea').value;
-				try {
-					document.getElementById('viewer').srcdoc = textContent;
-				} catch(err) {
-					return err;
-				}
-				emptyAndLog("Refreshed");
-				saveLocal();
-			}
-			function eRefreshING(){
-				saved = false;
-				var textContent = document.getElementById('editor-textarea').value;
-				try {
-					windowExternalWindow.document.getElementById('e-viewer').srcdoc = textContent;
-				} catch(err) {
-					return err;
-				}
-				emptyAndLog("Refreshed Externally");
-				saveLocal();
-			}
-			function reloading(){
-				try {
-					windowExternalWindow.close();
-					saveLocal();
-					location.reload(true);
-				} catch (err) {
-					return err;
-				}
-			}
-			function stopRefresh(){
-				if (settings["autoRefresh"]){
-					settingsChange("autoRefresh",false);
-					document.getElementById('stopRefresh').innerHTML = "Start Auto Refresh";
-					if (settings["instantRefresh"]){
-						toggleInstantRefresh();
-					}
-					return settings["autoRefresh"];
-				} else {
-					settingsChange("autoRefresh",true);
-					document.getElementById('stopRefresh').innerHTML = "Stop Auto Refresh";
-					return settings["autoRefresh"];
-				}
-			}
-			function setRefreshTime(){
-				var timeOfRefresh = parseInt(prompt("How long until refresh?", 750));
-				if (typeof timeOfRefresh === 'null') {
-					return timeOfRefresh;
-				}
-				settingsChange("refreshInterval",timeOfRefresh);
-			}
-
-			function saveLocal(localStorageName = wideLocalStorageName){
-				var textContent = document.getElementById('editor-textarea').value;
-				localStorage.setItem(localStorageName, textContent);
-				logAndEmpty("Saved");
-			}		
-			function loadLocal(){
-				if (typeof localStorage.RTE_HTML === 'undefined' || typeof localStorage.RTE_HTML === 'null' || localStorage.RTE_HTML == '') {
-					saved = true;
-					return localStorage.RTE_HTML;
-				} else {
-					saved = false;
-					document.getElementById('editor-textarea').value = localStorage.RTE_HTML;
-					console.log("Loaded");
-					refreshING();
-					return localStorage.RTE_HTML;
-				}
-			}
-			function oldLoadLocal(oldLocalStorageName){
-				if (typeof localStorage.oldLocalStorageName === 'undefined' || typeof localStorage.oldLocalStorageName === 'null'){
-					console.log('Old local storage not found! ' + oldLocalStorageName);
-					return(oldLocalStorageName);
-				} else {
-					document.getElementById('editor-textarea').value = localStorage.oldLocalStorageName;
-					refresh();
-					console.log("Loaded from old local storage! " + localStorage.oldLocalStorageName);
-					localStorage.setItem(oldLocalStorageName, undefined);
-					console.log("Converted from old local storage! " + oldLocalStorageName);
-				}
-			}
-			function allOfOldLoadLocal(){
-				oldLoadLocal("RTE_HTML_File");
-			}
-
-			// https://www.html5rocks.com/en/tutorials/file/dndfiles/
-			// Check for the various File API support.
-			if (window.File && window.FileReader && window.FileList && window.Blob) {
-				// ok supported
-			} else {
-				alert('The File APIs are not fully supported in this browser. The file functions might not work correctly.');
-			}
-
-			// Open the file
-			// https://www.javascripture.com/FileReader
-			var openFile = function(event) {
-				fileName = document.getElementById('file').value.replace("C:\\fakepath\\","");
-				console.log(fileName);
-			    var input = event.target;
-			    backupHTML();
-			    var reader = new FileReader();
-			    reader.onload = function(){
-			      var text = reader.result;
-			      var editor = document.getElementById('editor-textarea');
-			      editor.value = text;
-			      refreshING();
-			      fileForm.reset(); // https://www.geeksforgeeks.org/how-to-reset-a-form-using-jquery-with-reset-method/
-			    };
-			    reader.readAsText(input.files[0]);
-			};
-			function downloadHTML(fileNames = fileName){
-				fileNames = prompt("Choose a name for your file", fileNames);
-				if (fileNames == 'null') {
-					return;
-				} else {
-					download(fileNames + ".html", document.getElementById('editor-textarea').value);
-					return;
-				}
-			}
-			function backupHTML(){
-				if (saved) {
-					return;
-				} else {
-					download("backupHTML.html", document.getElementById('editor-textarea').value);
-					return;
-				}
-			}
-			function download(filename, text) { // https://stackoverflow.com/questions/3665115/how-to-create-a-file-in-memory-for-user-to-download-but-not-through-server
-			  var element = document.createElement('a');
-			  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
-			  element.setAttribute('download', filename);
-			  element.style.display = 'none';
-			  document.body.appendChild(element);
-			  element.click();
-			  document.body.removeChild(element);
-			  saved = true;
-			}
-			
-			function openExternalWindow(){
-				if (typeof windowExternalWindow === 'undefined') {
-					childWindowChecking = setInterval(childWindowCheck,500);
-					windowExternalWindow = window.open(
-						"about:blank",
-		 				"External HTML Live View",
-						windowFeatures);
-					windowExternalWindow.document.write("<style>body {margin: 0px; overflow: hidden;} iframe {width: 100%;height: 100%;border:0px;}</style> <script>function confirmExit(){return '';}window.onbeforeunload=confirmExit;<\/script> <iframe id=\"e-viewer\"></iframe>");
-					removeElement("viewer");
-					eRefreshING();
-				}
-			}
-			function childWindowCheck() { // Use not found, but is used
-				if (windowExternalWindow.closed) {
-					saveLocal();
-					reloading();
-				}
-			}
-
-			function resetText(){
-				backupHTML();
-				editor.reset();
-				refreshING();
-			}
-
-			function emptyAndLog(text){
-				console.log('');
-				console.log(text);
-			}
-			function logAndEmpty(text){
-				console.log(text);
-				console.log('');
-			}
-
-			function setIndentSize(){
-				var indentSize = parseInt(prompt("How many spaces for indenting?",settings["tabSize"]));
-				document.getElementById('editor-textarea').style.tabSize = indentSize;
-				settingsChange("tabSize",indentSize);
-				return settings["tabSize"];
-			}
-			function fontSize(){
-				var fontSize = parseInt(prompt("What would you like the font size to be?", settings["fontSize"]));
-				document.getElementById('editor-textarea').style.fontSize = fontSize;
-				settingsChange("fontSize",fontSize);
-				return settings["fontSize"];
-			}
-
-			function insertAtCaret(areaId, text) { // https://stackoverflow.com/questions/1064089/inserting-a-text-where-cursor-is-using-javascript-jquery
-			  var txtarea = document.getElementById(areaId);
-			  if (!txtarea) {
-			    return;
-			  }
-
-			  var scrollPos = txtarea.scrollTop;
-			  var strPos = 0;
-			  var br = ((txtarea.selectionStart || txtarea.selectionStart == '0') ?
-			    "ff" : (document.selection ? "ie" : false));
-			  if (br == "ie") {
-			    txtarea.focus();
-			    var range = document.selection.createRange();
-			    range.moveStart('character', -txtarea.value.length);
-			    strPos = range.text.length;
-			  } else if (br == "ff") {
-			    strPos = txtarea.selectionStart;
-			  }
-
-			  var front = (txtarea.value).substring(0, strPos);
-			  var back = (txtarea.value).substring(strPos, txtarea.value.length);
-			  txtarea.value = front + text + back;
-			  strPos = strPos + text.length;
-			  if (br == "ie") {
-			    txtarea.focus();
-			    var ieRange = document.selection.createRange();
-			    ieRange.moveStart('character', -txtarea.value.length);
-			    ieRange.moveStart('character', strPos);
-			    ieRange.moveEnd('character', 0);
-			    ieRange.select();
-			  } else if (br == "ff") {
-			    txtarea.selectionStart = strPos;
-			    txtarea.selectionEnd = strPos;
-			    txtarea.focus();
-			  }
-
-			  txtarea.scrollTop = scrollPos;
-			}
-
-			function changeKeyPress(elementID,keyCode,text){
-				document.getElementById(elementID).addEventListener("keydown",function(event){
-					if (event.keyCode == keyCode){
-						event.preventDefault();
-						insertAtCaret(elementID,text);
-					} else {
-						return;
-					}
-				});
-			}
-
-			function specialBackground(){
-				document.getElementById('editor-textarea').style.backgroundImage = "linear-gradient(to right, #333, #666)";
-				document.getElementById('viewer').style.backgroundImage = "linear-gradient(to right, #666, #333)";
-				document.body.style.backgroundImage = "linear-gradient(to right, #333, #666, #333)";	
-			}
-
-			function load(){
-				console.clear();
-				console.log("Loading");
-				loadLocal();
-				settingsCheck();
-				changeKeyPress('editor-textarea',9,"	");
-				console.log(settings);
-				console.log("Finished loading");
-			}
-		</script>
 		<style>
 			body {
 				/* overflow: hidden; */
@@ -533,7 +175,8 @@ auto complete with css and javascript and allow choosing
                 <a href="javascript:void(0)" onclick="fontSize();" id="fontSize">Set Font Size...</a>
                 <hr>
                 <a href="javascript:void(0)" onclick="specialBackground();">Special Background</a>
-                
+                <hr>
+                <a href="javascript:void(0)" onclick="reloading();">Force Reload Page</a>
             </div>
         </div>
 
@@ -577,9 +220,361 @@ auto complete with css and javascript and allow choosing
 </html></textarea></form>
 			<iframe id="viewer"></iframe>
 		</div>
-	<script type="text/javascript">
-		load();
-	</script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" />
 	</body>
 </html>
+
+<script>
+	var dSettings = {
+		'refreshInterval':750,
+		'autoRefresh':true,
+		'instantRefresh':false,
+		'tabSize':4,
+		'fontSize':15
+	};
+	var settings = dSettings;
+	var time = new Date();
+	var instantRefresh;
+	var saved = false; // As an actual file
+	var fileName;
+	var wideLocalStorageName = "RTE_HTML"; // Let's just stick with it
+	var mainFunctions = [];
+	var windowExternalWindow;
+	var windowFeatures = "menubar=yes,location=no,resizable=yes,scrollbars=no,status=yes,fullscreen=yes";
+	var childWindowChecking;
+	var allowRefresh = sessionStorage.allowRefresh;
+
+	function settingsCheck(){
+		if (typeof localStorage.settings === 'null' || typeof localStorage.settings === 'undefined') {
+			localStorage.setItem("settings", JSON.stringify(dSettings));
+			return dSettings;
+		} else {
+			var TempSettings = localStorage.getItem("settings");
+			settings = JSON.parse(TempSettings); // https://stackoverflow.com/a/2010948/13104233
+			instantRefreshCheck();
+			document.getElementById('editor-textarea').style.fontSize = settings["fontSize"];
+			document.getElementById('editor-textarea').style.tabSize = settings["tabSize"];
+		}
+	}
+	function settingsSave(){
+		localStorage.setItem("settings", JSON.stringify(settings));
+		return settings;
+	}
+	function settingsReset(){
+		localStorage.removeItem("settings");
+		location.reload(true);
+	}
+	function settingsChange(setting,value){
+		settings[setting] = value;
+		settingsSave();
+		console.log("Settings changed");
+		console.log(settings);
+	}
+
+	function instantRefreshCheck() {
+		if (settings["instantRefresh"]){
+			document.getElementById('instant-refresh-btn').innerHTML = "Disable Instant Refresh";
+			return settings["instantRefresh"];
+		} else {
+			return settings["instantRefresh"];
+		}
+	}
+
+	// https://www.abeautifulsite.net/adding-and-removing-elements-on-the-fly-using-javascript
+	function removeElement(elementId) {
+	    // Removes an element from the document
+	    var element = document.getElementById(elementId);
+	    element.parentNode.removeChild(element);
+	}
+
+	function antiLag() { // Use not found, but still not made
+		// Uses change timing function to reduce lag between typing if it takes over 100ms or more to finish reloading the page or toggle instant refresh
+		// Can be enabled or disabled by the user
+	}
+
+	function toggleInstantRefresh() {
+		if (settings["instantRefresh"]){
+			document.getElementById('instant-refresh-btn').innerHTML = "Enable Instant Refresh";
+			settingsChange("instantRefresh",false);
+		} else if (settings["instantRefresh"] == false){
+			document.getElementById('instant-refresh-btn').innerHTML = "Disable Instant Refresh";
+			if (settings["autoRefresh"] == false){
+				stopRefresh();
+			}
+			settingsChange("instantRefresh",true);
+			return settings["instantRefresh"];
+		}
+	}
+
+	function refresh(time,downUp){
+		saved = false;
+		if (settings["autoRefresh"]) {
+			if (settings["instantRefresh"]) {
+				refreshING();
+				eRefreshING();
+			} else {
+				mainFunctions.forEach(clearTimeout); // https://stackoverflow.com/questions/54277835/how-to-stop-calling-a-function-js/54277902#54277902
+				mainFunctions.length = 0;
+				console.log("Detected " + downUp + " typing");
+				mainFunctions.push(setTimeout(refreshING,time));
+				mainFunctions.push(setTimeout(eRefreshING,time));
+			}
+		} else if (downUp == 'forced') {
+			refreshING();
+			eRefreshING();
+		} else {
+			saveLocal();
+			return;
+		}
+	}
+	function refreshING(){
+		saved = false;
+		var textContent = document.getElementById('editor-textarea').value;
+		try {
+			document.getElementById('viewer').srcdoc = textContent;
+		} catch(err) {
+			return err;
+		}
+		emptyAndLog("Refreshed");
+		saveLocal();
+	}
+	function eRefreshING(){
+		saved = false;
+		var textContent = document.getElementById('editor-textarea').value;
+		try {
+			windowExternalWindow.document.getElementById('e-viewer').srcdoc = textContent;
+		} catch(err) {
+			return err;
+		}
+		emptyAndLog("Refreshed Externally");
+		saveLocal();
+	}
+	function reloading(){
+		try {
+			windowExternalWindow.close();
+			saveLocal();
+			location.reload(true);
+		} catch (err) {
+			saveLocal();
+			location.reload(true);
+		}
+		return;
+	}
+	function stopRefresh(){
+		if (settings["autoRefresh"]){
+			settingsChange("autoRefresh",false);
+			document.getElementById('stopRefresh').innerHTML = "Start Auto Refresh";
+			if (settings["instantRefresh"]){
+				toggleInstantRefresh();
+			}
+			return settings["autoRefresh"];
+		} else {
+			settingsChange("autoRefresh",true);
+			document.getElementById('stopRefresh').innerHTML = "Stop Auto Refresh";
+			return settings["autoRefresh"];
+		}
+	}
+	function setRefreshTime(){
+		var timeOfRefresh = parseInt(prompt("How long until refresh?", 750));
+		if (typeof timeOfRefresh === 'null') {
+			return timeOfRefresh;
+		}
+		settingsChange("refreshInterval",timeOfRefresh);
+	}
+
+	function saveLocal(localStorageName = wideLocalStorageName){
+		localStorage.setItem(localStorageName, document.getElementById('editor-textarea').value);
+		logAndEmpty("Saved");
+	}		
+	function loadLocal(){
+		if (typeof localStorage.RTE_HTML === 'undefined' || typeof localStorage.RTE_HTML === 'null' || localStorage.RTE_HTML == '') {
+			saved = true;
+			return localStorage.RTE_HTML;
+		} else {
+			document.getElementById('editor-textarea').value = localStorage.RTE_HTML;
+			refreshING();
+			return localStorage.RTE_HTML;
+		}
+	}
+	function oldLoadLocal(oldLocalStorageName){
+		if (typeof localStorage.oldLocalStorageName === 'undefined' || typeof localStorage.oldLocalStorageName === 'null'){
+			console.log('Old local storage not found! ' + oldLocalStorageName);
+			return(oldLocalStorageName);
+		} else {
+			document.getElementById('editor-textarea').value = localStorage.oldLocalStorageName;
+			refresh();
+			console.log("Loaded from old local storage! " + localStorage.oldLocalStorageName);
+			localStorage.setItem(oldLocalStorageName, undefined);
+			console.log("Converted from old local storage! " + oldLocalStorageName);
+		}
+	}
+	function allOfOldLoadLocal(){
+		oldLoadLocal("RTE_HTML_File");
+	}
+
+	// https://www.html5rocks.com/en/tutorials/file/dndfiles/
+	// Check for the various File API support.
+	if (window.File && window.FileReader && window.FileList && window.Blob) {
+		// ok supported
+	} else {
+		alert('The File APIs are not fully supported in this browser. The file functions might not work correctly.');
+	}
+
+	// Open the file
+	// https://www.javascripture.com/FileReader
+	var openFile = function(event) {
+		fileName = document.getElementById('file').value.replace("C:\\fakepath\\","");
+		console.log(fileName);
+	    var input = event.target;
+	    backupHTML();
+	    var reader = new FileReader();
+	    reader.onload = function(){
+	      var text = reader.result;
+	      var editor = document.getElementById('editor-textarea');
+	      editor.value = text;
+	      refreshING();
+	      fileForm.reset(); // https://www.geeksforgeeks.org/how-to-reset-a-form-using-jquery-with-reset-method/
+	    };
+	    reader.readAsText(input.files[0]);
+	};
+	function downloadHTML(fileNames = fileName){
+		fileNames = prompt("Choose a name for your file", fileNames);
+		if (fileNames == 'null') {
+			return;
+		} else {
+			download(fileNames + ".html", document.getElementById('editor-textarea').value);
+			return;
+		}
+	}
+	function backupHTML(){
+		if (saved) {
+			return;
+		} else {
+			download("backupHTML.html", document.getElementById('editor-textarea').value);
+			return;
+		}
+	}
+	function download(filename, text) { // https://stackoverflow.com/questions/3665115/how-to-create-a-file-in-memory-for-user-to-download-but-not-through-server
+	  var element = document.createElement('a');
+	  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+	  element.setAttribute('download', filename);
+	  element.style.display = 'none';
+	  document.body.appendChild(element);
+	  element.click();
+	  document.body.removeChild(element);
+	  saved = true;
+	}
+
+	function openExternalWindow(){
+		if (typeof windowExternalWindow === 'undefined') {
+			childWindowChecking = setInterval(childWindowCheck,500);
+			windowExternalWindow = window.open(
+				"about:blank",
+					"External HTML Live View",
+				windowFeatures);
+			windowExternalWindow.document.write("<style>body {margin: 0px; overflow: hidden;} iframe {width: 100%;height: 100%;border:0px;}</style> <script>function confirmExit(){return '';}window.onbeforeunload=confirmExit;<\/script> <iframe id=\"e-viewer\"></iframe>");
+			removeElement("viewer");
+			eRefreshING();
+		}
+	}
+	function childWindowCheck() { // Use not found, but is used
+		if (windowExternalWindow.closed) {
+			saveLocal();
+			reloading();
+		}
+	}
+
+	function resetText(){
+		backupHTML();
+		editor.reset();
+		refreshING();
+	}
+
+	function emptyAndLog(text){
+		console.log('');
+		console.log(text);
+	}
+	function logAndEmpty(text){
+		console.log(text);
+		console.log('');
+	}
+
+	function setIndentSize(){
+		var indentSize = parseInt(prompt("How many spaces for indenting?",settings["tabSize"]));
+		document.getElementById('editor-textarea').style.tabSize = indentSize;
+		settingsChange("tabSize",indentSize);
+		return settings["tabSize"];
+	}
+	function fontSize(){
+		var fontSize = parseInt(prompt("What would you like the font size to be?", settings["fontSize"]));
+		document.getElementById('editor-textarea').style.fontSize = fontSize;
+		settingsChange("fontSize",fontSize);
+		return settings["fontSize"];
+	}
+
+	function insertAtCaret(areaId, text) { // https://stackoverflow.com/questions/1064089/inserting-a-text-where-cursor-is-using-javascript-jquery
+	  var txtarea = document.getElementById(areaId);
+	  if (!txtarea) {
+	    return;
+	  }
+
+	  var scrollPos = txtarea.scrollTop;
+	  var strPos = 0;
+	  var br = ((txtarea.selectionStart || txtarea.selectionStart == '0') ?
+	    "ff" : (document.selection ? "ie" : false));
+	  if (br == "ie") {
+	    txtarea.focus();
+	    var range = document.selection.createRange();
+	    range.moveStart('character', -txtarea.value.length);
+	    strPos = range.text.length;
+	  } else if (br == "ff") {
+	    strPos = txtarea.selectionStart;
+	  }
+
+	  var front = (txtarea.value).substring(0, strPos);
+	  var back = (txtarea.value).substring(strPos, txtarea.value.length);
+	  txtarea.value = front + text + back;
+	  strPos = strPos + text.length;
+	  if (br == "ie") {
+	    txtarea.focus();
+	    var ieRange = document.selection.createRange();
+	    ieRange.moveStart('character', -txtarea.value.length);
+	    ieRange.moveStart('character', strPos);
+	    ieRange.moveEnd('character', 0);
+	    ieRange.select();
+	  } else if (br == "ff") {
+	    txtarea.selectionStart = strPos;
+	    txtarea.selectionEnd = strPos;
+	    txtarea.focus();
+	  }
+
+	  txtarea.scrollTop = scrollPos;
+	}
+
+	function changeKeyPress(elementID,keyCode,text){
+		document.getElementById(elementID).addEventListener("keydown",function(event){
+			if (event.keyCode == keyCode){
+				event.preventDefault();
+				insertAtCaret(elementID,text);
+			} else {
+				return;
+			}
+		});
+	}
+
+	function specialBackground(){
+		document.getElementById('editor-textarea').style.backgroundImage = "linear-gradient(to right, #333, #666)";
+		document.getElementById('viewer').style.backgroundImage = "linear-gradient(to right, #666, #333)";
+		document.body.style.backgroundImage = "linear-gradient(to right, #333, #666, #333)";	
+	}
+
+	function load(){
+		var t0 = performance.now();
+		console.clear();
+		loadLocal();
+		settingsCheck();
+		changeKeyPress('editor-textarea',9,"	");
+		var t1 = performance.now();
+		console.log("Took " + (t1-t0) + "ms to load");
+	}
+	load();
+</script>
