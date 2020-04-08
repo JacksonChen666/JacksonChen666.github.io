@@ -4,11 +4,14 @@ SYNTAX HIGHLIGHTING (CAP LOCKS I HATE YOU, might be impossible)
 Allow switching from files to files (have to figure out the loadLocal params first)
 Detect low performance and set delay for every specific milliseconds
 Allow other types of files by allowing removal of iframe
+Allow Scrolling sideways in editing with settings
+able to change settings by calling specific functions with a int or user input
 -->
 <html>
 	<head>
 		<title id="webpage-title">Live HTML Editor</title>
 		<meta name="viewport" content="width=device-width initial-scale=1">
+		<meta name="google-site-verification" content="F07ZPniaA5zDRDgqVDMcvGqginMOIKnKhHtwVS49Irg" />
 		<link rel='icon' href='https://www.mcpcsystems.co.uk/wp-content/uploads/2018/10/Clipboard-Icon.png'>
 		<style>
 			body {
@@ -203,9 +206,10 @@ Allow other types of files by allowing removal of iframe
 	<!-- Learn HTML: https://www.w3schools.com/html/default.asp -->
 	<head>
 		<title>Your Title Here</title>
+		<meta name="viewport" content="width=device-width initial-scale=1">
 		<link rel="stylesheet" type="text/css" href="./path/to/stylesheet">
 		<style>
-
+			/* Styling */
 		</style>
 		<!-- Metadata and stuff -->
 	</head>
@@ -244,7 +248,7 @@ Allow other types of files by allowing removal of iframe
 	var allowRefresh = sessionStorage.allowRefresh;
 
 	function settingsCheck(){
-		if (typeof localStorage.settings === 'null' || typeof localStorage.settings === 'undefined') {
+		if (typeof localStorage.getItem("settings") === 'null' || typeof localStorage.getItem("settings") === 'undefined') {
 			localStorage.setItem("settings", JSON.stringify(dSettings));
 			return dSettings;
 		} else {
@@ -386,25 +390,26 @@ Allow other types of files by allowing removal of iframe
 		logAndEmpty("Saved");
 	}		
 	function loadLocal(){
-		if (typeof localStorage.RTE_HTML === 'undefined' || typeof localStorage.RTE_HTML === 'null' || localStorage.RTE_HTML == '') {
+		if (typeof localStorage.getItem("RTE_HTML") === 'undefined' || typeof localStorage.getItem("RTE_HTML") === 'null' || localStorage.getItem("RTE_HTML") == '') {
 			saved = true;
-			return localStorage.RTE_HTML;
+			return localStorage.getItem("RTE_HTML");
 		} else {
-			document.getElementById('editor-textarea').value = localStorage.RTE_HTML;
+			document.getElementById('editor-textarea').value = localStorage.getItem("RTE_HTML");
 			refreshING();
-			return localStorage.RTE_HTML;
+			return localStorage.getItem("RTE_HTML");
 		}
 	}
 	function oldLoadLocal(oldLocalStorageName){
-		if (typeof localStorage.oldLocalStorageName === 'undefined' || typeof localStorage.oldLocalStorageName === 'null'){
+		if (localStorage.getItem(oldLocalStorageName) == 'undefined' || localStorage.getItem(oldLocalStorageName) == 'null'){
 			console.log('Old local storage not found! ' + oldLocalStorageName);
-			return(oldLocalStorageName);
+			return false;
 		} else {
-			document.getElementById('editor-textarea').value = localStorage.oldLocalStorageName;
-			refresh();
-			console.log("Loaded from old local storage! " + localStorage.oldLocalStorageName);
-			localStorage.setItem(oldLocalStorageName, undefined);
+			document.getElementById('editor-textarea').value = localStorage.getItem(oldLocalStorageName);
+			console.log("Loaded from old local storage! '" + localStorage.getItem(oldLocalStorageName) + "'");
+			localStorage.removeItem(oldLocalStorageName);
 			console.log("Converted from old local storage! " + oldLocalStorageName);
+			refreshING();
+			return true;
 		}
 	}
 	function allOfOldLoadLocal(){
@@ -573,6 +578,7 @@ Allow other types of files by allowing removal of iframe
 		loadLocal();
 		settingsCheck();
 		changeKeyPress('editor-textarea',9,"	");
+		localStorage.removeItem("instantRefresh");
 		var t1 = performance.now();
 		console.log("Took " + (t1-t0) + "ms to load");
 	}
