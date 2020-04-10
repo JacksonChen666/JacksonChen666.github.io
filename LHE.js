@@ -1,240 +1,11 @@
-<!DOCTYPE html>
-<!-- 
-To Do:
-SYNTAX HIGHLIGHTING (CAP LOCKS I HATE YOU, might be impossible)
-Allow switching from files to files (have to figure out the loadLocal params first)
-Detect low performance and set delay for every specific milliseconds
-Allow other types of files by allowing removal of iframe
-Allow Scrolling sideways in editing with settings
-able to change settings by calling specific functions with a int or user input
-try and allow resizing with no weird behaviours and stuff with the things
-wrapping broken somehow
--->
-<html>
-
-<head>
-	<title id="webpage-title">Live HTML Editor</title>
-	<meta name="viewport" content="width=device-width initial-scale=1">
-	<link rel='icon' href='https://www.mcpcsystems.co.uk/wp-content/uploads/2018/10/Clipboard-Icon.png'>
-	<style>
-		body {
-				overflow: hidden; 
-				font-family: Arial, sans-serif;
-				tab-size: 4;
-				margin: 0;
-				overflow: hidden;
-				background-color: #202020; /* #202020 dark mode, #bdc3c7 light mode */
-				/*background-image: linear-gradient(to right, #333, #666, #333);*/
-			}
-			* {
-				margin: 0;
-				color: white;
-			}
-			button {
-				background-color: white;
-				color: black;
-			}
-			.main {
-				width: 100%;
-				height: 92vh; /* Dynamic screen height */
-				margin-bottom: 0px;
-				display: inline-flex;
-			}
-			.main * {
-				border-radius: 2px;
-				min-width: 50px;
-				margin: 10px;
-				width: 50%;
-				height: 100%;
-				border: 1px solid #555;
-				min-height: 50px;
-				outline: none;
-			}
-			#editor-textarea {
-				overflow: auto;
-				white-space: nowrap;
-
-				background-color: #333; /* #333 dark mode, #fff light mode */
-				height: 98.8%;
-				color: white;
-				padding: 5px;
-				font-family:Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace; /* Monospace */
-				resize: none;
-				/*background-image: linear-gradient(to right, #333, #666);*/
-			}
-			#viewer {
-				background-color: #555; /* #555 dark mode, #fff light mode */
-				/*background-image: linear-gradient(to right, #666, #333);*/
-			}
-			#buttons {
-				text-align: center;
-				margin: -10px 0px 0px 0px;
-			}
-			h1 {font-size: 24px;}
-			.medium {font-size: 16px;}
-			.small {font-size: 12px;}
-			.mini {font-size: 8px;}
-			.no-margin {margin: 0px}
-			.mini-margin {margin: 5px;}
-			.no-padding {padding: 0px;}
-			.middle {text-align: center;}
-			@media screen and (max-height: 810px){
-				.main {height: 90vh;}
-			}
-			#file {display: none;}
-			#filesMenu {margin-left: 10px;}
-            
-            /* https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_js_dropdown_hover */
-            .dropbtn {
-              background-color: #555;
-              margin-top: 10px;
-              outline: none;
-              color: white;
-              padding: 8px 16px 8px 16px;
-              font-size: 16px;
-              margin-right: -5px;
-              border: none;
-            }
-            .dropdown {
-              position: relative;
-              display: inline-block;
-            }
-            .dropdown-content {
-              display: none;
-              position: absolute;
-              background-color: #999;
-              min-width: 184px;
-              box-shadow: 0px 2px 16px 0px rgba(0,0,0,0.2);
-              z-index: 1;
-            }
-            .dropdown-content a {
-              color: white;
-              padding: 12px 16px;
-              text-decoration: none;
-              display: block;
-              transition: 0.25s ease;
-            }
-            .dropdown-content hr {
-            	margin: 5px;
-            	border-radius: 50px;
-            	border-width: 2px;
-            	border: 1px solid white;
-            }
-            .dropdown-content a:hover {background-color: #777;}
-            .dropdown:hover .dropdown-content {display: block;}
-            .dropdown .dropbtn {transition: 0.25s ease}
-            .dropdown:hover .dropbtn {background-color: #777}
-
-            .autocomplete-items {
-              position: absolute;
-              border: 1px solid #d4d4d4;
-              border-bottom: none;
-              border-top: none;
-              z-index: 99;
-              /*position the autocomplete items to be the same width as the container:*/
-              top: 100%;
-              left: 0;
-              right: 0;
-            }
-            .autocomplete-items div {
-              padding: 10px;
-              cursor: pointer;
-              background-color: #fff;
-              border-bottom: 1px solid #d4d4d4;
-            }
-            .autocomplete-items div:hover {
-              /*when hovering an item:*/
-              background-color: #e9e9e9;
-            }
-            .autocomplete-active {
-              /*when navigating through the items using the arrow keys:*/
-              background-color: DodgerBlue !important;
-              color: #ffffff;
-            }
-		</style>
-</head>
-
-<body onbeforeunload="reloading();">
-	<noscript style="font-size: 300px;">Enable JavaScript</noscript>
-	<form name="fileForm">
-		<input type="file" id='file' name='file[]' onchange="openFile(event)" accept=".HTML" />
-	</form>
-	<div class="dropdown" id="filesMenu">
-		<button class="dropbtn">File</button>
-		<div class="dropdown-content">
-			<a href="javascript:void(0)" onclick="document.getElementById('file').click();" id="open">Open...</a>
-			<a href="javascript:void(0)" onclick="downloadHTML()" id="save">Save...</a>
-			<hr>
-			<a href="javascript:void(0)" onclick="resetText()" id="resetText">Reset text</a>
-		</div>
-	</div>
-	<div class="dropdown" id="viewMenu">
-		<button class="dropbtn">View</button>
-		<div class="dropdown-content">
-			<a href="javascript:void(0)" onclick="refresh(0, 'forced');" id="refresh">Refresh</a>
-			<a href="javascript:void(0)" onclick="setRefreshTime();" id="setRefresh">Set Refresh time...</a>
-			<a href="javascript:void(0)" onclick="stopRefresh();" id="stopRefresh">Stop Auto Refresh</a>
-			<a href="javascript:void(0)" onclick="toggleInstantRefresh();" id="instant-refresh-btn">Enable Instant Refresh</a>
-			<hr>
-			<a href="javascript:void(0)" onclick="openExternalWindow();" id="e-iframe">Open Iframe externally</a>
-			<hr>
-			<a href="javascript:void(0)" onclick="setIndentSize();" id="indentSize">Set Tab Size...</a>
-			<a href="javascript:void(0)" onclick="fontSize();" id="fontSize">Set Font Size...</a>
-			<a href="javascript:void(0)" onclick="wrapping()" id="wrapping_btn">Enable wrapping</a>
-			<hr>
-			<a href="javascript:void(0)" onclick="specialBackground();">Special Background</a>
-			<a href="javascript:alert('Not done!')" onclick="changeLightMode()">Change light mode</a> <!-- or a button with an img that changes it -->
-			<hr>
-			<a href="javascript:void(0)" onclick="reloading();">Force Reload Page</a>
-		</div>
-	</div>
-	<div class="dropdown" id="otherMenu">
-		<button class="dropbtn">Misc</button>
-		<div class="dropdown-content">
-			<a href="javascript:void(0)" onclick="allOfOldLoadLocal()">Load from old local storage</a>
-			<a href="./LHE-FAQ.html">FAQ</a>
-			<hr>
-			<a href="https://www.youtube.com/watch?v=onLsz9BwP7M">Original</a>
-			<hr>
-			<a href="javascript:void(0)" onclick="settingsReset()">Reset Settings</a>
-		</div>
-	</div>
-	<form name='editor'>
-		<div class="main" id="main">
-			<!-- Grammarly disabled https://stackoverflow.com/a/46777787/13104233 -->
-			<textarea id="editor-textarea" onkeyup="refresh(settings['refreshInterval'],'up')" onkeydown="refresh(settings['refreshInterval'], 'down')" style="font-size: 15px;" autocomplete="off" autocapitalize="off" spellcheck="false" autofocus placeholder="HTML code (JS and CSS included, spellcheck off)" data-gramm_editor="false">
-<html>
-	<!-- Learn HTML: https://www.w3schools.com/html/default.asp -->
-	<head>
-		<title>Your Title Here</title>
-		<meta name="viewport" content="width=device-width initial-scale=1">
-		<link rel="stylesheet" type="text/css" href="./path/to/stylesheet">
-		<style>
-			/* Styling */
-		</style>
-		<!-- Metadata and stuff -->
-	</head>
-
-	<body>
-		<!-- Elements -->
-	</body>
-
-	<script>
-		// Javascript
-	</script>
-</html></textarea>
-	</form>
-	<iframe id="viewer"></iframe>
-	</div>
-</body>
-<script>
 var dSettings = {
 	'refreshInterval': 750,
 	'autoRefresh': true,
 	'instantRefresh': false,
 	'tabSize': 4,
 	'fontSize': 15,
-	'wrapping': false
+	'wrapping': false,
+	'lightMode': false
 };
 var settings = dSettings;
 var instantRefresh;
@@ -259,6 +30,7 @@ function settingsCheck() {
 		document.getElementById('editor-textarea').style.tabSize = settings.tabSize;
 		wrapping();
 		wrapping();	
+		checkLightMode();
 	}
 }
 
@@ -278,6 +50,32 @@ function settingsChange(setting, value) {
 	settingsSave();
 	console.log("Settings changed");
 	console.log(settings);
+}
+
+function toggleLightMode(){
+	if (settings.lightMode){
+		document.body.setAttribute('data-theme','dark');
+		document.getElementById('editor-textarea').setAttribute('data-theme','dark');
+		document.getElementById('viewer').setAttribute('data-theme','dark');
+		settingsChange('lightMode',false);
+	} else if (settings.lightMode === false){
+		document.body.setAttribute('data-theme','light');
+		document.getElementById('editor-textarea').setAttribute('data-theme','light');
+		document.getElementById('viewer').setAttribute('data-theme','light');
+		settingsChange('lightMode',true);
+	} else {
+		settingsChange('lightMode',false);
+	}
+	return settings.lightMode;
+}
+
+function checkLightMode(){
+	if (settings.lightMode){
+		document.body.setAttribute('data-theme','light');
+		document.getElementById('editor-textarea').setAttribute('data-theme','light');
+		document.getElementById('viewer').setAttribute('data-theme','light');
+	}
+	return settings.lightMode;
 }
 
 function instantRefreshCheck() {
@@ -397,7 +195,7 @@ function setRefreshTime() {
 
 function wrapping(){
 	if(settings.wrapping || typeof settings.wrapping === null || typeof settings.wrapping === undefined || typeof settings.wrapping === ''){
-		document.getElementById('editor-textarea').style.whiteSpace = "wrap"; // Allow
+		document.getElementById('editor-textarea').style.whiteSpace = "normal"; // Allow
 		document.getElementById('wrapping_btn').innerHTML = "Disable Wrapping";
 		settingsChange("wrapping",false);
 	} else if (settings.wrapping == false){
@@ -497,8 +295,8 @@ function download(filename, text) { // https://stackoverflow.com/questions/36651
 }
 
 function openExternalWindow() {
-	if (typeof windowExternalWindow === undefined) {
-		childWindowChecking = setInterval(childWindowCheck, 500);
+	if (typeof windowExternalWindow === "undefined") {
+		childWindowChecking = setInterval(childWindowCheck, 1000);
 		windowExternalWindow = window.open("about:blank", "External HTML Live View", windowFeatures);
 		windowExternalWindow.document.write("<style>body {margin: 0px; overflow: hidden;} iframe {width: 100%;height: 100%;border:0px;}</style> <script>function confirmExit(){return '';}window.onbeforeunload=confirmExit;<\/script> <iframe id=\"e-viewer\"></iframe>");
 		removeElement("viewer");
@@ -506,7 +304,7 @@ function openExternalWindow() {
 	}
 }
 
-function childWindowCheck() { // Use not found, but is used
+function childWindowCheck() { // Use not found, but is used on line 2 of openExternalWindow() function
 	if (windowExternalWindow.closed) {
 		saveLocal();
 		reloading();
@@ -589,12 +387,6 @@ function changeKeyPress(elementID, keyCode, text) {
 	});
 }
 
-function specialBackground() {
-	document.getElementById('editor-textarea').style.backgroundImage = "linear-gradient(to right, #333, #666)";
-	document.getElementById('viewer').style.backgroundImage = "linear-gradient(to right, #666, #333)";
-	document.body.style.backgroundImage = "linear-gradient(to right, #333, #666, #333)";
-}
-
 function load() {
 	var t0 = performance.now();
 	console.clear();
@@ -606,6 +398,3 @@ function load() {
 	console.log("Took " + (t1 - t0) + "ms to load");
 }
 load();
-</script>
-
-</html>
