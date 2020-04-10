@@ -25,7 +25,7 @@ transaprent editor and viewer in css with dark and light mode
 			--viewer-bg: #555;
 			--btn-color: #555;
 		}
-		[data-theme="dark"]{
+		[theme="dark"]{
 			--body-color: #222;
 			--editor-bg: #333;
 			--editor-text: #fff;
@@ -33,7 +33,7 @@ transaprent editor and viewer in css with dark and light mode
 			--viewer-bg: #555;
 			--btn-color: #555;
 		}
-		[data-theme="light"]{
+		[theme="light"]{
 			--body-color: #bdc3c7;
 			--editor-bg: #fff;
 			--editor-text: #000;
@@ -85,6 +85,8 @@ transaprent editor and viewer in css with dark and light mode
 			resize: none;
 		}
 		#viewer {
+			height: 100.66%;
+			width: 101.4%;
 			background-color: var(--viewer-bg); /* #555 dark mode, #fff light mode */
 		}
 		@media all and (min-height: 1500px) {.main {height: 95vh;}}
@@ -300,14 +302,14 @@ function settingsChange(setting, value) {
 
 function toggleLightMode() {
 	if (settings.lightMode) {
-		document.body.setAttribute('data-theme', 'dark');
-		document.getElementById('editor-textarea').setAttribute('data-theme', 'dark');
-		document.getElementById('viewer').setAttribute('data-theme', 'dark');
+		document.body.setAttribute('theme', 'dark');
+		document.getElementById('editor-textarea').setAttribute('theme', 'dark');
+		document.getElementById('viewer').setAttribute('theme', 'dark');
 		settingsChange('lightMode', false);
 	} else if (settings.lightMode === false) {
-		document.body.setAttribute('data-theme', 'light');
-		document.getElementById('editor-textarea').setAttribute('data-theme', 'light');
-		document.getElementById('viewer').setAttribute('data-theme', 'light');
+		document.body.setAttribute('theme', 'light');
+		document.getElementById('editor-textarea').setAttribute('theme', 'light');
+		document.getElementById('viewer').setAttribute('theme', 'light');
 		settingsChange('lightMode', true);
 	} else {
 		settingsChange('lightMode', false);
@@ -317,9 +319,9 @@ function toggleLightMode() {
 
 function checkLightMode() {
 	if (settings.lightMode) {
-		document.body.setAttribute('data-theme', 'light');
-		document.getElementById('editor-textarea').setAttribute('data-theme', 'light');
-		document.getElementById('viewer').setAttribute('data-theme', 'light');
+		document.body.setAttribute('theme', 'light');
+		document.getElementById('editor-textarea').setAttribute('theme', 'light');
+		document.getElementById('viewer').setAttribute('theme', 'light');
 	}
 	return settings.lightMode;
 }
@@ -432,7 +434,7 @@ function stopRefresh() {
 }
 
 function setRefreshTime() {
-	var timeOfRefresh = parseInt(prompt("How long until refresh?", 750));
+	var timeOfRefresh = parseInt(prompt("How long until refresh?", settings.refreshInterval));
 	if (typeof timeOfRefresh === null) {
 		return timeOfRefresh;
 	}
