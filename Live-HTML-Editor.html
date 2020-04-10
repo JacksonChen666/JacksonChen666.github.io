@@ -5,18 +5,17 @@ SYNTAX HIGHLIGHTING (CAP LOCKS I HATE YOU, might be impossible)
 Allow switching from files to files (have to figure out the loadLocal params first)
 Detect low performance and set delay for every specific milliseconds
 Allow other types of files by allowing removal of iframe
-Allow Scrolling sideways in editing with settings
 able to change settings by calling specific functions with a int or user input
 try and allow resizing with no weird behaviours and stuff with the things
-wrapping broken somehow
+transaprent editor and viewer in css with dark and light mode
 -->
 <html>
 
 <head>
 	<title id="webpage-title">Live HTML Editor</title>
-	<meta name="viewport" content="width=device-width initial-scale=1"/>
+	<meta name="viewport" content="width=device-width initial-scale=1" />
 	<!-- <link rel='icon' href='https://www.mcpcsystems.co.uk/wp-content/uploads/2018/10/Clipboard-Icon.png'> -->
-	<link rel="icon" href="data:text/plain;base64,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"/>
+	<link rel="icon" href="data:text/plain;base64,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" />
 	<style>
 		:root {
 			--body-color: #222;
@@ -24,6 +23,7 @@ wrapping broken somehow
 			--editor-text: #fff;
 			--border-color: #444;
 			--viewer-bg: #555;
+			--btn-color: #555;
 		}
 		[data-theme="dark"]{
 			--body-color: #222;
@@ -31,6 +31,7 @@ wrapping broken somehow
 			--editor-text: #fff;
 			--border-color: #444;
 			--viewer-bg: #555;
+			--btn-color: #555;
 		}
 		[data-theme="light"]{
 			--body-color: #bdc3c7;
@@ -38,6 +39,7 @@ wrapping broken somehow
 			--editor-text: #000;
 			--border-color: #ddd;
 			--viewer-bg: #fff;
+			--btn-color: #999;
 		}
 		body {
 			overflow: hidden; 
@@ -46,11 +48,10 @@ wrapping broken somehow
 			margin: 0;
 			overflow: hidden;
 			background-color: var(--body-color); /* #222 dark mode, #bdc3c7 light mode */
-			color: white;
-			/*background-image: linear-gradient(to right, #333, #666, #333);*/
+			color: var(--editor-text);
 		}
 		* {
-			margin: 0;
+			transition: 0.4s ease-in-out;
 		}
 		button {
 			background-color: white;
@@ -61,6 +62,8 @@ wrapping broken somehow
 			height: 92vh; /* Dynamic screen height */
 			margin-bottom: 0px;
 			display: inline-flex;
+			float: top;
+			flex-direction: row;
 		}
 		.main * {
 			border-radius: 2px;
@@ -69,7 +72,6 @@ wrapping broken somehow
 			width: 100%;
 			height: 100%;
 			border: 1px solid var(--border-color);
-			min-height: 50px;
 			outline: none;
 		}
 		#editor-textarea {
@@ -77,17 +79,37 @@ wrapping broken somehow
 			white-space: nowrap;
 
 			background-color: var(--editor-bg); /* #333 dark mode, #fff light mode */
-			height: 98.8%;
 			color: var(--editor-text);
-			padding: 5px;
+			padding: 5px 5px 0px 5px;
 			font-family:Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace; /* Monospace */
 			resize: none;
-			/*background-image: linear-gradient(to right, #333, #666);*/
 		}
 		#viewer {
 			background-color: var(--viewer-bg); /* #555 dark mode, #fff light mode */
-			/*background-image: linear-gradient(to right, #666, #333);*/
 		}
+		@media all and (min-height: 1500px) {.main {height: 95vh;}}
+		@media all and (min-height: 1000px) {.main {height: 94vh;}}
+		@media all and (max-height: 840px) {.main {height: 90vh;}}
+		@media all and (max-height: 500px) {.main {height: 80vh;}}
+		@media all and (max-height: 350px) {.main {height: 70vh;}}
+		@media all and (max-width: 768px) {
+			.main {
+				float: left;
+				flex-direction: column;
+				height: 93vh;
+				width: 95vw;
+			}
+		}
+		@media all and (max-width: 768px) and (min-height: 1500px) {.main * {height: 90%;}}
+		@media all and (max-width: 768px) and (max-height: 1200px) {.main * {height: 80%;}
+		}
+		@media all and (max-width: 768px) and (max-height: 750px) {.main * {height: 55%;}
+		}
+		@media all and (max-width: 768px) and (max-height: 600px) {.main * {height: 45%;}}
+		@media all and (max-width: 768px) and (max-height: 550px) {.main * {height: 40%;}}
+		@media all and (max-width: 768px) and (max-height: 350px) {.main * {height: 35%;}}
+		@media all and (max-width: 550px) {.main {width: 90vw;}}
+		@media all and (max-width: 270px) {.main {width: 85vw;}}
 
 		#buttons {
 			text-align: center;
@@ -101,18 +123,16 @@ wrapping broken somehow
 		.mini-margin {margin: 5px;}
 		.no-padding {padding: 0px;}
 		.middle {text-align: center;}
-		@media screen and (max-height: 810px){
-			.main {height: 90vh;}
-		}
+
 		#file {display: none;}
 		#filesMenu {margin-left: 10px;}
         
         /* https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_js_dropdown_hover */
         .dropbtn {
-          background-color: #555;
+          background-color: var(--btn-color);
           margin-top: 10px;
           outline: none;
-          color: white;
+          color: var(--editor-text);
           padding: 8px 16px 8px 16px;
           font-size: 16px;
           margin-right: -5px;
@@ -131,11 +151,10 @@ wrapping broken somehow
           z-index: 1;
         }
         .dropdown-content a {
-          color: white;
+          color: var(--editor-text);
           padding: 12px 16px;
           text-decoration: none;
           display: block;
-          transition: 0.25s ease;
         }
         .dropdown-content hr {
         	margin: 5px;
@@ -145,7 +164,7 @@ wrapping broken somehow
         }
         .dropdown-content a:hover {background-color: #777;}
         .dropdown:hover .dropdown-content {display: block;}
-        .dropdown .dropbtn {transition: 0.25s ease}
+        /*.dropdown .dropbtn {}*/
         .dropdown:hover .dropbtn {background-color: #777}
 	</style>
 </head>
@@ -256,7 +275,7 @@ function settingsCheck() {
 		document.getElementById('editor-textarea').style.fontSize = settings.fontSize;
 		document.getElementById('editor-textarea').style.tabSize = settings.tabSize;
 		wrapping();
-		wrapping();	
+		wrapping();
 		checkLightMode();
 	}
 }
@@ -268,7 +287,7 @@ function settingsSave() {
 
 function settingsReset() {
 	localStorage.removeItem("settings");
-	localStorage.setItem("settings",JSON.stringify(dSettings));
+	localStorage.setItem("settings", JSON.stringify(dSettings));
 	location.reload(true);
 }
 
@@ -279,28 +298,28 @@ function settingsChange(setting, value) {
 	console.log(settings);
 }
 
-function toggleLightMode(){
-	if (settings.lightMode){
-		document.body.setAttribute('data-theme','dark');
-		document.getElementById('editor-textarea').setAttribute('data-theme','dark');
-		document.getElementById('viewer').setAttribute('data-theme','dark');
-		settingsChange('lightMode',false);
-	} else if (settings.lightMode === false){
-		document.body.setAttribute('data-theme','light');
-		document.getElementById('editor-textarea').setAttribute('data-theme','light');
-		document.getElementById('viewer').setAttribute('data-theme','light');
-		settingsChange('lightMode',true);
+function toggleLightMode() {
+	if (settings.lightMode) {
+		document.body.setAttribute('data-theme', 'dark');
+		document.getElementById('editor-textarea').setAttribute('data-theme', 'dark');
+		document.getElementById('viewer').setAttribute('data-theme', 'dark');
+		settingsChange('lightMode', false);
+	} else if (settings.lightMode === false) {
+		document.body.setAttribute('data-theme', 'light');
+		document.getElementById('editor-textarea').setAttribute('data-theme', 'light');
+		document.getElementById('viewer').setAttribute('data-theme', 'light');
+		settingsChange('lightMode', true);
 	} else {
-		settingsChange('lightMode',false);
+		settingsChange('lightMode', false);
 	}
 	return settings.lightMode;
 }
 
-function checkLightMode(){
-	if (settings.lightMode){
-		document.body.setAttribute('data-theme','light');
-		document.getElementById('editor-textarea').setAttribute('data-theme','light');
-		document.getElementById('viewer').setAttribute('data-theme','light');
+function checkLightMode() {
+	if (settings.lightMode) {
+		document.body.setAttribute('data-theme', 'light');
+		document.getElementById('editor-textarea').setAttribute('data-theme', 'light');
+		document.getElementById('viewer').setAttribute('data-theme', 'light');
 	}
 	return settings.lightMode;
 }
@@ -420,16 +439,16 @@ function setRefreshTime() {
 	settingsChange("refreshInterval", timeOfRefresh);
 }
 
-function wrapping(){
-	if(settings.wrapping || typeof settings.wrapping === null || typeof settings.wrapping === undefined || typeof settings.wrapping === ''){
+function wrapping() {
+	if (settings.wrapping || typeof settings.wrapping === null || typeof settings.wrapping === undefined || typeof settings.wrapping === '') {
 		document.getElementById('editor-textarea').style.whiteSpace = "normal"; // Allow
 		document.getElementById('wrapping_btn').innerHTML = "Disable Wrapping";
-		settingsChange("wrapping",false);
-	} else if (settings.wrapping == false){
+		settingsChange("wrapping", false);
+	} else if (settings.wrapping == false) {
 		document.getElementById('editor-textarea').style.whiteSpace = "nowrap"; // Disallow
 		document.getElementById('wrapping_btn').innerHTML = "Enable Wrapping";
-		settingsChange("wrapping",true);
-	} 
+		settingsChange("wrapping", true);
+	}
 	return settings.wrapping;
 }
 
