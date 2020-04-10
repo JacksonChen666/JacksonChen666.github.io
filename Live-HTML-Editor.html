@@ -384,26 +384,26 @@ function refresh(time, downUp) {
 
 function refreshING() {
 	saved = false;
-	var textContent = document.getElementById('editor-textarea').value;
 	try {
-		document.getElementById('viewer').srcdoc = textContent;
+		document.getElementById('viewer').srcdoc = document.getElementById('editor-textarea').value;
 	} catch (err) {
 		return err;
 	}
 	emptyAndLog("Refreshed");
 	saveLocal();
+	return true;
 }
 
 function eRefreshING() {
 	saved = false;
-	var textContent = document.getElementById('editor-textarea').value;
 	try {
-		windowExternalWindow.document.getElementById('e-viewer').srcdoc = textContent;
+		windowExternalWindow.document.getElementById('e-viewer').srcdoc = document.getElementById('editor-textarea').value;
 	} catch (err) {
 		return err;
 	}
 	emptyAndLog("Refreshed Externally");
 	saveLocal();
+	return true;
 }
 
 function reloading() {
