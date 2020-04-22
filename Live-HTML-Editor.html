@@ -8,6 +8,7 @@ Allow other types of files by allowing removal of iframe
 able to change settings by calling specific functions with a int or user input
 try and allow resizing with no weird behaviours and stuff with the things
 transaprent editor and viewer in css with dark and light mode
+Multi-file editing with HTML, CSS, and JS, all saved seprately, and is usable after saving somehow, with labels
 -->
 <html>
 
@@ -17,12 +18,14 @@ transaprent editor and viewer in css with dark and light mode
 	<!-- <link rel='icon' href='https://www.mcpcsystems.co.uk/wp-content/uploads/2018/10/Clipboard-Icon.png'> -->
 	<link rel="icon" href="data:image/png;base64,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" />
 	<style>
+		@import url('https://fonts.googleapis.com/css2?family=Inconsolata&display=swap');
 		:root {
 			--body-color: #222;
 			--editor-bg: #333;
 			--editor-text: #fff;
 			--border-color: #444;
-			--viewer-bg: #555;
+			--viewer-bg: #333;
+			--viewer-text: #fff;
 			--btn-color: #555;
 		}
 		[theme="dark"]{
@@ -30,7 +33,8 @@ transaprent editor and viewer in css with dark and light mode
 			--editor-bg: #333;
 			--editor-text: #fff;
 			--border-color: #444;
-			--viewer-bg: #555;
+			--viewer-bg: #333;
+			--viewer-text: #fff;
 			--btn-color: #555;
 		}
 		[theme="light"]{
@@ -39,6 +43,7 @@ transaprent editor and viewer in css with dark and light mode
 			--editor-text: #000;
 			--border-color: #ddd;
 			--viewer-bg: #fff;
+			--viewer-text: #000;
 			--btn-color: #999;
 		}
 		body {
@@ -49,9 +54,6 @@ transaprent editor and viewer in css with dark and light mode
 			overflow: hidden;
 			background-color: var(--body-color); /* #222 dark mode, #bdc3c7 light mode */
 			color: var(--editor-text);
-		}
-		* {
-			transition: 0.4s ease-in-out;
 		}
 		button {
 			background-color: white;
@@ -79,14 +81,16 @@ transaprent editor and viewer in css with dark and light mode
 
 			background-color: var(--editor-bg); /* #333 dark mode, #fff light mode */
 			color: var(--editor-text);
+			font-size: 18px !important;
 			padding: 5px 5px 0px 5px;
-			font-family:Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace; /* Monospace */
+			font-family: 'Inconsolata', monospace; /* MacOS Sublime Text font lol */
 			resize: none;
 		}
 		#viewer {
 			height: 100.66%;
 			width: 101.4%;
 			background-color: var(--viewer-bg); /* #555 dark mode, #fff light mode */
+			color: var(--viewer-text);
 		}
 		@media all and (min-height: 1500px) {.main {height: 95vh;}}
 		@media all and (min-height: 1000px) {.main {height: 94vh;}}
@@ -145,19 +149,23 @@ transaprent editor and viewer in css with dark and light mode
         .dropdown-content {
           display: none;
           position: absolute;
-          background-color: #999;
+          background-color: var(--btn-color);
           min-width: 184px;
           box-shadow: 0px 2px 16px 0px rgba(0,0,0,0.2);
           z-index: 1;
         }
-        .dropdown-content a {
-          color: var(--editor-text);
+        .dropdown-content * {
+          color: var(--editor-text) !important;
           padding: 12px 16px;
           text-decoration: none;
           display: block;
         }
+        .dropdown-content p {
+        	padding: 0px 16px;
+        }
         .dropdown-content hr {
         	margin: 5px;
+        	padding: 0px !important;
         	border-radius: 50px;
         	border-width: 2px;
         	border: 1px solid white;
@@ -166,6 +174,9 @@ transaprent editor and viewer in css with dark and light mode
         .dropdown:hover .dropdown-content {display: block;}
         /*.dropdown .dropbtn {}*/
         .dropdown:hover .dropbtn {background-color: #777}
+        * {
+        	transition: 0.4s ease-in-out;
+        }
 	</style>
 </head>
 
@@ -174,78 +185,99 @@ transaprent editor and viewer in css with dark and light mode
 	<form name="fileForm">
 		<input type="file" id='file' name='file[]' onchange="openFile(event)" accept=".HTML" />
 	</form>
-	<div class="dropdown" id="filesMenu">
-		<button class="dropbtn">File</button>
-		<div class="dropdown-content">
-			<a href="javascript:void(0)" onclick="document.getElementById('file').click();" id="open">Open...</a>
-			<a href="javascript:void(0)" onclick="downloadHTML()" id="save">Save...</a>
-			<hr>
-			<a href="javascript:alert('Unsupported! Check back later time!')">Switch Language</a>
-			<hr>
-			<a href="javascript:void(0)" onclick="resetText()" id="resetText">Reset text</a>
+	<div id="toolbar">
+		<div class="dropdown" id="filesMenu">
+			<button class="dropbtn">File</button>
+			<div class="dropdown-content">
+				<a href="javascript:void(0)" onclick="resetText();" id="resetText">New</a>
+				<a href="javascript:void(0)" onclick="document.getElementById('file').click();" id="open">Open...</a>
+				<a href="javascript:void(0)" onclick="downloadHTML();" id="save">Save...</a>
+				<hr>
+				<a href="javascript:void(0)" onclick="editor.reset(); refreshING();">New without saving</a>
+				<hr>
+				<a href="javascript:void(0)" onclick="nonHTMLMode();" id="non-html-btn">Switch to Non-HTML editing</a>
+			</div>
 		</div>
-	</div>
-	<div class="dropdown" id="viewMenu">
-		<button class="dropbtn">View</button>
-		<div class="dropdown-content">
-			<a href="javascript:void(0)" onclick="refresh(0, 'forced');" id="refresh">Refresh</a>
-			<a href="javascript:void(0)" onclick="setRefreshTime();" id="setRefresh">Set Refresh time...</a>
-			<a href="javascript:void(0)" onclick="stopRefresh();" id="stopRefresh">Stop Auto Refresh</a>
-			<a href="javascript:void(0)" onclick="toggleInstantRefresh();" id="instant-refresh-btn">Enable Instant Refresh</a>
-			<hr>
-			<a href="javascript:void(0)" onclick="openExternalWindow();" id="e-iframe">Open Iframe externally</a>
-			<hr>
-			<a href="javascript:void(0)" onclick="setIndentSize();" id="indentSize">Set Tab Size...</a>
-			<a href="javascript:void(0)" onclick="fontSize();" id="fontSize">Set Font Size...</a>
-			<a href="javascript:void(0)" onclick="wrapping()" id="wrapping_btn">Enable wrapping</a>
-			<hr>
-			<a href="javascript:void(0)" onclick="toggleLightMode()">Change light mode</a> <!-- or a button with an img that changes it -->
-			<hr>
-			<a href="javascript:void(0)" onclick="reloading();">Force Reload Page</a>
+		<div class="dropdown" id="viewMenu">
+			<button class="dropbtn">View</button>
+			<div class="dropdown-content">
+				<a href="javascript:void(0)" onclick="refresh(0, 'forced');" id="refresh">Refresh</a>
+				<a href="javascript:void(0)" onclick="setRefreshTime();" id="setRefresh">Set Refresh time...</a>
+				<a href="javascript:void(0)" onclick="stopRefresh();" id="stopRefresh">Stop Dynamic Refresh</a>
+				<a href="javascript:void(0)" onclick="toggleInstantRefresh();" id="instant-refresh-btn">Enable Instant Refresh</a>
+				<hr>
+				<a href="javascript:void(0)" onclick="openExternalWindow();" id="e-iframe">Open Iframe externally</a>
+				<hr>
+				<a href="javascript:void(0)" onclick="setIndentSize();" id="indentSize">Set Tab Size...</a>
+				<a href="javascript:void(0)" onclick="fontSize();" id="fontSize">Set Font Size...</a>
+				<a href="javascript:void(0)" onclick="wrapping()" id="wrapping_btn">Enable wrapping</a>
+				<hr>
+				<a href="javascript:void(0)" onclick="toggleLightMode();">Change light mode</a> <!-- or a button with an img that changes it -->
+				<hr>
+				<a href="javascript:void(0)" onclick="reloading();">Force Reload Page</a>
+			</div>
 		</div>
-	</div>
-	<div class="dropdown" id="otherMenu">
-		<button class="dropbtn">Misc</button>
-		<div class="dropdown-content">
-			<a href="javascript:void(0)" onclick="allOfOldLoadLocal()">Load from old local storage</a>
-			<a href="./LHE-FAQ.html">FAQ</a>
-			<hr>
-			<a href="https://www.youtube.com/watch?v=onLsz9BwP7M">Original</a>
-			<hr>
-			<a href="javascript:void(0)" onclick="settingsReset()">Reset Settings</a>
+		<div class="dropdown" id="otherMenu">
+			<button class="dropbtn">Misc</button>
+			<div class="dropdown-content">
+				<a href="javascript:void(0)" onclick="allOfOldLoadLocal();">Load from old local storage</a>
+				<a href="./LHE-FAQ.html">FAQ</a>
+				<hr>
+				<a href="https://www.youtube.com/watch?v=onLsz9BwP7M" target="_blank">Original</a>
+				<hr>
+				<a href="javascript:void(0)" onclick="settingsReset();">Reset Settings</a>
+			</div>
+		</div>
+		<div class="dropdown" id="fixesMenu">
+			<button class="dropbtn">Fixes</button>
+			<div class="dropdown-content">
+				<a href="javascript:void(0)" onclick="settingsReset();" id="reset-settings-assistant">"The editor doesn't refresh the preview!" (Reset Settings)</a>
+			</div>
+		</div>
+		<div class="dropdown" id="helpMenu">
+			<button class="dropbtn">Help</button>
+			<div class="dropdown-content">
+				<a href="https://www.w3schools.com/html/default.asp" target="_blank" id="html-tutorial">HTML Tutorial</a>
+				<hr>
+				<a href="https://htmlformatter.com/" target="_blank" id="prettify">Prettify HTML</a>
+			</div>
 		</div>
 	</div>
 	<form name='editor'>
 		<div class="main" id="main">
 			<!-- Grammarly disabled https://stackoverflow.com/a/46777787/13104233 -->
-			<textarea id="editor-textarea" onkeyup="refresh(settings['refreshInterval'],'up')" onkeydown="refresh(settings['refreshInterval'], 'down')" style="font-size: 15px;" autocomplete="off" autocapitalize="off" spellcheck="false" autofocus placeholder="HTML code (JS and CSS included, spellcheck off)" data-gramm_editor="false">
+			<textarea id="editor-textarea" onkeyup="refresh(settings.refreshInterval,'up')" onkeydown="refresh(settings.refreshInterval, 'down')" style="font-size: 15px;" autocomplete="off" autocapitalize="off" spellcheck="false" autofocus placeholder="HTML code (JS and CSS included, spellcheck off)" data-gramm_editor="false">
+<!DOCTYPE html>
 <html>
-	<!-- Learn HTML: https://www.w3schools.com/html/default.asp -->
-	<head>
-		<title>Your Title Here</title>
-		<meta name="viewport" content="width=device-width initial-scale=1">
-		<link rel="stylesheet" type="text/css" href="./path/to/stylesheet">
-		<style>
-			/* Styling */
-		</style>
-		<!-- Metadata and stuff -->
-	</head>
 
-	<body>
-		<!-- Elements -->
-	</body>
+<head>
+    <title>Your Title Here</title>
+    <meta name="viewport" content="width=device-width initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="./path/to/stylesheet">
+    <style>
+        /* Styling */
+    </style>
+    <!-- Metadata and stuff -->
+</head>
 
-	<script>
-		// Javascript
-	</script>
+<body>
+    <!-- Elements -->
+</body>
+
+<script>
+    // Javascript
+</script>
+
 </html></textarea>
 	</form>
-	<iframe id="viewer"></iframe>
+	<iframe id="viewer">
+		<p>Sorry, your browser doesn't support iframes. Try with another browser or just <a href="javascript:void(0)" onclick="nonHTMLMode();">edit without a preview.</a></p>
+	</iframe>
 	</div>
 </body>
 <script>
 var dSettings = {
-	'refreshInterval': 750,
+	'refreshInterval': 500,
 	'autoRefresh': true,
 	'instantRefresh': false,
 	'tabSize': 4,
@@ -274,9 +306,10 @@ function settingsCheck() {
 		instantRefreshCheck();
 		document.getElementById('editor-textarea').style.fontSize = settings.fontSize;
 		document.getElementById('editor-textarea').style.tabSize = settings.tabSize;
-		wrapping();
-		wrapping();
+		wrapping()
+		wrapping()
 		checkLightMode();
+		return settings
 	}
 }
 
@@ -294,8 +327,8 @@ function settingsReset() {
 
 function settingsChange(setting, value) {
 	settings[setting] = value;
-	console.log("Settings changed");
 	settingsSave()
+	console.log("Settings changed");
 	return settings;
 }
 
@@ -344,6 +377,12 @@ function antiLag() { // Use not found, but still not made
 	// Can be enabled or disabled by the user
 }
 
+function nonHTMLMode(){
+	removeElement('viewer');
+	document.getElementById('non-html-btn').setAttribute('onclick','reloading();');
+	document.getElementById('non-html-btn').innerHTML = "Switch back to HTML Editor";
+}
+
 function toggleInstantRefresh() {
 	if (settings.instantRefresh) {
 		document.getElementById('instant-refresh-btn').innerHTML = "Enable Instant Refresh";
@@ -366,7 +405,7 @@ function refresh(time, downUp) {
 			eRefreshING();
 		} else {
 			mainFunctions.forEach(clearTimeout); // https://stackoverflow.com/questions/54277835/how-to-stop-calling-a-function-js/54277902#54277902
-			mainFunctions.length = 0;
+			mainFunctions = [];
 			console.log("Detected " + downUp + " typing");
 			mainFunctions.push(setTimeout(refreshING, time));
 			mainFunctions.push(setTimeout(eRefreshING, time));
@@ -420,20 +459,20 @@ function reloading() {
 function stopRefresh() {
 	if (settings.autoRefresh) {
 		settingsChange("autoRefresh", false);
-		document.getElementById('stopRefresh').innerHTML = "Start Auto Refresh";
+		document.getElementById('stopRefresh').innerHTML = "Start Dynamic Refresh";
 		if (settings.instantRefresh) {
 			toggleInstantRefresh();
 		}
 	} else {
 		settingsChange("autoRefresh", true);
-		document.getElementById('stopRefresh').innerHTML = "Stop Auto Refresh";
+		document.getElementById('stopRefresh').innerHTML = "Stop Dynamic Refresh";
 	}
 	return settings.autoRefresh;
 }
 
 function setRefreshTime() {
-	var timeOfRefresh = parseInt(prompt("How long until refresh?", settings.refreshInterval));
-	if (typeof timeOfRefresh === null) {
+	var timeOfRefresh = parseInt(prompt("How long until refresh? (MS)", settings.refreshInterval));
+	if (typeof timeOfRefresh === null || timeOfRefresh == 'NaN' || typeof timeOfRefresh === NaN) {
 		return timeOfRefresh;
 	}
 	settingsChange("refreshInterval", timeOfRefresh);
@@ -519,6 +558,7 @@ function downloadHTML(fileNames = fileName) {
 		return;
 	} else {
 		download(fileNames + ".html", document.getElementById('editor-textarea').value);
+		saved = true
 		return;
 	}
 }
@@ -583,9 +623,13 @@ function setIndentSize() {
 }
 
 function fontSize() {
-	var fontSize = parseInt(prompt("What would you like the font size to be?", settings.fontSize));
-	document.getElementById('editor-textarea').style.fontSize = fontSize;
-	settingsChange("fontSize", fontSize);
+	var fontSizeChoice = parseInt(prompt("What would you like the font size to be?", document.getElementById('editor-textarea').style.fontSize));
+	if (fontSizeChoice == '' || fontSizeChoice == 'NaN' || fontSizeChoice === null || fontSizeChoice === undefined) {
+		return false;
+	} else {
+		document.getElementById('editor-textarea').style.fontSize = fontSizeChoice & " !important";
+		settingsChange("fontSize", fontSizeChoice);
+	}
 	return settings.fontSize;
 }
 

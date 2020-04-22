@@ -52,9 +52,8 @@
         </div>
         <br>
         <div id="applescript">
-            <p>Here is where I'll share my AppleScripts:</p>
-            <a href="applescript://com.apple.scripteditor?action=new&script=set+originalv+to+output+volume+of+%28get+volume+settings%29%0D%0Aset+repeatz+to+the+text+returned+of+%28display+dialog+%22How+many+times+do+you+want+to+set+the+volume+randomly%3F%22+default+answer+%22100%22%29%0D%0Arepeat+repeatz+times%0D%0A%09%28set+volume+output+volume+random+number+from+0+to+100%29%0D%0Aend+repeat%0D%0Aset+volume+output+volume+originalv">Random
-                Output Volume</a>
+            <p>Here is where I'll share my AppleScripts:<noscript>You'll need javascript to open code from links</noscript></p>
+            <a href="#random-output-volume">Random Output Volume</a>
             <pre>
 set originalv to output volume of (get volume settings)
 set repeatz to the text returned of (display dialog "How many times do you want to set the volume randomly?" default answer "100")
@@ -63,7 +62,7 @@ repeat repeatz times
 end repeat
 set volume output volume originalv
             </pre>
-            <a href="applescript://com.apple.scripteditor?action=new&script=set%20originalv%20to%20input%20volume%20of%20(get%20volume%20settings)%0Arepeat%0A%20%20%20%20try%0A%20%20%20%20%20%20%20%20set%20volume%20input%20volume%20(random%20number%20from%200%20to%20100)%0A%20%20%20%20%20%20%20%20delay%20(random%20number%20from%200.0%20to%200.5)%0A%20%20%20%20on%20error%0A%20%20%20%20%20%20%20%20set%20volume%20input%20volume%20originalv%0A%20%20%20%20%20%20%20%20return%20originalv%0A%20%20%20%20end%20try%0Aend%20repeat">Random Input Volume</a>
+            <a href="#random-input-volume">Random Input Volume</a>
             <pre>
 set originalv to input volume of (get volume settings)
 repeat
@@ -76,8 +75,7 @@ repeat
     end try
 end repeat
             </pre>
-            <a href="applescript://com.apple.scripteditor?action=new&script=set+spamText+to+the+text+returned+of+%28display+dialog+%22What+to+spam%3F%22+default+answer+%22%22%29%0D%0Aset+repeatTimes+to+the+text+returned+of+%28display+dialog+%22Times+to+spam%22+default+answer+%2250%22%29%0D%0Adelay+5%0D%0Atell+application+%22System+Events%22%0D%0A%09repeat+repeatTimes+times%0D%0A%09%09keystroke+spamText%0D%0A%09%09key+code+36%0D%0A%09end+repeat%0D%0Aend+tell">Typing
-                spammer (used for texting)</a>
+            <a href="#typing-spammer">Typing spammer (used for texting)</a>
             <pre>
 set spamText to the text returned of (display dialog "What to spam?" default answer "")
 set repeatTimes to the text returned of (display dialog "Times to spam" default answer "50")
@@ -89,10 +87,9 @@ tell application "System Events"
     end repeat
 end tell
             </pre>
-            <a href="applescript://com.apple.scripteditor?action=new&script=%23Save%20as%20APP%20for%20extra%20enjoyment%0A%23%20To-do%3A%20fix%20constant%20interger%20overflow%0A(*%0APTS%20means%20progress%20total%20steps%0APD%20means%20progress%20descrition%20%0APAD%20means%20progress%20additional%20description%0APCS%20means%20progress%20completed%20steps%0APInfo%20means%20progress%20info%20(additional%20description)%0A*)%0Aglobal%20PTS%2C%20PD%2C%20PAD%2C%20PCS%2C%20numberz%2C%20PInfo%0A%0Aon%20varChecks()%0A%09set%20PTS%20to%20progress%20total%20steps%0A%09set%20PD%20to%20progress%20description%0A%09set%20PAD%20to%20progress%20additional%20description%0A%09set%20PCS%20to%20progress%20completed%20steps%0Aend%20varChecks%0A%0Aon%20setPTS(contentz)%0A%09set%20progress%20total%20steps%20to%20contentz%0Aend%20setPTS%0A%0Aon%20setPD(contentz)%0A%09set%20progress%20description%20to%20contentz%0Aend%20setPD%0A%0Aon%20setPAD(contentz)%0A%09set%20progress%20additional%20description%20to%20contentz%0Aend%20setPAD%0A%0Aon%20setPCS(contentz)%0A%09set%20progress%20completed%20steps%20to%20contentz%0Aend%20setPCS%0A%0Aset%20numberz%20to%20%7B-1%2C%201%7D%0AsetPTS(1000)%0AsetPD(%22Fun%20Progress%20Bar%22)%0AsetPCS(progress%20total%20steps%20%2F%202)%0A%0Aon%20flowChecks()%0A%09varChecks()%0A%09if%20PCS%20is%20less%20than%200%20then%0A%09%09set%20PCS%20to%20setPCS(0)%0A%09%09set%20PAD%20to%20setPAD(%22Interger%20underflow%2C%20please%20wait%22)%0A%09%09repeat%20PTS%20%2F%202%20times%0A%09%09%09set%20PCS%20to%20setPCS(PCS%20%2B%201)%0A%09%09%09varChecks()%0A%09%09%09delay%200.005%0A%09%09end%20repeat%0A%09%09%0A%09else%20if%20PCS%20is%20greater%20than%20PTS%20-%201%20then%0A%09%09set%20PCS%20to%20setPCS(PTS)%0A%09%09set%20PAD%20to%20setPAD(%22Interger%20overflow%2C%20please%20wait%22)%0A%09%09repeat%20PTS%20%2F%202%20times%0A%09%09%09set%20PCS%20to%20setPCS(PCS%20-%201)%0A%09%09%09varChecks()%0A%09%09%09delay%200.005%0A%09%09end%20repeat%0A%09end%20if%0A%09numChecks()%0A%09return%0Aend%20flowChecks%0A%0Aon%20numChecks()%0A%09varChecks()%0A%09%23%20Checks%20the%20number%20and%20adds%20extra%20text%20to%20it%0A%09if%20PCS%20is%20500%20then%0A%09%09set%20PAD%20to%20setPAD(PInfo%20%26%20%22(Middle)%22)%0A%09%09%0A%09else%20if%20PCS%20is%20less%20than%2010%20then%0A%09%09set%20PAD%20to%20setPAD(PInfo%20%26%20%22(Extremely%20Low)%22)%0A%09%09%0A%09else%20if%20PCS%20is%20greater%20than%20990%20then%0A%09%09set%20PAD%20to%20setPAD(PInfo%20%26%20%22(Extremely%20High)%22)%0A%09%09%0A%09else%20if%20PCS%20is%20less%20than%2050%20then%0A%09%09set%20PAD%20to%20setPAD(PInfo%20%26%20%22(Very%20Low)%22)%0A%09%09%0A%09else%20if%20PCS%20is%20greater%20than%20950%20then%0A%09%09set%20PAD%20to%20setPAD(PInfo%20%26%20%22(Very%20High)%22)%0A%09%09%0A%09else%20if%20PCS%20is%20less%20than%20100%20then%0A%09%09set%20PAD%20to%20setPAD(PInfo%20%26%20%22(Low)%22)%0A%09%09%0A%09else%20if%20PCS%20is%20greater%20than%20900%20then%0A%09%09set%20PAD%20to%20setPAD(PInfo%20%26%20%22(High)%22)%0A%09%09%0A%09end%20if%0A%09return%0Aend%20numChecks%0A%0Aon%20repeating()%0A%09try%0A%09%09repeat%0A%09%09%09varChecks()%0A%09%09%09set%20PInfo%20to%20PCS%20%26%20%22%2F%22%20%26%20PTS%20%26%20%22%20steps%20%22%0A%09%09%09set%20PTS%20to%20setPCS(PCS%20%2B%20(some%20item%20of%20numberz))%0A%09%09%09set%20PAD%20to%20setPAD(PInfo)%0A%09%09%09%0A%09%09%09flowChecks()%0A%09%09%09delay%205.0E-5%0A%09%09end%20repeat%0A%09on%20error%20the%20errorMsg%20number%20the%20errorNum%0A%09%09set%20PD%20to%20setPD(%22Interrupted%20by%20error%22)%0A%09%09set%20PAD%20to%20setPAD(%22Error%3A%20%22%20%26%20the%20errorNum%20%26%20%22.%20%22%20%26%20the%20errorMsg)%0A%09%09if%20errorNum%20is%20-128%20then%0A%09%09%09return%0A%09%09else%0A%09%09%09display%20dialog%20%22Error%3A%20%22%20%26%20the%20errorNum%20%26%20%22.%20%22%20%26%20the%20errorMsg%20buttons%20%7B%22OK%22%7D%20default%20button%201%20giving%20up%20after%2010%0A%09%09%09return%0A%09%09end%20if%0A%09%09return%0A%09end%20try%0Aend%20repeating%0A%0Arepeating()%0A%0Aon%20quit%0A%09setPTS(0)%0A%09setPD(%22%22)%0A%09setPAD(%22%22)%0A%09setPCS(0)%0A%09continue%20quit%0Aend%20quit%0A">Fun progress bar (Code is too large)</a>
+            <a href="#fun-progress-bar">Fun progress bar (Code is large lmao)</a>
             <pre>
-#Save as APP for extra enjoyment
-# To-do: fix constant interger overflow
+# Save as APP for extra enjoyment
 (*
 PTS means progress total steps
 PD means progress descrition 
@@ -214,10 +211,30 @@ on quit
     setPAD("")
     setPCS(0)
     continue quit
-end quit
-            </pre>
+end quit</pre>
         </div>
     </div>
 </body>
+
+<script>
+    function hashChange() {
+        switch (location.hash) {
+            case "#random-output-volume":
+                window.open("applescript://com.apple.scripteditor?action=new&script=set+originalv+to+output+volume+of+%28get+volume+settings%29%0D%0Aset+repeatz+to+the+text+returned+of+%28display+dialog+%22How+many+times+do+you+want+to+set+the+volume+randomly%3F%22+default+answer+%22100%22%29%0D%0Arepeat+repeatz+times%0D%0A%09%28set+volume+output+volume+random+number+from+0+to+100%29%0D%0Aend+repeat%0D%0Aset+volume+output+volume+originalv", name="_parent");
+                break;
+            case "#random-input-volume":
+                window.open("applescript://com.apple.scripteditor?action=new&script=set%20originalv%20to%20input%20volume%20of%20(get%20volume%20settings)%0Arepeat%0A%20%20%20%20try%0A%20%20%20%20%20%20%20%20set%20volume%20input%20volume%20(random%20number%20from%200%20to%20100)%0A%20%20%20%20%20%20%20%20delay%20(random%20number%20from%200.0%20to%200.5)%0A%20%20%20%20on%20error%0A%20%20%20%20%20%20%20%20set%20volume%20input%20volume%20originalv%0A%20%20%20%20%20%20%20%20return%20originalv%0A%20%20%20%20end%20try%0Aend%20repeat", name="_parent");
+                break;
+            case "#typing-spammer":
+                window.open("applescript://com.apple.scripteditor?action=new&script=set+spamText+to+the+text+returned+of+%28display+dialog+%22What+to+spam%3F%22+default+answer+%22%22%29%0D%0Aset+repeatTimes+to+the+text+returned+of+%28display+dialog+%22Times+to+spam%22+default+answer+%2250%22%29%0D%0Adelay+5%0D%0Atell+application+%22System+Events%22%0D%0A%09repeat+repeatTimes+times%0D%0A%09%09keystroke+spamText%0D%0A%09%09key+code+36%0D%0A%09end+repeat%0D%0Aend+tell", name="_parent");
+                break;
+            case "#fun-progress-bar":
+                window.open("applescript://com.applescriptedior?action=new&script='%23+Save+as+APP+for+extra+enjoyment%0D%28*%0APTS+means+progress+total+steps%0APD+means+progress+descrition+%0APAD+means+progress+additional+description%0APCS+means+progress+completed+steps%0APInfo+means+progress+info+%28additional+description%29%0A*%29%0Dglobal+PTS%2C+PD%2C+PAD%2C+PCS%2C+numberz%2C+PInfo%0D%0Don+varChecks%28%29%0D%09set+PTS+to+progress+total+steps%0D%09set+PD+to+progress+description%0D%09set+PAD+to+progress+additional+description%0D%09set+PCS+to+progress+completed+steps%0Dend+varChecks%0D%0Don+setPTS%28contentz%29%0D%09set+progress+total+steps+to+contentz%0Dend+setPTS%0D%0Don+setPD%28contentz%29%0D%09set+progress+description+to+contentz%0Dend+setPD%0D%0Don+setPAD%28contentz%29%0D%09set+progress+additional+description+to+contentz%0Dend+setPAD%0D%0Don+setPCS%28contentz%29%0D%09set+progress+completed+steps+to+contentz%0Dend+setPCS%0D%0Dset+numberz+to+%7B-1%2C+1%7D%0DsetPTS%281000%29%0DsetPD%28%22Fun+Progress+Bar%22%29%0DsetPCS%28progress+total+steps+%2F+2%29%0D%0Don+flowChecks%28%29%0D%09varChecks%28%29%0D%09if+PCS+is+less+than+0+then%0D%09%09set+PCS+to+setPCS%280%29%0D%09%09set+PAD+to+setPAD%28%22Interger+underflow%2C+please+wait%22%29%0D%09%09repeat+PTS+%2F+2+times%0D%09%09%09set+PCS+to+setPCS%28PCS+%2B+1%29%0D%09%09%09varChecks%28%29%0D%09%09%09delay+0.005%0D%09%09end+repeat%0D%09%09%0D%09else+if+PCS+is+greater+than+PTS+-+1+then%0D%09%09set+PCS+to+setPCS%28PTS%29%0D%09%09set+PAD+to+setPAD%28%22Interger+overflow%2C+please+wait%22%29%0D%09%09repeat+PTS+%2F+2+times%0D%09%09%09set+PCS+to+setPCS%28PCS+-+1%29%0D%09%09%09varChecks%28%29%0D%09%09%09delay+0.005%0D%09%09end+repeat%0D%09end+if%0D%09numChecks%28%29%0D%09return%0Dend+flowChecks%0D%0Don+numChecks%28%29%0D%09varChecks%28%29%0D%09%23+Checks+the+number+and+adds+extra+text+to+it%0D%09if+PCS+is+500+then%0D%09%09set+PAD+to+setPAD%28PInfo+%26+%22%28Middle%29%22%29%0D%09%09%0D%09else+if+PCS+is+less+than+10+then%0D%09%09set+PAD+to+setPAD%28PInfo+%26+%22%28Extremely+Low%29%22%29%0D%09%09%0D%09else+if+PCS+is+greater+than+990+then%0D%09%09set+PAD+to+setPAD%28PInfo+%26+%22%28Extremely+High%29%22%29%0D%09%09%0D%09else+if+PCS+is+less+than+50+then%0D%09%09set+PAD+to+setPAD%28PInfo+%26+%22%28Very+Low%29%22%29%0D%09%09%0D%09else+if+PCS+is+greater+than+950+then%0D%09%09set+PAD+to+setPAD%28PInfo+%26+%22%28Very+High%29%22%29%0D%09%09%0D%09else+if+PCS+is+less+than+100+then%0D%09%09set+PAD+to+setPAD%28PInfo+%26+%22%28Low%29%22%29%0D%09%09%0D%09else+if+PCS+is+greater+than+900+then%0D%09%09set+PAD+to+setPAD%28PInfo+%26+%22%28High%29%22%29%0D%09%09%0D%09end+if%0D%09return%0Dend+numChecks%0D%0Don+repeating%28%29%0D%09try%0D%09%09repeat%0D%09%09%09varChecks%28%29%0D%09%09%09set+PInfo+to+PCS+%26+%22%2F%22+%26+PTS+%26+%22+steps+%22%0D%09%09%09set+PTS+to+setPCS%28PCS+%2B+%28some+item+of+numberz%29%29%0D%09%09%09set+PAD+to+setPAD%28PInfo%29%0D%09%09%09%0D%09%09%09flowChecks%28%29%0D%09%09%09delay+5.0E-5%0D%09%09end+repeat%0D%09on+error+the+errorMsg+number+the+errorNum%0D%09%09set+PD+to+setPD%28%22Interrupted+by+error%22%29%0D%09%09set+PAD+to+setPAD%28%22Error%3A+%22+%26+the+errorNum+%26+%22.+%22+%26+the+errorMsg%29%0D%09%09if+errorNum+is+-128+then%0D%09%09%09return%0D%09%09else%0D%09%09%09display+dialog+%22Error%3A+%22+%26+the+errorNum+%26+%22.+%22+%26+the+errorMsg+buttons+%7B%22OK%22%7D+default+button+1+giving+up+after+10%0D%09%09%09return%0D%09%09end+if%0D%09%09return%0D%09end+try%0Dend+repeating%0D%0Drepeating%28%29%0D%0Don+quit%0D%09setPTS%280%29%0D%09setPD%28%22%22%29%0D%09setPAD%28%22%22%29%0D%09setPCS%280%29%0D%09continue+quit%0Dend+quit%0D'", name="_parent");
+                break;
+        }
+    }
+    window.addEventListener('hashchange', hashChange, false);
+    hashChange();
+</script>
 
 </html>
