@@ -32,6 +32,9 @@ hr {color: white;}
 	position: absolute;
     margin-left: 5px;
 }
+#aname {
+    font-color: white;
+}
 /* menu icon (css.gg) */
 div .menu-icon {
     width: 25px;
