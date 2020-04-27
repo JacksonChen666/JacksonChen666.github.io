@@ -7,130 +7,18 @@ body {
 	hyphens: auto;
 	font-family: "Arial";
 	font-size:18px;
-    margin: 0px;
+    margin: -25px 0px;
+    padding: 0px;
 }
 
-pre, h1, h2, h3, i, form, p, a {margin-left: 10px} /* Change to 'body *' */
-h1 {margin: 10px;}
+h1 {
+    padding-top: 10px
+}
 a:link {color: rgb(255, 230, 0);}
 a:visited {color: rgb(255, 230, 0);}
 a:hover {color: rgb(255, 230, 20);}
 a:active {color: rgb(235, 180, 0);}
-
-/*{font-family: "Arial", "Helvetica", sans-serif}*/
 hr {color: white;}
-/*@import url('https://css.gg/c');*/
-/* Animations */
-@keyframes appear {
-    from {margin-left: -2500px;}
-    to {margin-left: 0px;}
-}
-#all-animation {
-    /*animation: appear 0.25s 1 0 1 normal forwards running;*/
-}
-.header-and-nav {
-	position: absolute;
-    margin-left: 5px;
-}
 #aname {
     font-color: white;
-}
-/* menu icon (css.gg) */
-div .menu-icon {
-    width: 25px;
-    height: 2px;
-    background-color: currentColor;
-    margin: 5px 0px 0px 10px;
-    border-radius: 40px;
-}
-
-.gg-close {
-    box-sizing: border-box;
-    position: relative;
-    display: block;
-    transform: scale(var(--ggs,1));
-    width: 22px;
-    height: 22px;
-    border: 2px solid transparent;
-    border-radius: 40px
-}
-.gg-close::after,
-.gg-close::before {
-    content: "";
-    display: block;
-    box-sizing: border-box;
-    position: absolute;
-    width: 20px;
-    height: 3px;
-    background: currentColor;
-    transform: rotate(45deg);
-    border-radius: 40px;
-    top: 8px;
-    left: 1px
-}
-.gg-close::after {
-    transform: rotate(-45deg)
-}
-/* top navigation!!!!! refer to nav.css */
-@keyframes hover {
-    from {}
-    to {background-color: gray; color:cadetblue;}
-}
-@keyframes unhover {
-    from {background-color: gray;color:cadetblue}
-    to {}
-}
-@keyframes active {
-    from {}
-    to {color: brown;}
-}
-.gg-close {
-    position: absolute;
-    top: 0;
-    right: 25px;
-    font-size: 36px;
-    margin-left: 50px;
-}
-.nav {
-    height: 100%;
-    width: 0;
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    background-color: #111;
-    overflow-x: hidden;
-    transition-duration: 0.5s;
-    padding-top: 60px;
-    margin-top: 0px;
-    padding-left: 0px;
-    
-    overflow-wrap: none;
-	word-wrap: none;
-	hyphens: none;
-}
-.nav li a {
-    padding: 8px 8px 8px 32px;
-    text-decoration: none;
-    font-size: 25px;
-    color: #818181;
-    display: block;
-    transition: 0.5s;
-    
-    overflow-wrap: none;
-    width: 200px;
-	word-wrap: none;
-	hyphens: none;
-}
-.nav li a:hover {
-    animation: hover;
-    animation-duration: 0.5s;
-    background-color: gray; 
-    color:cadetblue;
-}
-.nav li a:active {
-    animation: active;
-    animation-duration: 0.5s;
-    background-color: gray;
-    color:cadetblue
 }
