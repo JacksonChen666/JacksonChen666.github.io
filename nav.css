@@ -58,7 +58,7 @@ main {
         flex-direction: row;
         margin-bottom: 10px;
 
-        overflow-x: scroll;
+        overflow-x: auto;
         overflow-y: none;
     }
     .nav-link {
@@ -79,8 +79,9 @@ main {
         height: 100vh;
     }
     .navbar-nav {
-        overflow-x: scroll;
-        overflow-y: scroll;
+        overflow: none;
+        overflow-x: none;
+        overflow-y: none;
     }
     .navbar:hover {
         width: 16rem;
