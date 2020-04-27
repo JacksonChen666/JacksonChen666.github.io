@@ -1,24 +1,19 @@
-/* Site structure?? */
 body {
-	background-color: darkslategray;
-	color: white;
+	background: #000;
+	color: #ddd;
 	overflow-wrap: break-word;
 	word-wrap: break-word;
 	hyphens: auto;
 	font-family: "Arial";
 	font-size: 18px;
-    margin: -20px 0px;
+    margin: 0px;
     padding: 0px;
 }
 
-h1 {
-    padding-top: 10px
-}
-a:link {color: rgb(255, 230, 0);}
-a:visited {color: rgb(255, 230, 0);}
-a:hover {color: rgb(255, 230, 20);}
-a:active {color: rgb(235, 180, 0);}
+a:link {color: yellow}
+a:visited {color: orange}
+a:hover {color: red}
+a:active {color: green}
 hr {color: white;}
-#aname {
-    font-color: white;
-}
+#aname {font-color: white;}
+textarea {background-color: #222;}

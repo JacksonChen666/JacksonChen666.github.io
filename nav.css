@@ -5,12 +5,13 @@
     --bg-secondory: #141418;
 }
 .navbar {
-    transition: width 200ms ease;
+    transition: width 250ms ease;
+    hyphens: none;
     width: 5rem;
     height: 100vh;
     position: fixed;
     padding-bottom: 30px !important;
-    background-color: var(--bg-primary);
+    background-color: #23232e;
     text-decoration: none;
 }
 .navbar-nav {
@@ -34,7 +35,6 @@
     display: flex;
     align-items: center;
     height: 5rem;
-    color: var(--text-primary);
     text-decoration: none !important;
 }
 .link-text {
@@ -64,7 +64,6 @@
     .navbar ~ * {
         margin: 0;
         margin-top: 20px;
-        margin-left: 5px;
     }
     main {
         padding-bottom: 5rem;
@@ -88,6 +87,6 @@
         transition: opacity 200ms;
     }
     main {
-        margin-left: 5.3rem;
+        margin-left: 5.5rem;
     }
 }
