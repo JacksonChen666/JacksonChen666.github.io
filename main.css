@@ -1,6 +1,12 @@
+:root {
+	--main-bg: #000;
+	--secondory-bg: #222;
+	--main-color: #ddd;
+	--secondory-color: #fff;
+}
 body {
-	background: #000;
-	color: #ddd;
+	background: var(--main-bg);
+	color: var(--main-color);
 	overflow-wrap: break-word;
 	word-wrap: break-word;
 	hyphens: auto;
@@ -16,4 +22,4 @@ a:hover {color: red}
 a:active {color: green}
 hr {color: white;}
 #aname {font-color: white;}
-textarea {background-color: #222;}
+textarea {background-color: var(--secondory-bg);}
