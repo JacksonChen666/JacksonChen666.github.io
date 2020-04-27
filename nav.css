@@ -4,7 +4,6 @@
     --bg-primary: #23232e;
     --bg-secondory: #141418;
 }
-
 .navbar {
     transition: width 200ms ease;
     width: 5rem;
@@ -46,8 +45,8 @@
     min-width: 1.5rem;
     margin: 0 1.5rem;
 }
-.navbar ~ * {
-    margin-left: 5.2rem;
+main {
+    margin-left: 5.3rem;
 }
 @media only screen and (max-width: 600px) {
     .navbar {
