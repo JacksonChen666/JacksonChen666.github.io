@@ -1,11 +1,13 @@
-# Contributing
+## Contributing checklist:
 
-Contributing is good, but here are things to keep in mind
+This checklist must be completed in order to have your pull request accepted
 
-## Rules of contributing
+Required:
+- [ ] **I am not violaiting the *[Github ToS](https://help.github.com/en/github/site-policy/github-terms-of-service)* in any way possible**
+- [ ] I know what I am doing here
+- [ ] *I understand that publishing my work to this repository means it is publicly avalible for everyone to use*
+- [ ] I am using pull requests to merge my commits
 
-1. Must not include copyrighted content
-
-## Before contributing, consider first
-
-* Must comply with the license (Keep the LICENSE file)
+Optional:
+- [ ] I am using [StackOverflow](https://stackoverflow.com) as main source of help
+- [ ] I am using [StackOverflow](https://stackoverflow.com) as main source of code
