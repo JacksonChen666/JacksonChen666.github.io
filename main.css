@@ -16,10 +16,15 @@ body {
     padding: 0px;
 }
 
-a:link {color: yellow}
-a:visited {color: orange}
-a:hover {color: red}
-a:active {color: green}
-hr {color: white;}
-#aname {font-color: white;}
+a:link:not(#aname) {color: yellow}
+a:visited:not(#aname) {color: orange}
+a:hover:not(#aname) {color: red}
+a:active:not(#aname) {color: green}
+hr {color: var(--main-color);}
 textarea {background-color: var(--secondory-bg);}
+button, input {
+	background-color: var(--secondory-bg);
+	color: var(--secondory-color);
+	border: 0px solid transparent;
+	border-radius: 2px;
+}
