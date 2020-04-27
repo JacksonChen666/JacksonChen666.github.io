@@ -45,9 +45,6 @@
     min-width: 1.5rem;
     margin: 0 1.5rem;
 }
-main {
-    margin-left: 5.3rem;
-}
 @media only screen and (max-width: 600px) {
     .navbar {
         bottom: 0;
@@ -69,6 +66,9 @@ main {
         margin-top: 20px;
         margin-left: 5px;
     }
+    main {
+        padding-bottom: 5rem;
+    }
 }
 @media only screen and (min-width: 600px) {
     .navbar {
@@ -86,5 +86,8 @@ main {
     .navbar:hover .link-text {
         display: inline;
         transition: opacity 200ms;
+    }
+    main {
+        margin-left: 5.3rem;
     }
 }
