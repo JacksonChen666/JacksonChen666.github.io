@@ -1,28 +1,15 @@
 <!DOCTYPE html>
 <!-- 
-To Do:
-SYNTAX HIGHLIGHTING (CAP LOCKS I HATE YOU, might be impossible)
+TODO:
 Allow switching from files to files (have to figure out the loadLocal params first)
-Detect low performance and set delay for every specific milliseconds
-Allow other types of files by allowing removal of iframe
-able to change settings by calling specific functions with a int or user input
-try and allow resizing with no weird behaviours and stuff with the things
-transaprent editor and viewer in css with dark and light mode
 Multi-file editing with HTML, CSS, and JS, all saved seprately, and is usable after saving somehow, with labels
 -->
 <html>
 
-<head>    
-    <script async src='https://www.google-analytics.com/analytics.js'></script>
-    <script>
-    window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-    ga('create', 'UA-164582561-1', 'auto');
-    ga('send', 'pageview');
-    </script>
-    <script src="https://www.googleoptimize.com/optimize.js?id=OPT-5FCNDHB"></script>
+<head>
 	<title id="webpage-title">Live HTML Editor</title>
 	<meta name="viewport" content="width=device-width initial-scale=1" />
-	<!-- <link rel='icon' href='https://www.mcpcsystems.co.uk/wp-content/uploads/2018/10/Clipboard-Icon.png'> -->
+	<!-- https://www.mcpcsystems.co.uk/wp-content/uploads/2018/10/Clipboard-Icon.png -->
 	<link rel="icon" href="data:image/png;base64,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" />
 	<style>
 		@import url('https://fonts.googleapis.com/css2?family=Inconsolata&display=swap');
@@ -56,7 +43,6 @@ Multi-file editing with HTML, CSS, and JS, all saved seprately, and is usable af
 		body {
 			overflow: hidden; 
 			font-family: Arial, sans-serif;
-			tab-size: 4;
 			margin: 0;
 			overflow: hidden;
 			background-color: var(--body-color); /* #222 dark mode, #bdc3c7 light mode */
@@ -65,7 +51,7 @@ Multi-file editing with HTML, CSS, and JS, all saved seprately, and is usable af
 		button {
 			background-color: white;
 			color: black;
-		}	
+		}   
 		.main {
 			width: 100%;
 			height: 92vh; /* Dynamic screen height */
@@ -75,7 +61,8 @@ Multi-file editing with HTML, CSS, and JS, all saved seprately, and is usable af
 		}
 		.main * {
 			border-radius: 2px;
-			min-width: 50px;
+			min-width: 100px;
+			min-height: 250px;
 			margin: 10px;
 			width: 100%;
 			height: 100%;
@@ -85,11 +72,10 @@ Multi-file editing with HTML, CSS, and JS, all saved seprately, and is usable af
 		#editor-textarea {
 			overflow: auto;
 			white-space: nowrap;
-
 			background-color: var(--editor-bg); /* #333 dark mode, #fff light mode */
 			color: var(--editor-text);
-			font-size: 18px !important;
 			padding: 5px 5px 0px 5px;
+			font-size: 18px;
 			font-family: 'Inconsolata', monospace; /* MacOS Sublime Text font lol */
 			resize: none;
 		}
@@ -113,20 +99,15 @@ Multi-file editing with HTML, CSS, and JS, all saved seprately, and is usable af
 			}
 		}
 		@media all and (max-width: 768px) and (min-height: 1500px) {.main * {height: 90%;}}
-		@media all and (max-width: 768px) and (max-height: 1200px) {.main * {height: 80%;}
-		}
-		@media all and (max-width: 768px) and (max-height: 750px) {.main * {height: 55%;}
-		}
+		@media all and (max-width: 768px) and (max-height: 1200px) {.main * {height: 80%;}}
+		@media all and (max-width: 768px) and (max-height: 750px) {.main * {height: 55%;}}
 		@media all and (max-width: 768px) and (max-height: 600px) {.main * {height: 45%;}}
 		@media all and (max-width: 768px) and (max-height: 550px) {.main * {height: 40%;}}
 		@media all and (max-width: 768px) and (max-height: 350px) {.main * {height: 35%;}}
 		@media all and (max-width: 550px) {.main {width: 90vw;}}
 		@media all and (max-width: 270px) {.main {width: 85vw;}}
-
-		#buttons {
-			text-align: center;
-		}
-		h1 {font-size: 24px;}
+		noscript {font-size: 300px;}
+		#buttons {text-align: center;}
 		.medium {font-size: 16px;}
 		.small {font-size: 12px;}
 		.mini {font-size: 8px;}
@@ -136,59 +117,54 @@ Multi-file editing with HTML, CSS, and JS, all saved seprately, and is usable af
 		.middle {text-align: center;}
 
 		#file {display: none;}
-		#filesMenu {margin-left: 10px;}
-        
-        /* https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_js_dropdown_hover */
-        .dropbtn {
-          background-color: var(--btn-color);
-          margin-top: 10px;
-          outline: none;
-          color: var(--editor-text);
-          padding: 8px 16px 8px 16px;
-          font-size: 16px;
-          margin-right: -5px;
-          border: none;
-        }
-        .dropdown {
-          position: relative;
-          display: inline-block;
-        }
-        .dropdown-content {
-          display: none;
-          position: absolute;
-          background-color: var(--btn-color);
-          min-width: 184px;
-          box-shadow: 0px 2px 16px 0px rgba(0,0,0,0.2);
-          z-index: 1;
-        }
-        .dropdown-content * {
-          color: var(--editor-text) !important;
-          padding: 12px 16px;
-          text-decoration: none;
-          display: block;
-        }
-        .dropdown-content p {
-        	padding: 0px 16px;
-        }
-        .dropdown-content hr {
-        	margin: 5px;
-        	padding: 0px !important;
-        	border-radius: 50px;
-        	border-width: 2px;
-        	border: 1px solid white;
-        }
-        .dropdown-content a:hover {background-color: #777;}
-        .dropdown:hover .dropdown-content {display: block;}
-        /*.dropdown .dropbtn {}*/
-        .dropdown:hover .dropbtn {background-color: #777}
-        * {
-        	transition: 0.4s ease-in-out;
-        }
+		
+		/* https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_js_dropdown_hover */
+		.dropbtn {
+		  background-color: var(--btn-color);
+		  margin-top: 10px;
+		  outline: none;
+		  color: var(--editor-text);
+		  padding: 8px 16px 8px 16px;
+		  font-size: 16px;
+		  margin-right: -5px;
+		  border: none;
+		}
+		.dropdown {
+		  position: relative;
+		  display: inline-block;
+		}
+		.dropdown:first-child {margin-left: 10px;}
+		.dropdown-content {
+		  display: none;
+		  position: absolute;
+		  background-color: var(--btn-color);
+		  width: 180px;
+		  box-shadow: 0px 2px 16px 0px rgba(0, 0, 0, 0.2);
+		  z-index: 1;
+		}
+		.dropdown-content * {
+		  color: var(--editor-text) !important;
+		  padding: 12px 16px;
+		  text-decoration: none;
+		  display: block;
+		}
+		.dropdown-content p {padding: 0px 16px;}
+		.dropdown-content hr {
+			margin: 5px;
+			padding: 0px !important;
+			border-radius: 50px;
+			border-width: 2px;
+			border: 1px solid white;
+		}
+		.dropdown-content a:hover {background-color: #777; cursor: pointer;}
+		.dropdown:hover .dropdown-content {display: block;}
+		.dropdown:hover .dropbtn {background-color: #777;}
+		* {transition: 0.25s ease-in-out;}
 	</style>
 </head>
 
 <body onbeforeunload="reloading();">
-	<noscript style="font-size: 300px;">Enable JavaScript</noscript>
+	<noscript>Enable JavaScript</noscript>
 	<form name="fileForm">
 		<input type="file" id='file' name='file[]' onchange="openFile(event)" accept=".HTML" />
 	</form>
@@ -196,49 +172,49 @@ Multi-file editing with HTML, CSS, and JS, all saved seprately, and is usable af
 		<div class="dropdown" id="filesMenu">
 			<button class="dropbtn">File</button>
 			<div class="dropdown-content">
-				<a href="javascript:void(0)" onclick="resetText();" id="resetText">New</a>
-				<a href="javascript:void(0)" onclick="document.getElementById('file').click();" id="open">Open...</a>
-				<a href="javascript:void(0)" onclick="downloadHTML();" id="save">Save...</a>
+				<a id="newSave">New</a>
+				<a id="open">Open...</a>
+				<a id="save">Save...</a>
 				<hr>
-				<a href="javascript:void(0)" onclick="editor.reset(); refreshING();">New without saving</a>
+				<a id="newNoSave">New without saving</a>
 				<hr>
-				<a href="javascript:void(0)" onclick="nonHTMLMode();" id="non-html-btn">Switch to Non-HTML editing</a>
+				<a id="nonHTMLBtn">Switch to Non-HTML editing</a>
 			</div>
 		</div>
 		<div class="dropdown" id="viewMenu">
 			<button class="dropbtn">View</button>
 			<div class="dropdown-content">
-				<a href="javascript:void(0)" onclick="refresh(0, 'forced');" id="refresh">Refresh</a>
-				<a href="javascript:void(0)" onclick="setRefreshTime();" id="setRefresh">Set Refresh time...</a>
-				<a href="javascript:void(0)" onclick="stopRefresh();" id="stopRefresh">Stop Dynamic Refresh</a>
-				<a href="javascript:void(0)" onclick="toggleInstantRefresh();" id="instant-refresh-btn">Enable Instant Refresh</a>
+				<a id="refresh">Refresh</a>
+				<a id="setRefresh">Set Refresh time...</a>
+				<a id="stopRefresh">Stop Dynamic Refresh</a>
+				<a id="instantRefreshBtn">Enable Instant Refresh</a>
 				<hr>
-				<a href="javascript:void(0)" onclick="openExternalWindow();" id="e-iframe">Open Iframe externally</a>
+				<a id="eIframe">Open Iframe externally</a>
 				<hr>
-				<a href="javascript:void(0)" onclick="setIndentSize();" id="indentSize">Set Tab Size...</a>
-				<a href="javascript:void(0)" onclick="fontSize();" id="fontSize">Set Font Size...</a>
-				<a href="javascript:void(0)" onclick="wrapping()" id="wrapping_btn">Enable wrapping</a>
+				<a id="indentSize">Set Tab Size...</a>
+				<a id="fontSize">Set Font Size...</a>
+				<a id="wrappingBtn">Enable wrapping</a>
 				<hr>
-				<a href="javascript:void(0)" onclick="toggleLightMode();">Change light mode</a> <!-- or a button with an img that changes it -->
+				<a id="changeLightMode">Change light mode</a>
 				<hr>
-				<a href="javascript:void(0)" onclick="reloading();">Force Reload Page</a>
+				<a id="forceReload">Force Reload Page</a>
 			</div>
 		</div>
 		<div class="dropdown" id="otherMenu">
 			<button class="dropbtn">Misc</button>
 			<div class="dropdown-content">
-				<a href="javascript:void(0)" onclick="allOfOldLoadLocal();">Load from old local storage</a>
+				<a id="oldLoad">Load from old local storage</a>
 				<a href="./LHE-FAQ.html">FAQ</a>
 				<hr>
 				<a href="https://www.youtube.com/watch?v=onLsz9BwP7M" target="_blank">Original</a>
 				<hr>
-				<a href="javascript:void(0)" onclick="settingsReset();">Reset Settings</a>
+				<a id="settingsReset">Reset Settings</a>
 			</div>
 		</div>
 		<div class="dropdown" id="fixesMenu">
 			<button class="dropbtn">Fixes</button>
 			<div class="dropdown-content">
-				<a href="javascript:void(0)" onclick="settingsReset();" id="reset-settings-assistant">"The editor doesn't refresh the preview!" (Reset Settings)</a>
+				<a id="help1">"The editor doesn't refresh the preview!" (Reset Settings)</a>
 			</div>
 		</div>
 		<div class="dropdown" id="helpMenu">
@@ -253,88 +229,86 @@ Multi-file editing with HTML, CSS, and JS, all saved seprately, and is usable af
 	<form name='editor'>
 		<div class="main" id="main">
 			<!-- Grammarly disabled https://stackoverflow.com/a/46777787/13104233 -->
-			<textarea id="editor-textarea" onkeyup="refresh(settings.refreshInterval,'up')" onkeydown="refresh(settings.refreshInterval, 'down')" style="font-size: 15px;" autocomplete="off" autocapitalize="off" spellcheck="false" autofocus placeholder="HTML code (JS and CSS included, spellcheck off)" data-gramm_editor="false">
+			<textarea id="editor-textarea" autocomplete="off" autocapitalize="off" spellcheck="false" autofocus placeholder="HTML code (JS and CSS included, spellcheck off)" data-gramm_editor="false">
 <!DOCTYPE html>
 <html>
 
 <head>
-    <title>Your Title Here</title>
-    <meta name="viewport" content="width=device-width initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="./path/to/stylesheet">
-    <style>
-        /* Styling */
-    </style>
-    <!-- Metadata and stuff -->
+	<title>Your Title Here</title>
+	<meta name="viewport" content="width=device-width initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="./path/to/stylesheet">
+	<style>
+		/* Styling */
+	</style>
+	<!-- Metadata and stuff -->
 </head>
 
 <body>
-    <!-- Elements -->
+	<!-- Elements -->
 </body>
 
 <script>
-    // Javascript
+	// Javascript
 </script>
 
-</html></textarea>
+</html>
+</textarea>
 	</form>
 	<iframe id="viewer">
-		<p>Sorry, your browser doesn't support iframes. Try with another browser or just <a href="javascript:void(0)" onclick="nonHTMLMode();">edit without a preview.</a></p>
+		<p>Sorry, your browser doesn't support iframes. Try with another browser or just <a href="javascript:;" id="nonHTMLbtn">edit without a preview.</a></p>
 	</iframe>
 	</div>
 </body>
 <script>
 var dSettings = {
-	'refreshInterval': 500,
-	'autoRefresh': true,
-	'instantRefresh': false,
-	'tabSize': 4,
-	'fontSize': 15,
-	'wrapping': false,
-	'lightMode': false
-};
-var settings = dSettings;
-var instantRefresh;
-var saved = false; // As an actual file
-var fileName;
-var wideLocalStorageName = "RTE_HTML"; // Let's just stick with it
-var mainFunctions = [];
-var windowExternalWindow;
-var windowFeatures = "menubar=yes,location=no,resizable=yes,scrollbars=no,status=yes,fullscreen=yes";
-var childWindowChecking;
-var allowRefresh;
+		'refreshInterval': 500,
+		'autoRefresh': true,
+		'instantRefresh': false,
+		'tabSize': 4,
+		'fontSize': 18,
+		'disableWrapping': true,
+		'lightMode': false
+	},
+	settings = dSettings,
+	saved = false,
+	fileName,
+	wideLocalStorageName = "RTE_HTML",
+	mainFunctions = [],
+	windowExternalWindow,
+	windowFeatures = "menubar=yes,location=no,resizable=yes,scrollbars=no,status=yes,fullscreen=yes"; // merged settings
 
 function settingsCheck() {
-	if (typeof localStorage.getItem("settings") === null || typeof localStorage.getItem("settings") === undefined || localStorage.getItem('settings') == '') {
-		localStorage.setItem("settings", JSON.stringify(dSettings));
+	if (localStorage.settings == '' || localStorage.settings == null || localStorage.settings == undefined) {
+		localStorage.settings = JSON.stringify(dSettings);
 		return dSettings;
 	} else {
-		var TempSettings = localStorage.getItem("settings");
+		var TempSettings = localStorage.settings;
 		settings = JSON.parse(TempSettings); // https://stackoverflow.com/a/2010948/13104233
 		instantRefreshCheck();
-		document.getElementById('editor-textarea').style.fontSize = settings.fontSize;
+		document.getElementById('editor-textarea').style.fontSize = settings.fontSize + "px";
 		document.getElementById('editor-textarea').style.tabSize = settings.tabSize;
-		wrapping()
-		wrapping()
+		wrapping();
+		wrapping();
 		checkLightMode();
 		return settings
 	}
 }
 
 function settingsSave() {
-	localStorage.setItem("settings", JSON.stringify(settings));
+	localStorage.settings = JSON.stringify(settings);
 	return settings;
 }
 
 function settingsReset() {
 	localStorage.removeItem("settings");
-	localStorage.setItem("settings", JSON.stringify(dSettings));
+	localStorage.settings = JSON.stringify(dSettings);
 	location.reload(true);
 	return settings;
 }
 
 function settingsChange(setting, value) {
 	settings[setting] = value;
-	settingsSave()
+	settingsSave();
 	console.log("Settings changed");
 	return settings;
 }
@@ -367,7 +341,7 @@ function checkLightMode() {
 
 function instantRefreshCheck() {
 	if (settings.instantRefresh) {
-		document.getElementById('instant-refresh-btn').innerHTML = "Disable Instant Refresh";
+		document.getElementById('instantRefreshBtn').innerHTML = "Disable Instant Refresh";
 	}
 	return settings.instantRefresh;
 }
@@ -379,33 +353,15 @@ function removeElement(elementId) {
 	return element;
 }
 
-function antiLag() { // Use not found, but still not made
-	// Uses change timing function to reduce lag between typing if it takes over 100ms or more to finish reloading the page or toggle instant refresh
-	// Can be enabled or disabled by the user
-}
-
-function nonHTMLMode(){
+function nonHTMLMode() {
 	removeElement('viewer');
-	document.getElementById('non-html-btn').setAttribute('onclick','reloading();');
-	document.getElementById('non-html-btn').innerHTML = "Switch back to HTML Editor";
-}
-
-function toggleInstantRefresh() {
-	if (settings.instantRefresh) {
-		document.getElementById('instant-refresh-btn').innerHTML = "Enable Instant Refresh";
-		settingsChange("instantRefresh", false);
-	} else if (settings.instantRefresh === false) {
-		document.getElementById('instant-refresh-btn').innerHTML = "Disable Instant Refresh";
-		if (settings.autoRefresh === false) {
-			stopRefresh();
-		}
-		settingsChange("instantRefresh", true);
-		return settings.instantRefresh;
-	}
+	document.getElementById('nonHTMLBtn').removeEventListener("click", nonHTMLMode);
+	document.getElementById('nonHTMLBtn').addEventListener('click', reloading);
+	document.getElementById('nonHTMLBtn').innerHTML = "Switch back to HTML Editor";
 }
 
 function refresh(time, downUp) {
-	saved = false;
+	saveLocal();
 	if (settings.autoRefresh) {
 		if (settings.instantRefresh) {
 			refreshING();
@@ -420,9 +376,6 @@ function refresh(time, downUp) {
 	} else if (downUp == 'forced') {
 		refreshING();
 		eRefreshING();
-	} else {
-		saveLocal();
-		return;
 	}
 	return;
 }
@@ -430,25 +383,51 @@ function refresh(time, downUp) {
 function refreshING() {
 	saved = false;
 	try {
-		document.getElementById('viewer').srcdoc = document.getElementById('editor-textarea').value;
+		// Adopted from CodeMirror HTML5 preview
+		var previewFrame = document.getElementById('viewer');
+		var preview = previewFrame.contentDocument || previewFrame.contentWindow.document;
+		preview.open();
+		preview.write(document.getElementById('editor-textarea').value);
+		preview.close();
+		// Adopted from the original
+		// document.getElementById('viewer').srcdoc = document.getElementById('editor-textarea').value;
 	} catch (err) {
 		return err;
 	}
 	emptyAndLog("Refreshed");
-	saveLocal();
 	return true;
 }
 
 function eRefreshING() {
 	saved = false;
 	try {
-		windowExternalWindow.document.getElementById('e-viewer').srcdoc = document.getElementById('editor-textarea').value;
+		// Adopted from CodeMirror HTML5 preview
+		var previewFrame = windowExternalWindow.document.getElementById('e-viewer');
+		var preview = previewFrame.contentDocument || previewFrame.contentWindow.document;
+		preview.open();
+		preview.write(document.getElementById('editor-textarea').value);
+		preview.close();
+		// Adopted from the original
+		// windowExternalWindow.document.getElementById('e-viewer').srcdoc = document.getElementById('editor-textarea').value;
 	} catch (err) {
 		return err;
 	}
 	emptyAndLog("Refreshed Externally");
-	saveLocal();
 	return true;
+}
+
+function toggleInstantRefresh() {
+	if (settings.instantRefresh) {
+		document.getElementById('instantRefreshBtn').innerHTML = "Enable Instant Refresh";
+		settingsChange("instantRefresh", false);
+	} else if (settings.instantRefresh === false) {
+		document.getElementById('instantRefreshBtn').innerHTML = "Disable Instant Refresh";
+		if (settings.autoRefresh === false) {
+			stopRefresh();
+		}
+		settingsChange("instantRefresh", true);
+		return settings.instantRefresh;
+	}
 }
 
 function reloading() {
@@ -473,6 +452,7 @@ function stopRefresh() {
 	} else {
 		settingsChange("autoRefresh", true);
 		document.getElementById('stopRefresh').innerHTML = "Stop Dynamic Refresh";
+		refreshING();
 	}
 	return settings.autoRefresh;
 }
@@ -487,42 +467,43 @@ function setRefreshTime() {
 }
 
 function wrapping() {
-	if (settings.wrapping || typeof settings.wrapping === null || typeof settings.wrapping === undefined || typeof settings.wrapping === '') {
+	if (settings.disableWrapping || typeof settings.disableWrapping === null || typeof settings.disableWrapping === undefined || typeof settings.disableWrapping === '' || settings.disableWrapping == true) {
 		document.getElementById('editor-textarea').style.whiteSpace = "normal"; // Allow
-		document.getElementById('wrapping_btn').innerHTML = "Disable Wrapping";
-		settingsChange("wrapping", false);
-	} else if (settings.wrapping == false) {
+		document.getElementById('wrappingBtn').innerHTML = "Disable Wrapping";
+		settingsChange("disableWrapping", false);
+	} else if (settings.disableWrapping == false) {
 		document.getElementById('editor-textarea').style.whiteSpace = "nowrap"; // Disallow
-		document.getElementById('wrapping_btn').innerHTML = "Enable Wrapping";
-		settingsChange("wrapping", true);
+		document.getElementById('wrappingBtn').innerHTML = "Enable Wrapping";
+		settingsChange("disableWrapping", true);
 	}
-	return settings.wrapping;
+	return settings.disableWrapping;
 }
 
 function saveLocal(localStorageName = wideLocalStorageName) {
+	saved = false;
 	localStorage.setItem(localStorageName, document.getElementById('editor-textarea').value);
 	logAndEmpty("Saved");
+
 	return localStorage.getItem(localStorageName);
 }
 
 function loadLocal() {
-	if (typeof localStorage.getItem("RTE_HTML") === undefined || typeof localStorage.getItem("RTE_HTML") === null || localStorage.getItem("RTE_HTML") === '') {
+	if (typeof localStorage.RTE_HTML === undefined || typeof localStorage.RTE_HTML === null || localStorage.RTE_HTML === '') {
 		saved = true;
-		return localStorage.getItem("RTE_HTML");
 	} else {
-		document.getElementById('editor-textarea').value = localStorage.getItem("RTE_HTML");
+		document.getElementById('editor-textarea').value = localStorage.RTE_HTML;
 		refreshING();
-		return localStorage.getItem("RTE_HTML");
 	}
+	return localStorage.RTE_HTML;
 }
 
 function oldLoadLocal(oldLocalStorageName) {
-	if (localStorage.getItem(oldLocalStorageName) == 'undefined' || localStorage.getItem(oldLocalStorageName) == 'null') {
+	if (localStorage.oldLocalStorageName == 'undefined' || localStorage.oldLocalStorageName == 'null' || localStorage.oldLocalStorageName == undefined || localStorage.oldLocalStorageName == null) {
 		console.log('Old local storage not found! ' + oldLocalStorageName);
 		return false;
 	} else {
-		document.getElementById('editor-textarea').value = localStorage.getItem(oldLocalStorageName);
-		console.log("Loaded from old local storage! '" + localStorage.getItem(oldLocalStorageName) + "'");
+		document.getElementById('editor-textarea').value = localStorage.oldLocalStorageName;
+		console.log("Loaded from old local storage! '" + localStorage.oldLocalStorageName + "'");
 		localStorage.removeItem(oldLocalStorageName);
 		console.log("Converted from old local storage! " + oldLocalStorageName);
 		refreshING();
@@ -541,29 +522,30 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
 } else {
 	alert('The File APIs are not fully supported in this browser. The file functions might not work correctly.');
 }
+
 // Open the file
 // https://www.javascripture.com/FileReader
 var openFile = function(event) {
 	fileName = document.getElementById('file').value.replace("C:\\fakepath\\", "");
 	console.log(fileName);
 	var input = event.target;
-	backupHTML();
+	resetText();
 	var reader = new FileReader();
 	reader.onload = function() {
 		var text = reader.result;
 		var editor = document.getElementById('editor-textarea');
 		editor.value = text;
 		refreshING();
+		saveLocal();
 		fileForm.reset(); // https://www.geeksforgeeks.org/how-to-reset-a-form-using-jquery-with-reset-method/
 	};
 	reader.readAsText(input.files[0]);
 };
 
 function downloadHTML(fileNames = fileName) {
-	fileNames = prompt("Choose a name for your file", fileNames);
-	if (fileNames == 'null') {
-		return;
-	} else {
+	fileNames = prompt("Choose a name for your file", fileName);
+	if (fileNames != 'null') {
+		fileNames.replace(".html", "");
 		download(fileNames + ".html", document.getElementById('editor-textarea').value);
 		saved = true
 		return;
@@ -573,6 +555,7 @@ function downloadHTML(fileNames = fileName) {
 function backupHTML() {
 	if (saved == false) {
 		download("backupHTML.html", document.getElementById('editor-textarea').value);
+		saved = true;
 	}
 	return;
 }
@@ -591,7 +574,7 @@ function download(filename, text) { // https://stackoverflow.com/questions/36651
 function openExternalWindow() {
 	if (typeof windowExternalWindow === "undefined") {
 		childWindowChecking = setInterval(childWindowCheck, 1000);
-		windowExternalWindow = window.open("about:blank", "External HTML Live View", windowFeatures);
+		windowExternalWindow = window.open("", "External HTML Live View", windowFeatures);
 		windowExternalWindow.document.write("<style>body {margin: 0px; overflow: hidden;} iframe {width: 100%;height: 100%;border:0px;}</style> <script>function confirmExit(){return '';}window.onbeforeunload=confirmExit;<\/script> <iframe id=\"e-viewer\"></iframe>");
 		removeElement("viewer");
 		eRefreshING();
@@ -609,6 +592,7 @@ function resetText() {
 	backupHTML();
 	editor.reset();
 	refreshING();
+	saved = true;
 	return;
 }
 
@@ -630,11 +614,9 @@ function setIndentSize() {
 }
 
 function fontSize() {
-	var fontSizeChoice = parseInt(prompt("What would you like the font size to be?", document.getElementById('editor-textarea').style.fontSize));
-	if (fontSizeChoice == '' || fontSizeChoice == 'NaN' || fontSizeChoice === null || fontSizeChoice === undefined) {
-		return false;
-	} else {
-		document.getElementById('editor-textarea').style.fontSize = fontSizeChoice & " !important";
+	var fontSizeChoice = parseInt(prompt("What would you like the font size to be?", settings.fontSize));
+	if (fontSizeChoice != '' || fontSizeChoice != 'NaN' || fontSizeChoice !== null || fontSizeChoice !== undefined || fontSizeChoice != null) {
+		document.getElementById('editor-textarea').style.fontSize = fontSizeChoice + "px";
 		settingsChange("fontSize", fontSizeChoice);
 	}
 	return settings.fontSize;
@@ -680,23 +662,57 @@ function changeKeyPress(elementID, keyCode, text) {
 		if (event.keyCode == keyCode) {
 			event.preventDefault();
 			insertAtCaret(elementID, text);
-		} else {
-			return;
 		}
 	});
+}
+
+function noMsgSaveLocal(localStorageName = wideLocalStorageName) {
+	localStorage.setItem(localStorageName, document.getElementById('editor-textarea').value);
+	return localStorage.localStorageName;
+}
+
+function splitEditing() {
+	// get html, css, and js and then inject then display. oh, and also, change a variable that tells that it's in split edit mode
+}
+
+function onStuff() {
+	document.getElementById('newSave').addEventListener("click", resetText);
+	document.getElementById('open').addEventListener("click", function() { document.getElementById('file').click() });
+	document.getElementById('save').addEventListener("click", downloadHTML);
+	document.getElementById('newNoSave').addEventListener("click", function() { editor.reset();
+		refreshING(); });
+	document.getElementById('nonHTMLBtn').addEventListener("click", nonHTMLMode);
+	document.getElementById('refresh').addEventListener("click", function() { refresh(0, 'forced'); });
+	document.getElementById('setRefresh').addEventListener("click", setRefreshTime);
+	document.getElementById('stopRefresh').addEventListener("click", stopRefresh);
+	document.getElementById('instantRefreshBtn').addEventListener("click", toggleInstantRefresh);
+	document.getElementById('eIframe').addEventListener("click", openExternalWindow);
+	document.getElementById('indentSize').addEventListener("click", setIndentSize);
+	document.getElementById('fontSize').addEventListener("click", fontSize);
+	document.getElementById('wrappingBtn').addEventListener("click", wrapping);
+	document.getElementById('changeLightMode').addEventListener("click", toggleLightMode);
+	document.getElementById('forceReload').addEventListener("click", reloading);
+	document.getElementById('oldLoad').addEventListener("click", allOfOldLoadLocal);
+	document.getElementById('settingsReset').addEventListener("click", settingsReset);
+	document.getElementById('help1').addEventListener("click", settingsReset);
+	document.getElementById('editor-textarea').addEventListener("keyup", function() { refresh(settings.refreshInterval, 'up') });
+	document.getElementById('editor-textarea').addEventListener("keydown", function() { refresh(settings.refreshInterval, 'down') });
+	document.body.addEventListener("beforeunload", reloading);
 }
 
 function load() {
 	var t0 = performance.now();
 	console.clear();
+	console.log("Ignore the fact it still uses document.write, it's to prevent flashing content");
 	loadLocal();
 	settingsCheck();
-	changeKeyPress('editor-textarea', 9, "	");
-	localStorage.removeItem("instantRefresh");
+	changeKeyPress('editor-textarea', 9, "  ");
+	onStuff();
+	setInterval(noMsgSaveLocal, 1000);
+	setInterval(settingsSave, 1000);
 	var t1 = performance.now();
 	console.log("Took " + (t1 - t0) + "ms to load");
 }
 load();
 </script>
-
 </html>
