@@ -22,6 +22,10 @@
     <link rel="stylesheet" type="text/css" href="./nav.css">
     <meta name="viewport" content="width=device-width initial-scale=1">
     <meta name="description" content="Home page o JacksonChen666.github.io">
+    <style type="text/css">
+        #random_quotes {cursor:pointer;}
+        #random_quotes::selection {color:none;background-color:none;}
+    </style>
     <!-- If you see the o in the meta tag, that was unintentional lol -->
     <style type="text/css">
         small {
@@ -76,7 +80,10 @@
 </div>
 </main>
 <script type="text/javascript">
-    randomQuotes(["How hard is it to use a computer?", "Why are still alive", "I have reached the state of unmotivated depression", "Coding is fun", "I like <a href=\"https://www.youtube.com/user/billwurtz\">bill wurtz</a>", "I am not interesting...", "Hello?", "Do you like my website?"], "-JacksonChen666");
+    var quotesLists = ["How hard is it to use a computer?", "Why are still alive", "I have reached the state of unmotivated depression", "Coding is fun", "I like bill wurtz", "What a nice day", "I am not interesting...", "Hello?", "haha very funny", "Do you like my website?", "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"],
+    endQuotes = "-JacksonChen666";
+    constantRandomQuotes(quotesLists, endQuotes);
+    addQuotesListener("click", "random_quotes", quotesLists, endQuotes);
 </script>
 </body>
 </html>
