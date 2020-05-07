@@ -1,30 +1,9 @@
-:root {
-	--main-bg: #000;
-	--secondory-bg: #222;
-	--main-color: #ddd;
-	--secondory-color: #fff;
-}
-body {
-	background: var(--main-bg);
-	color: var(--main-color);
-	overflow-wrap: break-word;
-	word-wrap: break-word;
-	hyphens: auto;
-	font-family: "Arial";
-	font-size: 18px;
-    margin: 0px;
-    padding: 0px;
-}
-
-a:link:not(#aname) {color: yellow}
-a:visited:not(#aname) {color: orange}
-a:hover:not(#aname) {color: red}
-a:active:not(#aname) {color: green}
-hr {color: var(--main-color);}
-textarea {background-color: var(--secondory-bg);}
-button, input {
-	background-color: var(--secondory-bg);
-	color: var(--secondory-color);
-	border: 0px solid transparent;
-	border-radius: 2px;
-}
+:root{--main-bg:#000;--secondory-bg:#222;--main-color:#ddd;--secondory-color:#fff}
+body{background:var(--main-bg);color:var(--main-color);overflow-wrap:break-word;word-wrap:break-word;hyphens:auto;font-family:Arial;font-size:18px;margin:0;padding:0}
+a:link:not(#aname){color:#ff0}
+a:visited:not(#aname){color:orange}
+a:hover:not(#aname){color:red}
+a:active:not(#aname){color:green}
+hr{color:var(--main-color)}
+textarea{background-color:var(--secondory-bg)}
+button,input{background-color:var(--secondory-bg);color:var(--secondory-color);border:0 solid transparent;border-radius:2px}
