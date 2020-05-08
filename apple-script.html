@@ -35,25 +35,25 @@
 </nav>
 <main>
 <h1>Jackson Chen</h1>
-        <div id="explanation">
-            <p>I actually like programming stuff. So far, I've learned 3 total languages: Python, HTML, and AppleScript<br>
-                AppleScript is for mac only. If you are on other OS, it won't work properly.</p>
-            <a href="https://jacksonchen666.000webhostapp.com/applescript.php">AppleScript URL Encoder</a>
-        </div>
-        <br>
-        <div id="applescript">
-            <p>Here is where I'll share my AppleScripts:<noscript>You'll need javascript to open code from links</noscript></p>
-            <a href="#random-output-volume">Random Output Volume</a>
-            <pre>
+    <div id="explanation">
+        <p>I actually like programming stuff. So far, I've learned 3 total languages: Python, HTML, and AppleScript<br>
+            AppleScript is for mac only. If you are on other OS, it won't work properly.</p>
+        <a href="https://jacksonchen666.000webhostapp.com/applescript.php">AppleScript URL Encoder</a>
+    </div>
+    <br>
+    <div id="applescript">
+        <p>Here is where I'll share my AppleScripts:<noscript>You'll need javascript to open code from links</noscript></p>
+        <a href="#random-output-volume">Random Output Volume</a>
+        <pre>
 set originalv to output volume of (get volume settings)
 set repeatz to the text returned of (display dialog "How many times do you want to set the volume randomly?" default answer "100")
 repeat repeatz times
     (set volume output volume random number from 0 to 100)
 end repeat
 set volume output volume originalv
-            </pre>
-            <a href="#random-input-volume">Random Input Volume</a>
-            <pre>
+        </pre>
+        <a href="#random-input-volume">Random Input Volume</a>
+        <pre>
 set originalv to input volume of (get volume settings)
 repeat
     try
@@ -64,9 +64,9 @@ repeat
         return originalv
     end try
 end repeat
-            </pre>
-            <a href="#typing-spammer">Typing spammer (used for texting)</a>
-            <pre>
+        </pre>
+        <a href="#typing-spammer">Typing spammer (used for texting)</a>
+        <pre>
 set spamText to the text returned of (display dialog "What to spam?" default answer "")
 set repeatTimes to the text returned of (display dialog "Times to spam" default answer "50")
 delay 5
@@ -76,9 +76,9 @@ tell application "System Events"
         key code 36
     end repeat
 end tell
-            </pre>
-            <a href="#fun-progress-bar">Fun progress bar (Code is large lmao)</a>
-            <pre>
+        </pre>
+        <a href="#fun-progress-bar">Fun progress bar (Code is large lmao)</a>
+        <pre>
 # Save as APP for extra enjoyment
 (*
 PTS means progress total steps

@@ -1,4 +1,4 @@
-:root{--main-bg:#000;--secondory-bg:#222;--main-color:#ddd;--secondory-color:#fff}
+:root{--main-bg:#000;--secondory-bg:#222;--main-color:#fff;--secondory-color:#ddd;}
 body{background:var(--main-bg);color:var(--main-color);overflow-wrap:break-word;word-wrap:break-word;hyphens:auto;font-family:Arial;font-size:18px;margin:0;padding:0}
 a:link:not(#aname){color:#ff0}
 a:visited:not(#aname){color:orange}
