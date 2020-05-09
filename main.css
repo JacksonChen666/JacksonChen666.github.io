@@ -3,7 +3,7 @@
 [theme="light"]{--main-bg:#fff;--secondory-bg:#ddd;--main-color:#000;--secondory-color:#222;}
 body{background:var(--main-bg);color:var(--main-color);overflow-wrap:break-word;word-wrap:break-word;hyphens:auto;font-family:Arial;font-size:18px;margin:0;padding:0}
 a:not(#aname){color:orange;cursor:pointer;}
-a:link:not(#aname){color:#ff0}
+a:link:not(#aname){color:yellow}
 a:visited:not(#aname){color:orange}
 a:hover:not(#aname){color:red}
 a:active:not(#aname){color:green}
