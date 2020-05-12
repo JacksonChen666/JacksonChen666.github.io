@@ -6,6 +6,7 @@ function randomQuotes(quotesList=["Oh hi, thanks for checking in im still a piec
 
 function addQuotesListener(eventWithoutOn, ElementId, quotesList=["Oh hi, thanks for checking in im still a piece of garbage"], endQuote="Nobody"){
 	document.getElementById(ElementId).addEventListener(eventWithoutOn, function(){randomQuotes(quotesList, endQuote)});
+	document.getElementById(ElementId).style.cursor = "pointer"; // yes, it is clickable from now own
 }
 
 function constantRandomQuotes(quotesList=["Oh hi, thanks for checking in im still a piece of garbage"], endQuote="Nobody", ElementId="random_quotes", time=10000){
