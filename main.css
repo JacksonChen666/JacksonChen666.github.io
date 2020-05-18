@@ -1,12 +1,12 @@
 :root{--main-bg:#000;--secondory-bg:#222;--main-color:#fff;--secondory-color:#ddd;}
 [theme="dark"]{--main-bg:#000;--secondory-bg:#222;--main-color:#fff;--secondory-color:#ddd;}
 [theme="light"]{--main-bg:#fff;--secondory-bg:#ddd;--main-color:#000;--secondory-color:#222;}
-body{background:var(--main-bg);color:var(--main-color);overflow-wrap:break-word;word-wrap:break-word;hyphens:auto;font-family:Arial;font-size:18px;margin:0;padding:0;}
+body{background:var(--main-bg);color:var(--main-color);overflow-wrap:break-word;word-wrap:break-word;hyphens:auto;font-family:Arial;font-size:18px;margin:0;padding:0}
 a:not(#aname){color:#ff6a00;cursor:pointer;}
-a:link:not(#aname){color:orange;}
-a:visited:not(#aname){color:#ff6a00;}
-a:hover:not(#aname){color:red;}
-a:active:not(#aname){color:green;}
-hr{color:var(--main-color);}
-textarea{background-color:var(--secondory-bg);}
-button,input{background-color:var(--secondory-bg);color:var(--secondory-color);border:0 solid transparent;border-radius:2px;}
+a:link:not(#aname){color:orange}
+a:visited:not(#aname){color:#ff6a00}
+a:hover:not(#aname){color:red}
+a:active:not(#aname){color:green}
+hr{color:var(--main-color)}
+textarea{background-color:var(--secondory-bg)}
+button,input{background-color:var(--secondory-bg);color:var(--secondory-color);border:0 solid transparent;border-radius:2px}
