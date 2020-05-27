@@ -17,6 +17,11 @@
     <script src="./main.js"></script>
     <meta name="viewport" content="width=device-width initial-scale=1">
     <meta name="description" content="AppleScript">
+    <style>
+        a+pre{display:none;}
+        a:hover+pre,pre:hover{display:block;}
+        pre{margin-bottom:-18px;margin-top:3px;}
+    </style>
 </head>
 <body>
 <nav class="navbar">
@@ -38,25 +43,22 @@
 <main>
 <h1>Jackson Chen</h1>
     <div id="explanation">
-        <p>I actually like programming stuff. So far, I've learned 3 total languages: Python, HTML, and AppleScript<br>
+        <p>I actually like programming stuff. So far, I've learned 3 total languages: Python, HTML (and related), and AppleScript<br>
             AppleScript is for mac only. If you are on other OS, it won't work properly.</p>
-        <a href="https://jacksonchen666.000webhostapp.com/applescript.php">AppleScript URL Encoder</a>
+        <a href="./applescript-gen.html">AppleScript URL Encoder</a>
     </div>
-    <br>
     <div id="applescript">
-        <p>Here is where I'll share my AppleScripts:<noscript>You'll need javascript to open code from links</noscript></p>
-        <a href="#random-output-volume">Random Output Volume</a>
-        <pre>
-set originalv to output volume of (get volume settings)
+        <p>Here is where I'll share my AppleScript scripts (hover to see code):<noscript>You'll need javascript to open code from links</noscript></p>
+        <a href="#random-output-volume" onclick="openAppleScript();">Random Output Volume</a>
+        <pre>set originalv to output volume of (get volume settings)
 set repeatz to the text returned of (display dialog "How many times do you want to set the volume randomly?" default answer "100")
 repeat repeatz times
     (set volume output volume random number from 0 to 100)
 end repeat
-set volume output volume originalv
-        </pre>
-        <a href="#random-input-volume">Random Input Volume</a>
-        <pre>
-set originalv to input volume of (get volume settings)
+set volume output volume originalv</pre>
+        <br>
+        <a href="#random-input-volume" onclick="openAppleScript();">Random Input Volume</a>
+        <pre>set originalv to input volume of (get volume settings)
 repeat
     try
         set volume input volume (random number from 0 to 100)
@@ -65,11 +67,10 @@ repeat
         set volume input volume originalv
         return originalv
     end try
-end repeat
-        </pre>
-        <a href="#typing-spammer">Typing spammer (used for texting)</a>
-        <pre>
-set spamText to the text returned of (display dialog "What to spam?" default answer "")
+end repeat</pre>
+        <br>
+        <a href="#typing-spammer" onclick="openAppleScript();">Typing spammer</a>
+        <pre>set spamText to the text returned of (display dialog "What to spam?" default answer "")
 set repeatTimes to the text returned of (display dialog "Times to spam" default answer "50")
 delay 5
 tell application "System Events"
@@ -77,11 +78,10 @@ tell application "System Events"
         keystroke spamText
         key code 36
     end repeat
-end tell
-        </pre>
-        <a href="#fun-progress-bar">Fun progress bar (Code is large lmao)</a>
-        <pre>
-# Save as APP for extra enjoyment
+end tell</pre>
+        <br>
+        <a href="#fun-progress-bar" onclick="openAppleScript();">Fun progress bar</a>
+        <pre># Save as APP for extra enjoyment
 (*
 PTS means progress total steps
 PD means progress descrition 
@@ -204,11 +204,298 @@ on quit
     setPCS(0)
     continue quit
 end quit</pre>
+<br>
+<a href="#auto-join-zoom" onclick="openAppleScript();">Auto join Zoom</a>
+<pre># It all started when I wanted to join zoom faster than a human could do with no prompt like how I expected like this. I first discovered zoom.us's URL scheme to join meeting, but when I found out it doesn't work, I started to make this program. After this all of stuff, I finally have something that is constantly updated. After this pandemic is over, development might slow down or become discontinued.
+global meetingNames, meetingIDs, meetingPwds, wname
+# Compiling the app will reset all your saved meetings!
+property meetingNames : {}
+property meetingIDs : {}
+property meetingPwds : {}
+
+on joinMeeting(meetingID, meetingPwd)
+    tell application "System Events"
+        activate application "zoom.us"
+        if wname is "Login" then
+            try
+                my doWithTimeout("click UI element 2 of group 1 of window \"Login\" of application process \"zoom.us\"", 10)
+            on error errmsg number errnum
+                activate me
+                error "Error: " & errnum & ". " & errmsg & "\nUnable to click specified button"
+            end try
+            try
+                click text field 1 of window 1 of application process "zoom.us"
+            on error
+                my doWithTimeout("click UI element 2 of group 1 of window \"Login\" of application process \"zoom.us\"", 10)
+                click text field 1 of window 1 of application process "zoom.us"
+            end try
+            tell process "zoom.us" to keystroke meetingID
+            click UI element 8 of window 1 of application process "zoom.us"
+        else if wname is "Zoom" then
+            my doWithTimeout("click UI Element 15 of window \"Zoom\" of application process \"zoom.us\"", 10)
+            click text field 1 of window 1 of application process "zoom.us"
+            tell process "zoom.us" to keystroke meetingID
+            click UI element 7 of window 1 of application process "zoom.us"
+        else if wname contains "Zoom Meeting" or wname is "Window" then
+            activate me
+            display dialog "It seems like you are already in a meeting" buttons {"OK"} default button 1
+            return false
+        else
+            error "I'm lost in the windows that you've got"
+            return false
+        end if
+        
+        if meetingPwd is not missing value then # yeah it's all pretty much the same
+            try
+                my doWithTimeout("click text field 1 of window \"Join a Meeting\" of application process \"zoom.us\"", 10)
+            on error errmsg number errnum
+                if errmsg is "System Events got an error: Can’t get window \"Join a Meeting\" of application process \"zoom.us\"." then error "Cannot get password window" number errnum
+            end try
+            tell process "zoom.us" to keystroke meetingPwd
+            click UI element "Join" of window "Join a Meeting" of application process "zoom.us"
+        end if
+    end tell
+    return true
+end joinMeeting
+
+on lengthCheck()
+    if (length of meetingNames) is not equal to (length of meetingIDs) or (length of meetingNames) is not equal to (length of meetingPwds) then display dialog "The lists are unequal. Additional items in the list are removed, so please check your list.\nAmounts:\nMeeting Names: " & length of meetingNames & "\nMeeting IDs: " & length of meetingIDs & "\nMeeting passwords: " & length of meetingPwds
+    repeat
+        if (length of meetingNames) is not equal to (length of meetingIDs) then
+            items 1 thru -2 of meetingIDs
+        else if (length of meetingNames) is not equal to (length of meetingPwds) then
+            items 1 thru -2 of meetingPwds
+        else
+            exit repeat
+        end if
+    end repeat
+end lengthCheck
+
+on getWinName() # yes getting the window has been a too hard process
+    launch application "zoom.us"
+    try
+        tell application "System Events"
+            tell process "zoom.us" to set wname to name of front window
+        end tell
+    on error errmsg number errnum
+        if errnum is 600 or errmsg is "System Events got an error: Application isn’t running." then # System Events has stopped working
+            do shell script "pkill System Events"
+            delay 3
+            tell application "System Events"
+                tell process "zoom.us" to set wname to name of front window
+            end tell
+        else if errnum is -1719 and errmsg is not "System Events got an error: Can’t get window 1 of process \"zoom.us\". Invalid index." then
+            display dialog "Please enable accessibility access for me to join zoom for you\nError: " & errmsg with icon caution
+            tell application "System Preferences"
+                reveal anchor "Privacy" of pane id "com.apple.preference.security"
+                activate
+            end tell
+            set timeOutTime to (current date) + 30
+            repeat
+                try
+                    tell application "System Events"
+                        tell process "zoom.us" to set wname to name of front window
+                    end tell
+                    exit repeat
+                on error
+                    if ((current date) > timeOutTime) then error errmsg number errnum
+                end try
+            end repeat
+        else if errmsg is "System Events got an error: Can’t get window 1 of process \"zoom.us\". Invalid index." then
+            tell application "System Events"
+                do shell script "pkill zoom.us"
+                launch application "zoom.us"
+                set timeOutTime to (current date) + 30
+                repeat
+                    try
+                        tell process "zoom.us" to set wname to name of front window
+                        exit repeat
+                    on error errmsg number errnum
+                        if ((current date) > timeOutTime) then error errmsg number errnum
+                    end try
+                end repeat
+            end tell
+        else
+            error errmsg number errnum
+        end if
+    end try
+    return wname
+end getWinName
+
+on userPrompt(versions)
+    lengthCheck()
+    getWinName()
+    set allowJoin to true
+    if wname contains "Zoom Meeting" or wname is "Window" or wname contains "Zoom - Breakout Room" then
+        set allowJoin to false
+        activate me
+        display dialog "You are already in a meeting, so joining meeting is disabled." buttons {"OK"} default button 1
+    else if wname is "" then
+        activate me
+        display dialog "I cannot figure out which window you are in (Join or Minimized window)" buttons {"OK"} default button 1
+    end if
+    set extras to {"Add meeting...", "Remove meeting...", "Change meeting info...", "Get Meeting ID and password...", "I DON'T HAVE TIME TO ADD, JUST JOIN"}
+    activate me
+    set choice to choose from list meetingNames & extras default items item 1 of (meetingNames & extras)
+    if choice is false then # cancel
+        return
+    else if (choice as text) is "Add meeting..." then
+        addToList()
+    else if (choice as text) is "Remove meeting..." then
+        removeFromList()
+    else if (choice as text) is "Change meeting info..." then
+        changeInfo()
+    else if (choice as text) is "Get Meeting ID and password..." then
+        getIDPwd()
+    else if (choice as text) is "I DON'T HAVE TIME TO ADD, JUST JOIN" then
+        if allowJoin is true then
+            iDontHaveTimeCanYouJoinForMe()
+        else
+            display dialog "You can't join meetings because you are already in a meeting" buttons {"OK FINE"} default button 1
+            userPrompt(versions)
+            return
+        end if
+    else
+        if allowJoin is false then
+            display dialog "You are still in the meeting" buttons {"OK"} default button 1
+            return
+        end if
+        repeat with a from 1 to length of meetingNames
+            if (choice as text) is item a of meetingNames then
+                joinMeeting(item a of meetingIDs, item a of meetingPwds)
+                exit repeat
+            end if
+        end repeat
+    end if
+    if (choice as text) is "Add meeting..." or (choice as text) is "Remove meeting..." or (choice as text) is "Change meeting info..." or (choice as text) is "Get Meeting ID and password..." or (choice as text) is "I DON'T HAVE TIME TO ADD, JUST JOIN" then
+        userPrompt(versions)
+        return
+    end if
+    return
+end userPrompt
+
+on getIDPwd()
+    if length of meetingNames is 0 then error number -2573
+    set choice to choose from list meetingNames default items item 1 of meetingNames with prompt "Which meeting do you want to know the meeting ID and password for?"
+    repeat with a from 1 to length of meetingNames
+        if (choice as text) is (item a of meetingNames as text) then
+            if item a of meetingPwds is missing value then
+                display dialog "Meeting Name: " & item a of meetingNames & "\nMeeting ID: " & item a of meetingIDs & "\nMeeting link: https://zoom.us/j/" & item a of meetingIDs buttons {"OK"} default button 1
+            else
+                display dialog "Meeting Name: " & item a of meetingNames & "\nMeeting ID: " & item a of meetingIDs & "\nMeeting Password: " & item a of meetingPwds & "\nMeeting link: https://zoom.us/j/" & item a of meetingIDs & "?pwd=" & item a of meetingPwds buttons {"OK"} default button 1
+            end if
+            exit repeat
+        end if
+    end repeat
+    return choice
+end getIDPwd
+
+on addToList()
+    set meetingNames to meetingNames & repeatUntilAnswered("What meeting name to use?")
+    repeat
+        set mID to (repeatUntilAnswered("What is the meeting ID?") as string)
+        if length of mID is greater than 8 and length of mID is less than 12 then
+            exit repeat
+        else
+            display dialog "Invalid. Meeting IDs must be between 9 to 11 characters long." with icon caution
+        end if
+    end repeat
+    set meetingIDs to meetingIDs & mID
+    set mPwd to text returned of (display dialog "What is the meeting password? (Optional, if none, skip, anything that works will work)" default answer "") as string
+    if mPwd is "" then set mPwd to missing value
+    set meetingPwds to meetingPwds & mPwd
+    return
+end addToList
+
+on changeInfo()
+    if length of meetingNames is 0 then error "There's nothing to see..." number -2573
+    set {rename, changeChoice} to {choose from list meetingNames with prompt "Which meeting would you like to change?" default items item 1 of meetingNames, choose from list {"Name", "Meeting ID", "Meeting Password"} with prompt "Which info do you want to change?" default items {"Name"}}
+    repeat with a from 1 to length of meetingNames
+        if (item a of meetingNames as string) is (rename as string) then
+            if (changeChoice as text) is "Name" then
+                set item a of meetingNames to text returned of (display dialog "What would you like to rename " & item a of meetingNames & " to?" default answer (item a of meetingNames))
+            else if (changeChoice as text) is "Meeting ID" then
+                set item a of meetingIDs to text returned of (display dialog "What meeting ID would you like to change to on " & item a of meetingNames & "?" default answer (item a of meetingIDs))
+            else if (changeChoice as text) is "Meeting Password" then
+                if item a of meetingPwds is missing value then set item a of meetingPwds to ""
+                set item a of meetingPwds to text returned of (display dialog "What meeting password would you like to change to on " & item a of meetingNames & "?" default answer (item a of meetingPwds))
+            end if
+            exit repeat
+        end if
+    end repeat
+    return
+end changeInfo
+
+on removeFromList()
+    if length of meetingNames is 0 then error "There's nothing to see..." number -2573
+    set {toRemove, cleanList, cleanList2, cleanList3} to {choose from list meetingNames with prompt "Remove meeting from list:" default items item 1 of meetingNames, {}, {}, {}}
+    repeat with a from 1 to length of meetingNames
+        if (item a of meetingNames as string) is not (toRemove as string) then
+            set {cleanList, cleanList2, cleanList3} to {cleanList & (item a of meetingNames), cleanList2 & (item a of meetingIDs), cleanList3 & (item a of meetingPwds)}
+        end if
+    end repeat
+    set {meetingNames, meetingIDs, meetingPwds} to {cleanList, cleanList2, cleanList3}
+    return {cleanList, cleanList2, cleanList3}
+end removeFromList
+
+on versionCheck()
+    set {appVersion, supportedVersions, supported, supportedVersion, maxTime} to {version of application "zoom.us", {"5.0.2 (24030.0508)"}, false, "", (current date) + 30}
+    repeat with a from 1 to length of supportedVersions
+        repeat
+            try
+                if appVersion is item a of supportedVersions then
+                    set {supported, supportedVersion} to {true, item a of supportedVersions}
+                    exit repeat
+                end if
+            on error errmsg number errnum
+                if ((current date) > maxTime) then error errmsg number errnum
+            end try
+        end repeat
+    end repeat
+    if supported is false then display dialog "Zoom.us version unsupported! You may need to do it manually"
+    userPrompt(appVersion)
+    return
+end versionCheck
+
+on repeatUntilAnswered(prompt)
+    repeat
+        set temp to text returned of (display dialog prompt default answer "")
+        if temp is not "" then exit repeat
+    end repeat
+    return temp
+end repeatUntilAnswered
+
+on doWithTimeout(uiScript, timeoutSeconds)
+    set endDate to (current date) + timeoutSeconds
+    repeat
+        try
+            run script "tell application \"System Events\"\n" & uiScript & "\nend tell"
+            exit repeat
+        on error errorMessage number errnum
+            if ((current date) > endDate) then error errorMessage number errnum
+        end try
+    end repeat
+end doWithTimeout
+
+on iDontHaveTimeCanYouJoinForMe()
+    set ids to text returned of (display dialog "Meeting ID" default answer "")
+    if length of ids is greater than 8 and length of ids is less than 12 then
+        set pwd to text returned of (display dialog "Meeting password (optional)" default answer "")
+        if pwd is "" then set pwd to missing value
+        joinMeeting(ids, pwd)
+    else
+        display dialog "Invalid. Meeting IDs must be between 9 to 11 characters long." with icon caution
+        iDontHaveTimeCanYouJoinForMe()
+    end if
+    return
+end iDontHaveTimeCanYouJoinForMe
+
+versionCheck()</pre>
 </main>
 </body>
 
 <script>
-    function hashChange() {
+    function openAppleScript() {
         switch (location.hash) {
             case "#random-output-volume":
                 window.open("applescript://com.apple.scripteditor?action=new&script=set+originalv+to+output+volume+of+%28get+volume+settings%29%0D%0Aset+repeatz+to+the+text+returned+of+%28display+dialog+%22How+many+times+do+you+want+to+set+the+volume+randomly%3F%22+default+answer+%22100%22%29%0D%0Arepeat+repeatz+times%0D%0A%09%28set+volume+output+volume+random+number+from+0+to+100%29%0D%0Aend+repeat%0D%0Aset+volume+output+volume+originalv", name="_parent");
@@ -222,9 +509,12 @@ end quit</pre>
             case "#fun-progress-bar":
                 window.open("applescript://com.applescriptedior?action=new&script='%23+Save+as+APP+for+extra+enjoyment%0D%28*%0APTS+means+progress+total+steps%0APD+means+progress+descrition+%0APAD+means+progress+additional+description%0APCS+means+progress+completed+steps%0APInfo+means+progress+info+%28additional+description%29%0A*%29%0Dglobal+PTS%2C+PD%2C+PAD%2C+PCS%2C+numberz%2C+PInfo%0D%0Don+varChecks%28%29%0D%09set+PTS+to+progress+total+steps%0D%09set+PD+to+progress+description%0D%09set+PAD+to+progress+additional+description%0D%09set+PCS+to+progress+completed+steps%0Dend+varChecks%0D%0Don+setPTS%28contentz%29%0D%09set+progress+total+steps+to+contentz%0Dend+setPTS%0D%0Don+setPD%28contentz%29%0D%09set+progress+description+to+contentz%0Dend+setPD%0D%0Don+setPAD%28contentz%29%0D%09set+progress+additional+description+to+contentz%0Dend+setPAD%0D%0Don+setPCS%28contentz%29%0D%09set+progress+completed+steps+to+contentz%0Dend+setPCS%0D%0Dset+numberz+to+%7B-1%2C+1%7D%0DsetPTS%281000%29%0DsetPD%28%22Fun+Progress+Bar%22%29%0DsetPCS%28progress+total+steps+%2F+2%29%0D%0Don+flowChecks%28%29%0D%09varChecks%28%29%0D%09if+PCS+is+less+than+0+then%0D%09%09set+PCS+to+setPCS%280%29%0D%09%09set+PAD+to+setPAD%28%22Interger+underflow%2C+please+wait%22%29%0D%09%09repeat+PTS+%2F+2+times%0D%09%09%09set+PCS+to+setPCS%28PCS+%2B+1%29%0D%09%09%09varChecks%28%29%0D%09%09%09delay+0.005%0D%09%09end+repeat%0D%09%09%0D%09else+if+PCS+is+greater+than+PTS+-+1+then%0D%09%09set+PCS+to+setPCS%28PTS%29%0D%09%09set+PAD+to+setPAD%28%22Interger+overflow%2C+please+wait%22%29%0D%09%09repeat+PTS+%2F+2+times%0D%09%09%09set+PCS+to+setPCS%28PCS+-+1%29%0D%09%09%09varChecks%28%29%0D%09%09%09delay+0.005%0D%09%09end+repeat%0D%09end+if%0D%09numChecks%28%29%0D%09return%0Dend+flowChecks%0D%0Don+numChecks%28%29%0D%09varChecks%28%29%0D%09%23+Checks+the+number+and+adds+extra+text+to+it%0D%09if+PCS+is+500+then%0D%09%09set+PAD+to+setPAD%28PInfo+%26+%22%28Middle%29%22%29%0D%09%09%0D%09else+if+PCS+is+less+than+10+then%0D%09%09set+PAD+to+setPAD%28PInfo+%26+%22%28Extremely+Low%29%22%29%0D%09%09%0D%09else+if+PCS+is+greater+than+990+then%0D%09%09set+PAD+to+setPAD%28PInfo+%26+%22%28Extremely+High%29%22%29%0D%09%09%0D%09else+if+PCS+is+less+than+50+then%0D%09%09set+PAD+to+setPAD%28PInfo+%26+%22%28Very+Low%29%22%29%0D%09%09%0D%09else+if+PCS+is+greater+than+950+then%0D%09%09set+PAD+to+setPAD%28PInfo+%26+%22%28Very+High%29%22%29%0D%09%09%0D%09else+if+PCS+is+less+than+100+then%0D%09%09set+PAD+to+setPAD%28PInfo+%26+%22%28Low%29%22%29%0D%09%09%0D%09else+if+PCS+is+greater+than+900+then%0D%09%09set+PAD+to+setPAD%28PInfo+%26+%22%28High%29%22%29%0D%09%09%0D%09end+if%0D%09return%0Dend+numChecks%0D%0Don+repeating%28%29%0D%09try%0D%09%09repeat%0D%09%09%09varChecks%28%29%0D%09%09%09set+PInfo+to+PCS+%26+%22%2F%22+%26+PTS+%26+%22+steps+%22%0D%09%09%09set+PTS+to+setPCS%28PCS+%2B+%28some+item+of+numberz%29%29%0D%09%09%09set+PAD+to+setPAD%28PInfo%29%0D%09%09%09%0D%09%09%09flowChecks%28%29%0D%09%09%09delay+5.0E-5%0D%09%09end+repeat%0D%09on+error+the+errorMsg+number+the+errorNum%0D%09%09set+PD+to+setPD%28%22Interrupted+by+error%22%29%0D%09%09set+PAD+to+setPAD%28%22Error%3A+%22+%26+the+errorNum+%26+%22.+%22+%26+the+errorMsg%29%0D%09%09if+errorNum+is+-128+then%0D%09%09%09return%0D%09%09else%0D%09%09%09display+dialog+%22Error%3A+%22+%26+the+errorNum+%26+%22.+%22+%26+the+errorMsg+buttons+%7B%22OK%22%7D+default+button+1+giving+up+after+10%0D%09%09%09return%0D%09%09end+if%0D%09%09return%0D%09end+try%0Dend+repeating%0D%0Drepeating%28%29%0D%0Don+quit%0D%09setPTS%280%29%0D%09setPD%28%22%22%29%0D%09setPAD%28%22%22%29%0D%09setPCS%280%29%0D%09continue+quit%0Dend+quit%0D'", name="_parent");
                 break;
+            case "#auto-join-zoom":
+                window.open("applescript://com.apple.scripteditor?action=new&script=%23%20It%20all%20started%20when%20I%20wanted%20to%20join%20zoom%20faster%20than%20a%20human%20could%20do%20with%20no%20prompt%20like%20how%20I%20expected%20like%20this.%20I%20first%20discovered%20zoom.us's%20URL%20scheme%20to%20join%20meeting%2C%20but%20when%20I%20found%20out%20it%20doesn't%20work%2C%20I%20started%20to%20make%20this%20program.%20After%20this%20all%20of%20stuff%2C%20I%20finally%20have%20something%20that%20is%20constantly%20updated.%20After%20this%20pandemic%20is%20over%2C%20development%20might%20slow%20down%20or%20become%20discontinued.%0Aglobal%20meetingNames%2C%20meetingIDs%2C%20meetingPwds%2C%20wname%0A%23%20Compiling%20the%20app%20will%20reset%20all%20your%20saved%20meetings!%0Aproperty%20meetingNames%20%3A%20%7B%7D%0Aproperty%20meetingIDs%20%3A%20%7B%7D%0Aproperty%20meetingPwds%20%3A%20%7B%7D%0A%0Aon%20joinMeeting(meetingID%2C%20meetingPwd)%0A%09tell%20application%20%22System%20Events%22%0A%09%09activate%20application%20%22zoom.us%22%0A%09%09if%20wname%20is%20%22Login%22%20then%0A%09%09%09try%0A%09%09%09%09my%20doWithTimeout(%22click%20UI%20element%202%20of%20group%201%20of%20window%20%5C%22Login%5C%22%20of%20application%20process%20%5C%22zoom.us%5C%22%22%2C%2010)%0A%09%09%09on%20error%20errmsg%20number%20errnum%0A%09%09%09%09activate%20me%0A%09%09%09%09error%20%22Error%3A%20%22%20%26%20errnum%20%26%20%22.%20%22%20%26%20errmsg%20%26%20%22%5CnUnable%20to%20click%20specified%20button%22%0A%09%09%09end%20try%0A%09%09%09try%0A%09%09%09%09click%20text%20field%201%20of%20window%201%20of%20application%20process%20%22zoom.us%22%0A%09%09%09on%20error%0A%09%09%09%09my%20doWithTimeout(%22click%20UI%20element%202%20of%20group%201%20of%20window%20%5C%22Login%5C%22%20of%20application%20process%20%5C%22zoom.us%5C%22%22%2C%2010)%0A%09%09%09%09click%20text%20field%201%20of%20window%201%20of%20application%20process%20%22zoom.us%22%0A%09%09%09end%20try%0A%09%09%09tell%20process%20%22zoom.us%22%20to%20keystroke%20meetingID%0A%09%09%09click%20UI%20element%208%20of%20window%201%20of%20application%20process%20%22zoom.us%22%0A%09%09else%20if%20wname%20is%20%22Zoom%22%20then%0A%09%09%09my%20doWithTimeout(%22click%20UI%20Element%2015%20of%20window%20%5C%22Zoom%5C%22%20of%20application%20process%20%5C%22zoom.us%5C%22%22%2C%2010)%0A%09%09%09click%20text%20field%201%20of%20window%201%20of%20application%20process%20%22zoom.us%22%0A%09%09%09tell%20process%20%22zoom.us%22%20to%20keystroke%20meetingID%0A%09%09%09click%20UI%20element%207%20of%20window%201%20of%20application%20process%20%22zoom.us%22%0A%09%09else%20if%20wname%20contains%20%22Zoom%20Meeting%22%20or%20wname%20is%20%22Window%22%20then%0A%09%09%09activate%20me%0A%09%09%09display%20dialog%20%22It%20seems%20like%20you%20are%20already%20in%20a%20meeting%22%20buttons%20%7B%22OK%22%7D%20default%20button%201%0A%09%09%09return%20false%0A%09%09else%0A%09%09%09error%20%22I'm%20lost%20in%20the%20windows%20that%20you've%20got%22%0A%09%09%09return%20false%0A%09%09end%20if%0A%09%09%0A%09%09if%20meetingPwd%20is%20not%20missing%20value%20then%20%23%20yeah%20it's%20all%20pretty%20much%20the%20same%0A%09%09%09try%0A%09%09%09%09my%20doWithTimeout(%22click%20text%20field%201%20of%20window%20%5C%22Join%20a%20Meeting%5C%22%20of%20application%20process%20%5C%22zoom.us%5C%22%22%2C%2010)%0A%09%09%09on%20error%20errmsg%20number%20errnum%0A%09%09%09%09if%20errmsg%20is%20%22System%20Events%20got%20an%20error%3A%20Can%E2%80%99t%20get%20window%20%5C%22Join%20a%20Meeting%5C%22%20of%20application%20process%20%5C%22zoom.us%5C%22.%22%20then%20error%20%22Cannot%20get%20password%20window%22%20number%20errnum%0A%09%09%09end%20try%0A%09%09%09tell%20process%20%22zoom.us%22%20to%20keystroke%20meetingPwd%0A%09%09%09click%20UI%20element%20%22Join%22%20of%20window%20%22Join%20a%20Meeting%22%20of%20application%20process%20%22zoom.us%22%0A%09%09end%20if%0A%09end%20tell%0A%09return%20true%0Aend%20joinMeeting%0A%0Aon%20lengthCheck()%0A%09if%20(length%20of%20meetingNames)%20is%20not%20equal%20to%20(length%20of%20meetingIDs)%20or%20(length%20of%20meetingNames)%20is%20not%20equal%20to%20(length%20of%20meetingPwds)%20then%20display%20dialog%20%22The%20lists%20are%20unequal.%20Additional%20items%20in%20the%20list%20are%20removed%2C%20so%20please%20check%20your%20list.%5CnAmounts%3A%5CnMeeting%20Names%3A%20%22%20%26%20length%20of%20meetingNames%20%26%20%22%5CnMeeting%20IDs%3A%20%22%20%26%20length%20of%20meetingIDs%20%26%20%22%5CnMeeting%20passwords%3A%20%22%20%26%20length%20of%20meetingPwds%0A%09repeat%0A%09%09if%20(length%20of%20meetingNames)%20is%20not%20equal%20to%20(length%20of%20meetingIDs)%20then%0A%09%09%09items%201%20thru%20-2%20of%20meetingIDs%0A%09%09else%20if%20(length%20of%20meetingNames)%20is%20not%20equal%20to%20(length%20of%20meetingPwds)%20then%0A%09%09%09items%201%20thru%20-2%20of%20meetingPwds%0A%09%09else%0A%09%09%09exit%20repeat%0A%09%09end%20if%0A%09end%20repeat%0Aend%20lengthCheck%0A%0Aon%20getWinName()%20%23%20yes%20getting%20the%20window%20has%20been%20a%20too%20hard%20process%0A%09launch%20application%20%22zoom.us%22%0A%09try%0A%09%09tell%20application%20%22System%20Events%22%0A%09%09%09tell%20process%20%22zoom.us%22%20to%20set%20wname%20to%20name%20of%20front%20window%0A%09%09end%20tell%0A%09on%20error%20errmsg%20number%20errnum%0A%09%09if%20errnum%20is%20600%20or%20errmsg%20is%20%22System%20Events%20got%20an%20error%3A%20Application%20isn%E2%80%99t%20running.%22%20then%20%23%20System%20Events%20has%20stopped%20working%0A%09%09%09do%20shell%20script%20%22pkill%20System%20Events%22%0A%09%09%09delay%203%0A%09%09%09tell%20application%20%22System%20Events%22%0A%09%09%09%09tell%20process%20%22zoom.us%22%20to%20set%20wname%20to%20name%20of%20front%20window%0A%09%09%09end%20tell%0A%09%09else%20if%20errnum%20is%20-1719%20and%20errmsg%20is%20not%20%22System%20Events%20got%20an%20error%3A%20Can%E2%80%99t%20get%20window%201%20of%20process%20%5C%22zoom.us%5C%22.%20Invalid%20index.%22%20then%0A%09%09%09display%20dialog%20%22Please%20enable%20accessibility%20access%20for%20me%20to%20join%20zoom%20for%20you%5CnError%3A%20%22%20%26%20errmsg%20with%20icon%20caution%0A%09%09%09tell%20application%20%22System%20Preferences%22%0A%09%09%09%09reveal%20anchor%20%22Privacy%22%20of%20pane%20id%20%22com.apple.preference.security%22%0A%09%09%09%09activate%0A%09%09%09end%20tell%0A%09%09%09set%20timeOutTime%20to%20(current%20date)%20%2B%2030%0A%09%09%09repeat%0A%09%09%09%09try%0A%09%09%09%09%09tell%20application%20%22System%20Events%22%0A%09%09%09%09%09%09tell%20process%20%22zoom.us%22%20to%20set%20wname%20to%20name%20of%20front%20window%0A%09%09%09%09%09end%20tell%0A%09%09%09%09%09exit%20repeat%0A%09%09%09%09on%20error%0A%09%09%09%09%09if%20((current%20date)%20%3E%20timeOutTime)%20then%20error%20errmsg%20number%20errnum%0A%09%09%09%09end%20try%0A%09%09%09end%20repeat%0A%09%09else%20if%20errmsg%20is%20%22System%20Events%20got%20an%20error%3A%20Can%E2%80%99t%20get%20window%201%20of%20process%20%5C%22zoom.us%5C%22.%20Invalid%20index.%22%20then%0A%09%09%09tell%20application%20%22System%20Events%22%0A%09%09%09%09do%20shell%20script%20%22pkill%20zoom.us%22%0A%09%09%09%09launch%20application%20%22zoom.us%22%0A%09%09%09%09set%20timeOutTime%20to%20(current%20date)%20%2B%2030%0A%09%09%09%09repeat%0A%09%09%09%09%09try%0A%09%09%09%09%09%09tell%20process%20%22zoom.us%22%20to%20set%20wname%20to%20name%20of%20front%20window%0A%09%09%09%09%09%09exit%20repeat%0A%09%09%09%09%09on%20error%20errmsg%20number%20errnum%0A%09%09%09%09%09%09if%20((current%20date)%20%3E%20timeOutTime)%20then%20error%20errmsg%20number%20errnum%0A%09%09%09%09%09end%20try%0A%09%09%09%09end%20repeat%0A%09%09%09end%20tell%0A%09%09else%0A%09%09%09error%20errmsg%20number%20errnum%0A%09%09end%20if%0A%09end%20try%0A%09return%20wname%0Aend%20getWinName%0A%0Aon%20userPrompt(versions)%0A%09lengthCheck()%0A%09getWinName()%0A%09set%20allowJoin%20to%20true%0A%09if%20wname%20contains%20%22Zoom%20Meeting%22%20or%20wname%20is%20%22Window%22%20or%20wname%20contains%20%22Zoom%20-%20Breakout%20Room%22%20then%0A%09%09set%20allowJoin%20to%20false%0A%09%09activate%20me%0A%09%09display%20dialog%20%22You%20are%20already%20in%20a%20meeting%2C%20so%20joining%20meeting%20is%20disabled.%22%20buttons%20%7B%22OK%22%7D%20default%20button%201%0A%09else%20if%20wname%20is%20%22%22%20then%0A%09%09activate%20me%0A%09%09display%20dialog%20%22I%20cannot%20figure%20out%20which%20window%20you%20are%20in%20(Join%20or%20Minimized%20window)%22%20buttons%20%7B%22OK%22%7D%20default%20button%201%0A%09end%20if%0A%09set%20extras%20to%20%7B%22Add%20meeting...%22%2C%20%22Remove%20meeting...%22%2C%20%22Change%20meeting%20info...%22%2C%20%22Get%20Meeting%20ID%20and%20password...%22%2C%20%22I%20DON'T%20HAVE%20TIME%20TO%20ADD%2C%20JUST%20JOIN%22%7D%0A%09activate%20me%0A%09set%20choice%20to%20choose%20from%20list%20meetingNames%20%26%20extras%20default%20items%20item%201%20of%20(meetingNames%20%26%20extras)%0A%09if%20choice%20is%20false%20then%20%23%20cancel%0A%09%09return%0A%09else%20if%20(choice%20as%20text)%20is%20%22Add%20meeting...%22%20then%0A%09%09addToList()%0A%09else%20if%20(choice%20as%20text)%20is%20%22Remove%20meeting...%22%20then%0A%09%09removeFromList()%0A%09else%20if%20(choice%20as%20text)%20is%20%22Change%20meeting%20info...%22%20then%0A%09%09changeInfo()%0A%09else%20if%20(choice%20as%20text)%20is%20%22Get%20Meeting%20ID%20and%20password...%22%20then%0A%09%09getIDPwd()%0A%09else%20if%20(choice%20as%20text)%20is%20%22I%20DON'T%20HAVE%20TIME%20TO%20ADD%2C%20JUST%20JOIN%22%20then%0A%09%09if%20allowJoin%20is%20true%20then%0A%09%09%09iDontHaveTimeCanYouJoinForMe()%0A%09%09else%0A%09%09%09display%20dialog%20%22You%20can't%20join%20meetings%20because%20you%20are%20already%20in%20a%20meeting%22%20buttons%20%7B%22OK%20FINE%22%7D%20default%20button%201%0A%09%09%09userPrompt(versions)%0A%09%09%09return%0A%09%09end%20if%0A%09else%0A%09%09if%20allowJoin%20is%20false%20then%0A%09%09%09display%20dialog%20%22You%20are%20still%20in%20the%20meeting%22%20buttons%20%7B%22OK%22%7D%20default%20button%201%0A%09%09%09return%0A%09%09end%20if%0A%09%09repeat%20with%20a%20from%201%20to%20length%20of%20meetingNames%0A%09%09%09if%20(choice%20as%20text)%20is%20item%20a%20of%20meetingNames%20then%0A%09%09%09%09joinMeeting(item%20a%20of%20meetingIDs%2C%20item%20a%20of%20meetingPwds)%0A%09%09%09%09exit%20repeat%0A%09%09%09end%20if%0A%09%09end%20repeat%0A%09end%20if%0A%09if%20(choice%20as%20text)%20is%20%22Add%20meeting...%22%20or%20(choice%20as%20text)%20is%20%22Remove%20meeting...%22%20or%20(choice%20as%20text)%20is%20%22Change%20meeting%20info...%22%20or%20(choice%20as%20text)%20is%20%22Get%20Meeting%20ID%20and%20password...%22%20or%20(choice%20as%20text)%20is%20%22I%20DON'T%20HAVE%20TIME%20TO%20ADD%2C%20JUST%20JOIN%22%20then%0A%09%09userPrompt(versions)%0A%09%09return%0A%09end%20if%0A%09return%0Aend%20userPrompt%0A%0Aon%20getIDPwd()%0A%09if%20length%20of%20meetingNames%20is%200%20then%20error%20number%20-2573%0A%09set%20choice%20to%20choose%20from%20list%20meetingNames%20default%20items%20item%201%20of%20meetingNames%20with%20prompt%20%22Which%20meeting%20do%20you%20want%20to%20know%20the%20meeting%20ID%20and%20password%20for%3F%22%0A%09repeat%20with%20a%20from%201%20to%20length%20of%20meetingNames%0A%09%09if%20(choice%20as%20text)%20is%20(item%20a%20of%20meetingNames%20as%20text)%20then%0A%09%09%09if%20item%20a%20of%20meetingPwds%20is%20missing%20value%20then%0A%09%09%09%09display%20dialog%20%22Meeting%20Name%3A%20%22%20%26%20item%20a%20of%20meetingNames%20%26%20%22%5CnMeeting%20ID%3A%20%22%20%26%20item%20a%20of%20meetingIDs%20%26%20%22%5CnMeeting%20link%3A%20https%3A%2F%2Fzoom.us%2Fj%2F%22%20%26%20item%20a%20of%20meetingIDs%20buttons%20%7B%22OK%22%7D%20default%20button%201%0A%09%09%09else%0A%09%09%09%09display%20dialog%20%22Meeting%20Name%3A%20%22%20%26%20item%20a%20of%20meetingNames%20%26%20%22%5CnMeeting%20ID%3A%20%22%20%26%20item%20a%20of%20meetingIDs%20%26%20%22%5CnMeeting%20Password%3A%20%22%20%26%20item%20a%20of%20meetingPwds%20%26%20%22%5CnMeeting%20link%3A%20https%3A%2F%2Fzoom.us%2Fj%2F%22%20%26%20item%20a%20of%20meetingIDs%20%26%20%22%3Fpwd%3D%22%20%26%20item%20a%20of%20meetingPwds%20buttons%20%7B%22OK%22%7D%20default%20button%201%0A%09%09%09end%20if%0A%09%09%09exit%20repeat%0A%09%09end%20if%0A%09end%20repeat%0A%09return%20choice%0Aend%20getIDPwd%0A%0Aon%20addToList()%0A%09set%20meetingNames%20to%20meetingNames%20%26%20repeatUntilAnswered(%22What%20meeting%20name%20to%20use%3F%22)%0A%09repeat%0A%09%09set%20mID%20to%20(repeatUntilAnswered(%22What%20is%20the%20meeting%20ID%3F%22)%20as%20string)%0A%09%09if%20length%20of%20mID%20is%20greater%20than%208%20and%20length%20of%20mID%20is%20less%20than%2012%20then%0A%09%09%09exit%20repeat%0A%09%09else%0A%09%09%09display%20dialog%20%22Invalid.%20Meeting%20IDs%20must%20be%20between%209%20to%2011%20characters%20long.%22%20with%20icon%20caution%0A%09%09end%20if%0A%09end%20repeat%0A%09set%20meetingIDs%20to%20meetingIDs%20%26%20mID%0A%09set%20mPwd%20to%20text%20returned%20of%20(display%20dialog%20%22What%20is%20the%20meeting%20password%3F%20(Optional%2C%20if%20none%2C%20skip%2C%20anything%20that%20works%20will%20work)%22%20default%20answer%20%22%22)%20as%20string%0A%09if%20mPwd%20is%20%22%22%20then%20set%20mPwd%20to%20missing%20value%0A%09set%20meetingPwds%20to%20meetingPwds%20%26%20mPwd%0A%09return%0Aend%20addToList%0A%0Aon%20changeInfo()%0A%09if%20length%20of%20meetingNames%20is%200%20then%20error%20%22There's%20nothing%20to%20see...%22%20number%20-2573%0A%09set%20%7Brename%2C%20changeChoice%7D%20to%20%7Bchoose%20from%20list%20meetingNames%20with%20prompt%20%22Which%20meeting%20would%20you%20like%20to%20change%3F%22%20default%20items%20item%201%20of%20meetingNames%2C%20choose%20from%20list%20%7B%22Name%22%2C%20%22Meeting%20ID%22%2C%20%22Meeting%20Password%22%7D%20with%20prompt%20%22Which%20info%20do%20you%20want%20to%20change%3F%22%20default%20items%20%7B%22Name%22%7D%7D%0A%09repeat%20with%20a%20from%201%20to%20length%20of%20meetingNames%0A%09%09if%20(item%20a%20of%20meetingNames%20as%20string)%20is%20(rename%20as%20string)%20then%0A%09%09%09if%20(changeChoice%20as%20text)%20is%20%22Name%22%20then%0A%09%09%09%09set%20item%20a%20of%20meetingNames%20to%20text%20returned%20of%20(display%20dialog%20%22What%20would%20you%20like%20to%20rename%20%22%20%26%20item%20a%20of%20meetingNames%20%26%20%22%20to%3F%22%20default%20answer%20(item%20a%20of%20meetingNames))%0A%09%09%09else%20if%20(changeChoice%20as%20text)%20is%20%22Meeting%20ID%22%20then%0A%09%09%09%09set%20item%20a%20of%20meetingIDs%20to%20text%20returned%20of%20(display%20dialog%20%22What%20meeting%20ID%20would%20you%20like%20to%20change%20to%20on%20%22%20%26%20item%20a%20of%20meetingNames%20%26%20%22%3F%22%20default%20answer%20(item%20a%20of%20meetingIDs))%0A%09%09%09else%20if%20(changeChoice%20as%20text)%20is%20%22Meeting%20Password%22%20then%0A%09%09%09%09if%20item%20a%20of%20meetingPwds%20is%20missing%20value%20then%20set%20item%20a%20of%20meetingPwds%20to%20%22%22%0A%09%09%09%09set%20item%20a%20of%20meetingPwds%20to%20text%20returned%20of%20(display%20dialog%20%22What%20meeting%20password%20would%20you%20like%20to%20change%20to%20on%20%22%20%26%20item%20a%20of%20meetingNames%20%26%20%22%3F%22%20default%20answer%20(item%20a%20of%20meetingPwds))%0A%09%09%09end%20if%0A%09%09%09exit%20repeat%0A%09%09end%20if%0A%09end%20repeat%0A%09return%0Aend%20changeInfo%0A%0Aon%20removeFromList()%0A%09if%20length%20of%20meetingNames%20is%200%20then%20error%20%22There's%20nothing%20to%20see...%22%20number%20-2573%0A%09set%20%7BtoRemove%2C%20cleanList%2C%20cleanList2%2C%20cleanList3%7D%20to%20%7Bchoose%20from%20list%20meetingNames%20with%20prompt%20%22Remove%20meeting%20from%20list%3A%22%20default%20items%20item%201%20of%20meetingNames%2C%20%7B%7D%2C%20%7B%7D%2C%20%7B%7D%7D%0A%09repeat%20with%20a%20from%201%20to%20length%20of%20meetingNames%0A%09%09if%20(item%20a%20of%20meetingNames%20as%20string)%20is%20not%20(toRemove%20as%20string)%20then%0A%09%09%09set%20%7BcleanList%2C%20cleanList2%2C%20cleanList3%7D%20to%20%7BcleanList%20%26%20(item%20a%20of%20meetingNames)%2C%20cleanList2%20%26%20(item%20a%20of%20meetingIDs)%2C%20cleanList3%20%26%20(item%20a%20of%20meetingPwds)%7D%0A%09%09end%20if%0A%09end%20repeat%0A%09set%20%7BmeetingNames%2C%20meetingIDs%2C%20meetingPwds%7D%20to%20%7BcleanList%2C%20cleanList2%2C%20cleanList3%7D%0A%09return%20%7BcleanList%2C%20cleanList2%2C%20cleanList3%7D%0Aend%20removeFromList%0A%0Aon%20versionCheck()%0A%09set%20%7BappVersion%2C%20supportedVersions%2C%20supported%2C%20supportedVersion%2C%20maxTime%7D%20to%20%7Bversion%20of%20application%20%22zoom.us%22%2C%20%7B%225.0.2%20(24030.0508)%22%7D%2C%20false%2C%20%22%22%2C%20(current%20date)%20%2B%2030%7D%0A%09repeat%20with%20a%20from%201%20to%20length%20of%20supportedVersions%0A%09%09repeat%0A%09%09%09try%0A%09%09%09%09if%20appVersion%20is%20item%20a%20of%20supportedVersions%20then%0A%09%09%09%09%09set%20%7Bsupported%2C%20supportedVersion%7D%20to%20%7Btrue%2C%20item%20a%20of%20supportedVersions%7D%0A%09%09%09%09%09exit%20repeat%0A%09%09%09%09end%20if%0A%09%09%09on%20error%20errmsg%20number%20errnum%0A%09%09%09%09if%20((current%20date)%20%3E%20maxTime)%20then%20error%20errmsg%20number%20errnum%0A%09%09%09end%20try%0A%09%09end%20repeat%0A%09end%20repeat%0A%09if%20supported%20is%20false%20then%20display%20dialog%20%22Zoom.us%20version%20unsupported!%20You%20may%20need%20to%20do%20it%20manually%22%0A%09userPrompt(appVersion)%0A%09return%0Aend%20versionCheck%0A%0Aon%20repeatUntilAnswered(prompt)%0A%09repeat%0A%09%09set%20temp%20to%20text%20returned%20of%20(display%20dialog%20prompt%20default%20answer%20%22%22)%0A%09%09if%20temp%20is%20not%20%22%22%20then%20exit%20repeat%0A%09end%20repeat%0A%09return%20temp%0Aend%20repeatUntilAnswered%0A%0Aon%20doWithTimeout(uiScript%2C%20timeoutSeconds)%0A%09set%20endDate%20to%20(current%20date)%20%2B%20timeoutSeconds%0A%09repeat%0A%09%09try%0A%09%09%09run%20script%20%22tell%20application%20%5C%22System%20Events%5C%22%5Cn%22%20%26%20uiScript%20%26%20%22%5Cnend%20tell%22%0A%09%09%09exit%20repeat%0A%09%09on%20error%20errorMessage%20number%20errnum%0A%09%09%09if%20((current%20date)%20%3E%20endDate)%20then%20error%20errorMessage%20number%20errnum%0A%09%09end%20try%0A%09end%20repeat%0Aend%20doWithTimeout%0A%0Aon%20iDontHaveTimeCanYouJoinForMe()%0A%09set%20ids%20to%20text%20returned%20of%20(display%20dialog%20%22Meeting%20ID%22%20default%20answer%20%22%22)%0A%09if%20length%20of%20ids%20is%20greater%20than%208%20and%20length%20of%20ids%20is%20less%20than%2012%20then%0A%09%09set%20pwd%20to%20text%20returned%20of%20(display%20dialog%20%22Meeting%20password%20(optional)%22%20default%20answer%20%22%22)%0A%09%09if%20pwd%20is%20%22%22%20then%20set%20pwd%20to%20missing%20value%0A%09%09joinMeeting(ids%2C%20pwd)%0A%09else%0A%09%09display%20dialog%20%22Invalid.%20Meeting%20IDs%20must%20be%20between%209%20to%2011%20characters%20long.%22%20with%20icon%20caution%0A%09%09iDontHaveTimeCanYouJoinForMe()%0A%09end%20if%0A%09return%0Aend%20iDontHaveTimeCanYouJoinForMe%0A%0AversionCheck()", name="_parent");
+                break;
         }
     }
-    window.addEventListener('hashchange', hashChange, false);
-    hashChange();
+    window.addEventListener('hashchange', openAppleScript, false);
+    openAppleScript();
 </script>
 </html>
