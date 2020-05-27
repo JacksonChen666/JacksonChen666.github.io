@@ -8,5 +8,5 @@ a:visited:not(#aname){color:#ff6a00}
 a:hover:not(#aname){color:red}
 a:active:not(#aname){color:green}
 hr{color:var(--main-color)}
-textarea{background-color:var(--secondory-bg)}
+textarea{background-color:var(--secondory-bg);color:var(--main-color);}
 button,input{background-color:var(--secondory-bg);color:var(--secondory-color);border:0 solid transparent;border-radius:2px}
