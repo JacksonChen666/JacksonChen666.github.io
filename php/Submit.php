@@ -27,10 +27,14 @@
 <?php
 $back = "<a href='javascript:history.back();'>back</a>";
 if (isset($_POST['q'])) {
-	$submission = writeFile("questions", $_POST['q']);
+	$submission = writeFile("Question", $_POST['q']);
 } else if (isset($_POST['i'])) {
-	$submission = writeFile("ideas", $_POST['i']);
-} else {
+	$submission = writeFile("Idea", $_POST['i']);
+} else if (isset($_POST['lol'])) {
+	writeFile("lol", $_POST['lol']);
+	exit;
+}
+else {
 	echo("<h2>tip of the day</h2><p>try and actually type something</p>" . $back);
 	error_log("Submit.php: empty submission found", 0);
 	exit;
@@ -45,24 +49,20 @@ function redirectTo($URLToRedirect) {
 }
 
 function writeFile($Type, $TextToWrite) {
-	if ($Type == "questions") {
-		$FileName = "Questions";
-	} else if ($Type == "ideas") {
-		$FileName = "Ideas";
-	}
+	$FileName = $Type;
 	$exists = file_exists($FileName . ".csv");
 	$file = fopen($FileName . ".csv", "a") or die("can't open file F");
 	echo $exists;
 	if ($exists == 0) {
-		if ($Type == "questions") {
-			fwrite($file, "Unix Time,Question,Response\n");
-		} else if ($Type == "ideas") {
-			fwrite($file, "Unix Time,Idea,Response\n");
+		if ($Type == "Question" or $Type == "Idea") {
+			fwrite($file, "Unix Time," . $FileName . ",Response\n");
+		} else {
+			fwrite($file, "Unix Time, Data\n");
 		}
 	}
 	fwrite($file, time().",{$TextToWrite},\n");
 	fclose($file);
-	chmod($FileName . ".csv", 0766);
+	chmod($FileName . ".csv", 0777);
 	return $TextToWrite;
 }
 ?>
