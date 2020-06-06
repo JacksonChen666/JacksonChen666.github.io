@@ -26,20 +26,16 @@ function toggleTheme() {
     if (lightMode == "true") {
         document.body.setAttribute('theme', 'dark');
         setCookie("lightTheme", false, 10000);
-    } else if (lightMode == "false") {
-        document.body.setAttribute('theme', 'light');
-        setCookie("lightTheme", true, 10000);
+    } else if (location.protocol == "file:") {
+        // check if user opened it from file system anyways
+        document.body.setAttribute('theme', 'dark');
+        setCookie("lightTheme", false, 10000);
+        removeElement("theme");
+        console.error("%cThemes don't work properly if you use \"file:\" protocol%c(Opening html from file system, which makes cookies not work)", "color:red;font-size:5rem", "font-size:0.5rem;color:white;");
+        debugger;
     } else {
         document.body.setAttribute('theme', 'light');
         setCookie("lightTheme", true, 10000);
-        // check if user opened it from file system anyways
-        if (location.protocol == "file:") {
-            console.error("%cThemes don't work properly if you use \"file:\" protocol%c(Opening html from file system, which makes cookies not work)", "color:red;font-size:5rem", "font-size:0.5rem;color:white;");
-            document.body.setAttribute('theme', 'dark');
-            setCookie("lightTheme", false, 10000);
-            removeElement("ddown");
-            debugger;
-        };
     }
     return lightMode;
 }
