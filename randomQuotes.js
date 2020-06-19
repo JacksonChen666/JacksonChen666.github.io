@@ -4,7 +4,7 @@ defaultEQuote = "bill wurtz"
 function randomQuotes(quotesList=defaultQList, endQuote=defaultEQuote, ElementId="random_quotes"){
 	var quote = quotesList[Math.floor(Math.random() * quotesList.length)];
 	document.getElementById(ElementId).innerHTML = "\"" + quote + "\" " + "-" + endQuote;
-	return true;
+	return; 
 }
 
 function addQuotesListener(eventWithoutOn, ElementId, quotesList=defaultQList, endQuote=defaultEQuote){
