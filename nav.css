@@ -12,4 +12,4 @@ main{margin-left:5.5rem;transition:filter 250ms ease;}
 .link-text{display:none;margin-left:1rem;}
 .nav-link svg{min-width:1.5rem;margin:0 1.5rem;}
 @media only screen and (max-width:600px){.navbar{bottom:0;width:100vw;height:3rem;}.navbar-nav{flex-direction:row;margin-top:3px;overflow-x:auto;overflow-y:none;}.nav-link{justify-content:center;}main{margin-left:0.5rem!important;margin-bottom:5.1rem!important;}}
-@media only screen and (min-width:600px){.navbar:hover~main{filter:blur(5px);}.navbar{top:0;width:5rem;height:100vh;overflow-y:auto;}.navbar:hover{width:16rem;}.navbar:hover .link-text{display:inline;transition:opacity 200ms;}}
+@media only screen and (min-width:600px){.navbar:hover~main{filter:blur(5px);}.navbar{top:0;width:5rem;height:100vh;overflow-y:auto;}.navbar:hover{width:16rem;}.navbar:hover .link-text{display:inline;}}
