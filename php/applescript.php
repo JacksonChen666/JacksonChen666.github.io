@@ -11,7 +11,7 @@
 		<title>JacksonChen666 - AppleScript URL Encoder</title>
 	</head>
 	<body>
-    <h1>AppleScript URL Encoder (<a href="./urlencode.php">URL Encoder</a>)</h1>
+    <h1>AppleScript URL Encoder (<a href="urlencode.php">URL Encoder</a>)</h1>
     <form action="./applescript.php" method="POST">
         <textarea name="script" cols="50" rows="10" for='applescript' placeholder="Put your AppleScript here without changes" id="applescriptStuff"></textarea><br>
         <input type="submit" value="Convert" name="formSubmit" for='submit' id="JSLess"><br>

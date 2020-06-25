@@ -55,3 +55,7 @@ function removeElement(elementId) {
 }
 
 window.addEventListener("load", checkTheme);
+// no more dumb html but it already works on github. why? local testing thats why
+window.addEventListener("load", function(){ if (location.protocol != "file:") { history.replaceState("", "", location.pathname.replace(".html", ""));} } );
+// how about the links also
+window.addEventListener("load", function(){ if (location.protocol != "file:") { Array.prototype.slice.call(document.links).forEach(e => e.href = (e.href.toLowerCase().indexOf(location.origin.toLowerCase()) !== -1 && e.href.toLowerCase().indexOf(".html") !== -1) ? e.href.replace(".html", "") : e.href); } });
