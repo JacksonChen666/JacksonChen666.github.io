@@ -54,8 +54,29 @@ function removeElement(elementId) {
     return element;
 }
 
+function anitHTML() {
+    if (location.protocol == "file:") {
+        return false;
+    }
+    history.replaceState("", "", location.pathname.replace(".html", ""));
+}
+
+function removeHTML() {
+    if (location.protocol == "file:") {
+        return false;
+    }
+    function removingHTML(e) {
+        var temp1 = e.href.toLowerCase();
+        var loc = location.origin.toLowerCase();
+        if (temp1.indexOf(loc) !== -1 && temp1.indexOf(".html") !== -1) {
+            e.href = e.href.replace(".html", "");
+        }
+    }
+    Array.prototype.slice.call(document.links).forEach(removingHTML);
+}
+
 window.addEventListener("load", checkTheme);
 // no more dumb html but it already works on github. why? local testing thats why
-window.addEventListener("load", function(){ if (location.protocol != "file:") { history.replaceState("", "", location.pathname.replace(".html", ""));} } );
-// how about the links also
-window.addEventListener("load", function(){ if (location.protocol != "file:") { Array.prototype.slice.call(document.links).forEach(e => e.href = (e.href.toLowerCase().indexOf(location.origin.toLowerCase()) !== -1 && e.href.toLowerCase().indexOf(".html") !== -1) ? e.href.replace(".html", "") : e.href); } });
+window.addEventListener("load", anitHTML);
+// now remove it from the link
+window.addEventListener("load", removeHTML);
