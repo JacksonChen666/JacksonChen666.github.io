@@ -12,7 +12,7 @@
     </head>
     <body>
     <h1>URL Encoder</h1>
-    <form action="." method="POST">
+    <form action="" method="POST">
         <textarea name="encode" cols="100" rows="40" for='urlencode' placeholder="Enter text"></textarea><br>
         <input type="submit" value="Convert" name="formSubmit" for='submit'><br>
     </form>
