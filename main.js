@@ -54,15 +54,15 @@ function removeElement(elementId) {
     return element;
 }
 
-function anitHTML() {
-    if (location.protocol == "file:") {
+function antiHTML() {
+    if (location.protocol == "file:" || location.host == "localhost") {
         return false;
     }
     history.replaceState("", "", location.pathname.replace(".html", ""));
 }
 
 function removeHTML() {
-    if (location.protocol == "file:") {
+    if (location.protocol == "file:" || location.host == "localhost") {
         return false;
     }
     function removingHTML(e) {
@@ -77,6 +77,6 @@ function removeHTML() {
 
 window.addEventListener("load", checkTheme);
 // no more dumb html but it already works on github. why? local testing thats why
-window.addEventListener("load", anitHTML);
+window.addEventListener("load", antiHTML);
 // now remove it from the link
 window.addEventListener("load", removeHTML);
