@@ -1,8 +1,5 @@
 :root{--text-primary:#b6b6b6;--text-secondory:#ececec;--bg-primary:#23232e;--bg-secondory:#141418;}
 .navbar{transition:width 250ms ease;hyphens:none;width:5rem;height:100vh;position:fixed;padding-bottom:30px!important;background-color:#23232e;text-decoration:none;}
-/*moving content with the sidebar hmm*/
-/*.navbar~main{transition:margin-left 250ms ease;}
-.navbar:hover~main{margin-left:16.5rem}*/
 main{margin-left:5.5rem;}
 .navbar-nav{list-style:none!important;margin-left:-40px!important;display:flex;flex-direction:column;align-items:center;overflow:auto;}
 .nav-item{width:100%;}
@@ -13,4 +10,3 @@ main{margin-left:5.5rem;}
 .nav-link svg{min-width:1.5rem;margin:0 1.5rem;}
 @media only screen and (max-width:600px){.navbar{bottom:0;width:100vw;height:3rem;}.navbar-nav{flex-direction:row;margin-top:3px;overflow-x:auto;overflow-y:none;}.nav-link{justify-content:center;}main{margin-left:0.5rem!important;margin-bottom:5.1rem!important;}}
 @media only screen and (min-width:600px){.navbar{top:0;width:5rem;height:100vh;overflow-y:auto;}.navbar:hover{width:16rem;}.navbar:hover .link-text{display:inline;}}
-/* removed .navbar:hover~main{filter:blur(5px);} at line above because it was causing problems like the menu being not transparent as intended */
