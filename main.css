@@ -10,3 +10,4 @@ a:active:not(#aname){color:green}
 hr{color:var(--main-color)}
 textarea{background-color:var(--secondory-bg);color:var(--main-color);}
 button,input{background-color:var(--secondory-bg);color:var(--secondory-color);border:0 solid transparent;border-radius:2px}
+small{font-size:0.75rem;}
