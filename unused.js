@@ -74,29 +74,6 @@ function billWurtzQuestionsJS() {
     });
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // thing JS
 function coolReset() {
     while (true) {
@@ -117,4 +94,14 @@ function coolReset() {
 function remove() {
     time -= 1;
     spacebarGame();
+}
+
+// live html (other stuff actually)
+function changeKeyPress(elementID, keyCode, text)  {
+    window.addEventListener("keydown", function(event)  {
+        if (event.keyCode == keyCode)  {
+            event.preventDefault();
+            insertAtCaret(elementID, text);
+        }
+    });
 }
