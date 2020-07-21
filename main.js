@@ -55,14 +55,14 @@ function removeElement(elementId) {
 }
 
 function antiHTML() {
-    if (location.protocol == "file:" || location.host == "localhost") {
+    if (location.protocol == "file:" || location.host == "localhost" || locations.host == "127.0.0.1" || getCookie("requireHTML") == "true") {
         return false;
     }
     history.replaceState("", "", location.pathname.replace(".html", ""));
 }
 
 function removeHTML() {
-    if (location.protocol == "file:" || location.host == "localhost") {
+    if (location.protocol == "file:" || location.host == "localhost" || locations.host == "127.0.0.1" || getCookie("requireHTML") == "true") {
         return false;
     }
     function removingHTML(e) {
