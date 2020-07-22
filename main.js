@@ -30,7 +30,8 @@ function toggleTheme() {
         // check if user opened it from file system anyways
         document.body.setAttribute('theme', 'dark');
         setCookie("lightTheme", false, 10000);
-        removeElement("theme");
+        var themeButton = document.getElementById("theme");
+        themeButton.parentNode.removeChild(themeButton);
         console.error("%cThemes don't work properly if you use \"file:\" protocol%c(Opening html from file system, which makes cookies not work)", "color:red;font-size:5rem", "font-size:0.5rem;color:white;");
         debugger;
     } else {
@@ -44,14 +45,6 @@ function checkTheme() {
     lightMode = (function() { return getCookie("lightTheme"); })();
     if (lightMode == "true") { document.body.setAttribute('theme', 'light'); }
     return lightMode;
-}
-
-// https://www.abeautifulsite.net/adding-and-removing-elements-on-the-fly-using-javascript
-function removeElement(elementId) {
-    // Removes an element from the document
-    var element = document.getElementById(elementId);
-    element.parentNode.removeChild(element);
-    return element;
 }
 
 function antiHTML() {
