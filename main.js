@@ -76,8 +76,6 @@ function requireHTML(HTMLrequired) {
 
 window.addEventListener("load", checkTheme);
 if (!(getCookie("requireHTML") == "true" || location.protocol == "file:" || location.host == "localhost" || location.host == "127.0.0.1")) {
-    // no more dumb html but it already works on github. why? local testing thats why
     window.addEventListener("load", antiHTML);
-    // now remove it from the link
     window.addEventListener("load", removeHTML);
 }
