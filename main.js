@@ -27,7 +27,7 @@ function toggleTheme() {
         document.body.setAttribute('theme', 'dark');
         setCookie("lightTheme", false, 10000);
     } else if (location.protocol == "file:") {
-        // check if user opened it from file system anyways
+        // check if user opened it from file system
         document.body.setAttribute('theme', 'dark');
         setCookie("lightTheme", false, 10000);
         var themeButton = document.getElementById("theme");
