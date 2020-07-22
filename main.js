@@ -55,16 +55,10 @@ function removeElement(elementId) {
 }
 
 function antiHTML() {
-    if (location.protocol == "file:" || location.host == "localhost" || location.host == "127.0.0.1" || getCookie("requireHTML") == "true") {
-        return false;
-    }
     history.replaceState("", "", location.pathname.replace(".html", ""));
 }
 
 function removeHTML() {
-    if (location.protocol == "file:" || location.host == "localhost" || location.host == "127.0.0.1" || getCookie("requireHTML") == "true") {
-        return false;
-    }
     function removingHTML(e) {
         var temp1 = e.href.toLowerCase();
         var loc = location.origin.toLowerCase();
@@ -75,8 +69,15 @@ function removeHTML() {
     Array.prototype.slice.call(document.links).forEach(removingHTML);
 }
 
+function requireHTML(HTMLrequired) {
+    setCookie("requireHTML", HTMLrequired, 10000);
+    return HTMLrequired;
+}
+
 window.addEventListener("load", checkTheme);
-// no more dumb html but it already works on github. why? local testing thats why
-window.addEventListener("load", antiHTML);
-// now remove it from the link
-window.addEventListener("load", removeHTML);
+if (!(getCookie("requireHTML") == "true" || location.protocol == "file:" || location.host == "localhost" || location.host == "127.0.0.1")) {
+    // no more dumb html but it already works on github. why? local testing thats why
+    window.addEventListener("load", antiHTML);
+    // now remove it from the link
+    window.addEventListener("load", removeHTML);
+}
