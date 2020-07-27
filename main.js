@@ -69,6 +69,6 @@ function requireHTML(HTMLrequired) {
 
 window.addEventListener("load", checkTheme);
 if (!(getCookie("requireHTML") == "true" || location.protocol == "file:" || location.host == "localhost" || location.host == "127.0.0.1")) {
-    window.addEventListener("load", antiHTML);
-    window.addEventListener("load", removeHTML);
+    document.addEventListener("load", antiHTML);
+    document.addEventListener("load", removeHTML);
 }
