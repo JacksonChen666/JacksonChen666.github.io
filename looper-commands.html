@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JacksonChen666 - Looper Commands</title>
+    <meta name="viewport" content="width=device-width initial-scale=1">
+    <style type="text/css">
+        html{font-family:arial;font-size:1.2rem;}
+        input:invalid{background-color:red;}
+        textarea{width:99%;height:17px;resize:none;max-height:200px;}
+    </style>
+    <script type="text/javascript">
+        function createCommand(form) {
+            var command = [];
+            var fileCMD = [];
+
+            var preVid = outOrNull(form.preVideo.value);
+            var preVidSec = toSeconds(form.preVideoLength.value);
+
+            var loopVid = form.loopVideo.value;
+            var loopVidSec = toSeconds(form.loopVideoLength.value);
+
+            var postVid = outOrNull(form.postVideo.value);
+            var postVidSec = toSeconds(form.postVideoLength.value);
+
+            var totalSec = toSeconds(form.videoLength.value);
+            var curSec = 0;
+
+            var outName = form.outName.value;
+            var processSub = form.proSub.checked;
+            var TEMP;
+
+            if (preVid) {
+                TEMP = "echo \"file '" + preVid + "'\"";
+                if (processSub) {
+                    temp += " > concat.txt";
+                }
+                fileCMD.push(TEMP);
+                curSec += preVidSec;
+            }
+            if (postVid) {
+                curSec += postVidSec;
+            }
+
+            var tt = Math.round((totalSec - curSec) / loopVidSec);
+            fileCMD.push("for i in {0.." +  tt + "}; do echo \"file '" + loopVid + "'\" >> concat.txt; done");
+
+            if (postVid) {
+                TEMP = "echo \"file '" + postVid + "'\""
+                if (processSub) {
+                    TEMP += " >> concat.txt";
+                }
+                fileCMD.push(TEMP);
+            }
+            // echo "file 'pre'"; for i in {0..10}; do echo "file 'loop'"; done; echo "file 'post'";
+
+            fileCMD = fileCMD.join("; ");
+            if (!processSub) {
+                command.push(fileCMD + ";");
+            }
+            command.push("ffmpeg -f concat -safe 0 -i");
+            if (processSub) {
+                command.push("<(" + fileCMD + ")");
+            }
+            else {
+                command.push("concat.txt");
+            }
+
+            // ffmpeg -i <(echo "file 'pre'"; for i in {0..10}; do echo "file 'loop'"; done; echo "file 'post'")
+            // echo "file 'pre'"; for i in {0..10}; do echo "file 'loop'"; done; echo "file 'post'";
+
+            var extraOptions = outOrNull(form.extraOptions.value);
+            if (extraOptions) { 
+                command.push(form.extraOptions.value);
+            }
+            command.push("\"" + outName + "\"");
+
+            var output = document.getElementById("output");
+            output.value = command.join(" ");
+            auto_grow(output);
+        }
+
+        function validation(form) {
+            var preVid = outOrNull(form.preVideo.value);
+            var preVidSec = outOrNull(form.preVideoLength.value);
+
+            var postVid = outOrNull(form.postVideo.value);
+            var postVidSec = outOrNull(form.postVideoLength.value);
+
+            if (preVid != null) {
+                var t = preVidSec == null;
+                if (t) {
+                    form.preVideoLength.focus();
+                    form.preVideoLength.style.backgroundColor = "red";
+                    alert("You are missing the length for the pre-video.");
+                    setTimeout(function() { document.formLol.preVideoLength.style.backgroundColor = null; }, 5000);
+                }
+                return t;
+            }
+            else if (postVid != null) {
+                var t = postVidSec == null;
+                if (t) {
+                    alert("You are missing the length for the post-video.");
+                }
+                return t;
+            }
+            return true;
+        }
+
+        function outOrNull(input) {
+            return input == "" ? null : input;
+        }
+
+        function toSeconds(string) {
+            if (outOrNull(string) == null) {
+                return null;
+            }
+            const timeRegex = /(\d\d):(\d\d):(\d\d)\.(\d{2,})/;
+            var t = timeRegex.exec(string);
+            for (var i = 1; i < t.length; i++) {
+                t[i] = parseInt(t[i]);
+            }
+            var t4Div = "1";
+            var t4 = t[4].toString().length;
+            for (var i = 0; i < t4; i++) {
+                t4Div += "0";
+            }
+            return (t[1] * 60 + t[2]) * 60 + t[3] + (t[4] / parseInt(t4Div));
+        }
+
+        function auto_grow(element) {
+            element.style.height = "5px";
+            element.style.height = (element.scrollHeight) + "px";
+        }
+    </script>
+</head>
+<body>
+    <h1>Looper commands</h1>
+    <h3>What's this?</h3>
+    <p>Basically for a future video (not yet made) on how to loop something extremely long (and also high quality, e.g. Yoshi 1 hours). I used the command line to do the looping, but I think there are some people who want to do this, and may not be familiar with the command line (and I hate it when they don't know how to use tech). So I made this exact tool that "generates" a command that would help the user loop a video. <small>i also made this at 2 am it's fine</small></p>
+    <p>do note that this will only work with the most common bash and zsh, so if you're on windows, you might want to write it into a file.</p>
+    <form action="javascript:createCommand(this.formLol);" method="post" name="formLol" onsubmit="validation(this);">
+        <label>Pre-video file name / path (Optional)</label><input type="text" name="preVideo"><br>
+        <label>Pre-video length (Required if pre-video is included)</label><input type="text" pattern="\d\d:\d\d:\d\d\.\d{2,}" placeholder="hh:mm:ss.ms" name="preVideoLength"><br>
+        <br>
+        <label>Looping video file name / path</label><input type="text" name="loopVideo" required><br>
+        <label>Looping video length</label><input type="text" pattern="\d\d:\d\d:\d\d\.\d{2,}" placeholder="hh:mm:ss.ms" name="loopVideoLength" required><br>
+        <br>
+        <label>Post-video file name / path (Optional)</label><input type="text" name="postVideo"><br>
+        <label>Post-video length (Required if post-video included)</label><input type="text" pattern="\d\d:\d\d:\d\d\.\d{2,}" placeholder="hh:mm:ss.ms" name="postVideoLength"><br>
+        <br>
+        <label>Total wanted video length</label><input type="text" name="videoLength" pattern="\d\d:\d\d:\d\d\.\d{2,}" required placeholder="hh:mm:ss.ms"><br>
+        <label>Output file name</label><input type="text" name="outName" required><br>
+        <label>Shell supports <a href="https://superuser.com/a/1060002">process substitution</a> (bash and zsh works, also required full path to file)</label><input type="checkbox" name="proSub"><br>
+        <label>Custom extra ffmpeg options</label><input type="text" name="extraOptions"><br>
+        <p>Note, that it cannot be super accurate. So if you need to adjust, you can choose to.</p>
+        <input type="submit" value="Create command">
+    </form>
+    <textarea readonly placeholder="Output command. Click to copy." onclick="this.setSelectionRange(0, this.value.length);document.execCommand('copy');" id="output"></textarea>
+</body>
+</html>
