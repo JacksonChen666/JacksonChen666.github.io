@@ -193,7 +193,7 @@
 <body>
     <h1>Looper commands</h1>
     <h3>What's this?</h3>
-    <p>Basically for a future video (not yet made) on how to loop something extremely long (and also high quality, e.g. Yoshi 1 hours). I used the command line to do the looping, but I think there are some people who want to do this, and may not be familiar with the command line (and I hate it when they don't know how to use tech). So I made this exact tool that "generates" a command that would help the user loop a video. <small>i also made this at 2 am it's fine</small></p>
+    <p>Basically for a video on <a href="https://youtu.be/mXWGVZVrAig">how to loop something extremely long (and also high quality, e.g. Yoshi 1 hours).</a> I used the command line to do the looping, but I think there are some people who want to do this, and may not be familiar with the command line (and I hate it when they don't know how to use tech). So I made this exact tool that "generates" a command that would help the user loop a video. <small>i also made this at 2 am it's fine</small></p>
     <p>do note that this will only work with the most common bash and zsh, so if you're on windows, you might want to write it into a file.</p>
     <form action="javascript:createCommand(this.formLol);" method="post" name="formLol" onsubmit="validation(this);">
         <label>Pre-video file name / path (Optional)</label><input type="text" name="preVideo"><br>
@@ -210,7 +210,7 @@
         <label>Add one more loop if over </label><input type="number" name="triggerLoss" placeholder="%" min="0" max="100" value="20" id="percent"><label>% of time is lost</label><br>
         <label>Shell supports <a href="https://superuser.com/a/1060002">process substitution</a> (bash and zsh works, also requires full path to file)</label><input type="checkbox" name="proSub"><br>
         <label>Custom extra ffmpeg options</label><input type="text" name="extraOptions"><br>
-        <p>Note: This will slightly down your expectation if it cannot achieve perfectly.</p>
+        <p>Note: This will slightly go down your expectation if it cannot achieve perfectly.</p>
         <input type="submit" value="Create command">
     </form>
     <textarea readonly placeholder="Output command. Click to copy." onclick="this.setSelectionRange(0, this.value.length);document.execCommand('copy');" id="output"></textarea>
