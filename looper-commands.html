@@ -40,7 +40,7 @@
             if (preVid) {
                 TEMP = "echo \"file '" + preVid + "'\"";
                 if (!processSub) {
-                    temp += " >> concat.txt";
+                    TEMP += " >> concat.txt";
                 }
                 fileCMD.push(TEMP);
                 curSec += preVidSec;
