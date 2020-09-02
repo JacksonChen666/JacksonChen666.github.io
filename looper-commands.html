@@ -11,6 +11,7 @@
     </style>
     <script type="text/javascript">
         function createCommand(form) {
+            "use strict";
             console.log("%cScreenshot should start here", "font-size:1.5rem;");
             var command = [];
             var fileCMD = [];
@@ -31,7 +32,7 @@
             var processSub = form.proSub.checked;
             var lossTrigger = form.triggerLoss.value;
             var extraOptions = outOrNull(form.extraOptions.value);
-            var TEMP;
+            var TEMP = null;
 
             if (!processSub) {
                 fileCMD.push(": > concat.txt");
@@ -50,33 +51,40 @@
             }
 
             var tt = totalSec - curSec;
-            tt = !(loopVidSec % 1) ? tt / loopVidSec : tt * loopVidSec; // i mean, it's the greatest i've done
+            // tt = !(loopVidSec % 1) ? tt / loopVidSec : tt * loopVidSec; // i mean, it's the greatest i've done
+            tt /= loopVidSec;
             curSec += tt;
             // There is a slight issue when the looping video length is .75 seconds and the target is a minute, it gives only 45 loops (which is less than a minute)
+            console.log("Total seconds:")
             console.log(totalSec);
+            console.log("Current seconds:");
             console.log(curSec);
 
-            var loss = -((100 / totalSec) * curSec) + 100;
-            if (loss >= lossTrigger || -loss >= lossTrigger) {
-                console.log("LOSS!");
-                // But this thing is able to fix the .75 seconds problem by continuing to loop until it's the closest (the math is kept because that easily gets us closer to what we want)
-                while (totalSec > curSec) {
-                    tt += 1;
-                    curSec += loopVidSec;
-                }
+            // var loss = -((100 / totalSec) * curSec) + 100;
+            // if (loss >= lossTrigger || -loss >= lossTrigger) {
+            //     console.log("%cLOSS START", "font-size:1.2rem;");
+            //     // But this thing is able to fix the .75 seconds problem by continuing to loop until it's the closest (the math is kept because that easily gets us closer to what we want)
+            //     while (totalSec > curSec) {
+            //         tt += 1;
+            //         curSec += loopVidSec;
+            //     }
 
-                console.log(totalSec);
-                console.log(curSec);
+            //     console.log("Total seconds:")
+            //     console.log(totalSec);
+            //     console.log("Current seconds:");
+            //     console.log(curSec);
 
-                while (totalSec < curSec) {
-                    tt -= 1;
-                    curSec -= loopVidSec;
-                }
+            //     while (totalSec < curSec) {
+            //         tt -= 1;
+            //         curSec -= loopVidSec;
+            //     }
 
-                console.log(totalSec);
-                console.log(curSec);
-                console.log("LOSS!");
-            }
+            //     console.log("Total seconds:")
+            //     console.log(totalSec);
+            //     console.log("Current seconds:");
+            //     console.log(curSec);
+            //     console.log("%cLOSS END", "font-size:1.2rem;");
+            // }
 
             if (!processSub) {
                 fileCMD.push("for i in {0.." + Math.round(tt) + "}; do echo \"file '" + loopVid + "'\" >> concat.txt; done");
@@ -130,15 +138,9 @@
                 "Extra options: " + extraOptions + "\n" +
                 "Output command: " + output.value + "\n" +
                 "TEMP: " + TEMP + "\n"
-            )
+            );
             console.log("%cScreenshot should end here", "font-size:1.5rem;");
             auto_grow(output);
-        }
-
-        function getPercentageChange(oldNumber, newNumber){
-            var decreaseValue = oldNumber - newNumber;
-
-            return (decreaseValue / oldNumber) * 100;
         }
 
         function validation(form) {
@@ -161,7 +163,10 @@
             else if (postVid != null) {
                 var t = postVidSec == null;
                 if (t) {
+                    form.postVideoLength.focus();
+                    form.postVideoLength.style.backgroundColor = "red";
                     alert("You are missing the length for the post-video.");
+                    setTimeout(function() { document.formLol.postVideoLength.style.backgroundColor = null; }, 5000);
                 }
                 return t;
             }
@@ -176,7 +181,7 @@
             if (outOrNull(string) == null) {
                 return null;
             }
-            const timeRegex = /(\d\d):(\d\d):(\d\d)[.,](\d{2,})/;
+            const timeRegex = /(\d{2,}):(\d{2,}):(\d{2,})[.,](\d{2,})/;
             var t = timeRegex.exec(string);
             for (var i = 1; i < t.length; i++) {
                 t[i] = parseInt(t[i]);
@@ -197,22 +202,42 @@
     <p>do note that this will only work with the most common bash and zsh, so if you're on windows, you might want to write it into a file.</p>
     <form action="javascript:createCommand(this.formLol);" method="post" name="formLol" onsubmit="validation(this);">
         <label>Pre-video file name / path (Optional)</label><input type="text" name="preVideo"><br>
-        <label>Pre-video length (Required if pre-video is included)</label><input type="text" pattern="\d\d:\d\d:\d\d[.,]\d{2,}" placeholder="hh:mm:ss.ms" name="preVideoLength"><br>
+        <label>Pre-video length (Required if pre-video is included)</label><input type="text" pattern="\d{2,}:\d{2,}:\d{2,}[.,]\d{2,}" placeholder="hh:mm:ss.ms" name="preVideoLength"><br>
         <br>
         <label>Looping video file name / path</label><input type="text" name="loopVideo" required><br>
-        <label>Looping video length</label><input type="text" pattern="\d\d:\d\d:\d\d[.,]\d{2,}" placeholder="hh:mm:ss.ms" name="loopVideoLength" required><br>
+        <label>Looping video length</label><input type="text" pattern="\d{2,}:\d{2,}:\d{2,}[.,]\d{2,}" placeholder="hh:mm:ss.ms" name="loopVideoLength" required><br>
         <br>
         <label>Post-video file name / path (Optional)</label><input type="text" name="postVideo"><br>
-        <label>Post-video length (Required if post-video included)</label><input type="text" pattern="\d\d:\d\d:\d\d[.,]\d{2,}" placeholder="hh:mm:ss.ms" name="postVideoLength"><br>
+        <label>Post-video length (Required if post-video included)</label><input type="text" pattern="\d{2,}:\d{2,}:\d{2,}[.,]\d{2,}" placeholder="hh:mm:ss.ms" name="postVideoLength"><br>
         <br>
-        <label>Total wanted video length</label><input type="text" name="videoLength" pattern="\d\d:\d\d:\d\d[.,]\d{2,}" required placeholder="hh:mm:ss.ms"><br>
+        <label>Total wanted video length</label><input type="text" name="videoLength" pattern="\d{2,}:\d{2,}:\d{2,}[.,]\d{2,}" required placeholder="hh:mm:ss.ms"><br>
         <label>Output file name</label><input type="text" name="outName" required><br>
-        <label>More loops if over </label><input type="number" name="triggerLoss" placeholder="%" min="0" max="100" value="20" id="percent"><label>% of time is lost</label><br>
+        <!-- <label>Fix loops if over </label><input type="number" name="triggerLoss" placeholder="%" min="0" max="100" value="20" id="percent"><label>% of time is lost</label><br> -->
         <label>Shell supports <a href="https://superuser.com/a/1060002">process substitution</a> (bash and zsh works, also requires full path to file)</label><input type="checkbox" name="proSub"><br>
         <label>Custom extra ffmpeg options</label><input type="text" name="extraOptions"><br>
-        <p>Note: This will slightly go down your expectation if it cannot achieve perfectly.</p>
+        <p>Note: This isn't perfect. I can't tell why at all.</p>
         <input type="submit" value="Create command">
     </form>
     <textarea readonly placeholder="Output command. Click to copy." onclick="this.setSelectionRange(0, this.value.length);document.execCommand('copy');" id="output"></textarea>
+    <script>
+        var devMode = false;
+        function sleep(ms) {
+          return new Promise(resolve => setTimeout(resolve, ms));
+        }
+        async function autoSubmit() {
+            document.formLol.loopVideo.value = "Yoshi.mp4";
+            document.formLol.loopVideoLength.value = "00:00:00.75";
+            document.formLol.loopVideoLength.value = "00:00:00.99";
+            document.formLol.videoLength.value = "00:00:21.00";
+            document.formLol.videoLength.value = "00:01:00.00";
+            document.formLol.outName.value = "out.mp4";
+            document.formLol.submit();
+            await sleep(5000);
+            location.reload();
+        }
+        if (devMode) {
+            autoSubmit();
+        }
+    </script>
 </body>
 </html>
