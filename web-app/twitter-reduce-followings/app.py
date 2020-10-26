@@ -1,11 +1,14 @@
 import datetime
+import hashlib
+import random
+import threading
 import urllib.error
 import urllib.parse
 import urllib.request
 
 import oauth2 as oauth
 import tweepy
-from flask import Flask, Response, render_template, request, url_for
+from flask import Flask, make_response, render_template, request, url_for
 from werkzeug.utils import redirect
 
 app = Flask(__name__)
@@ -28,6 +31,9 @@ show_user_url = 'https://api.twitter.com/1.1/users/show.json'
 app.config.from_pyfile('config.cfg', silent=True)
 
 oauth_store = {}
+
+temp_data = {}  # cookie identifier: data
+in_progress = {}  # cookie identifier: thread
 
 
 def strf_runningtime(tdelta, round_period='second'):
@@ -93,12 +99,26 @@ def authorize():
 
 @app.route("/last-interactions")
 def show_last_interactions():
-    return render_template("last-interactions.html", last_interactions=request.args.get("last_interactions"))
+    try:
+        return render_template("last-interactions.html", last_interactions=temp_data.pop(request.cookies.get('id')))
+    except KeyError:
+        return redirect("/")
+
+
+@app.route("/please-wait")
+def please_wait():
+    cookie = request.cookies.get("id")
+    if cookie in temp_data.keys():
+        return redirect("last-interactions")
+    elif cookie in in_progress.keys():
+        return render_template("please-wait.html")
+    else:
+        return redirect("/")
 
 
 @app.route('/process-last-interactions')
 def last_interactions():
-    def process_last_interactions():
+    def process_last_interactions(cookie_data):
         def filterTweets(tweetsList):
             def addToList(interactedTweet, _user):
                 if not interactedTweet.author.following:
@@ -133,8 +153,8 @@ def last_interactions():
         followings = [u for u in tweepy.Cursor(api.friends, count=200).items()]
 
         dms = [dm for dm in tweepy.Cursor(api.list_direct_messages, count=50).items()]
-        tweets = [t for t in tweepy.Cursor(api.user_timeline, id=username, count=200, include_rts=True).items(1)]
-        tweets.extend([t for t in tweepy.Cursor(api.favorites, id=username, count=200, include_rts=True).items(1)])
+        tweets = [t for t in tweepy.Cursor(api.user_timeline, id=username, count=200, include_rts=True).items()]
+        tweets.extend([t for t in tweepy.Cursor(api.favorites, id=username, count=200, include_rts=True).items()])
 
         interactions = filterTweets(tweets)
 
@@ -164,15 +184,17 @@ def last_interactions():
 
         if noInteractFollowings:
             for user in noInteractFollowings:
-                lastInteractions.append(f"<a href=\"https://twitter.com/{user.screen_name}\">\"{user.name}\" (@"
+                lastInteractions.append(f"<a href=\"https://twitter.com/{user.screen_name}\">{user.name} (@"
                                         f"{user.screen_name}, Last interaction: Undetermined)</a>")
         if interactions:
-            temp = {datetime_time: user for tweet, user, datetime_time in interactions.values()}
-            temp = {k: temp[k] for k in reversed(sorted(temp))}
-            for time, user in temp.items():
-                lastInteractions.append(f"<a href=\"https://twitter.com/{user.screen_name}\">\"{user.name}\" (@"
-                                        f"{user.screen_name}, Last interaction: {strf_runningtime(time, 'minute')})</a>")
-        return render_template("last-interactions.html", last_interactions="<br>".join(lastInteractions))
+            _temp = {datetime_time: user for tweet, user, datetime_time in interactions.values()}
+            _temp = {k: _temp[k] for k in reversed(sorted(_temp))}
+            for time, user in _temp.items():
+                lastInteractions.append(
+                    f"<a href=\"https://twitter.com/{user.screen_name}\">{user.name} (@{user.screen_name}, "
+                    f"Last interaction: {strf_runningtime(time, 'minute')})</a>")
+        temp_data[cookie_data] = "<br>".join(lastInteractions)
+        del in_progress[cookie_data]
 
     # Accept the callback params, get the token and call the API to
     # display the logged-in user's name and handle
@@ -211,11 +233,19 @@ def last_interactions():
     real_oauth_token = access_token[b'oauth_token'].decode('utf-8')
     real_oauth_token_secret = access_token[b'oauth_token_secret'].decode('utf-8')
 
+    temp_hash = hashlib.sha512(
+        bytes(real_oauth_token + real_oauth_token_secret + str(random.uniform(-10000000, 10000000)), "utf8")).hexdigest()
+
     # don't keep this token and secret in memory any longer
     del oauth_store[oauth_token]
-    process_last_interactions()
 
-    return process_last_interactions()
+    resp = make_response(redirect("please-wait"))
+    resp.set_cookie('id', temp_hash)
+
+    temp = threading.Thread(target=process_last_interactions, args=[temp_hash])
+    temp.start()
+    in_progress[temp_hash] = temp
+    return resp
 
 
 @app.errorhandler(500)

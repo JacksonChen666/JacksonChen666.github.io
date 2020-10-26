@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block title %}Last interactions{% endblock %}
 {% block containercontent %}
+<h3>Refreshing this page will lose all information and will have to be reprocessed again!</h3>
 <p>Last interaction with other users:</p>
 {{ last_interactions|safe }}
 {% endblock %}
