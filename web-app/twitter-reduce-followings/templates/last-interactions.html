@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block title %}Last interactions{% endblock %}
 {% block containercontent %}
-<h2>A list of people you follow, including the last interaction time (excludes DM interactions, for now)</h2>
-{{ list_of_users }}
+<p>Last interaction with other users:</p>
+{{ last_interactions|safe }}
 {% endblock %}

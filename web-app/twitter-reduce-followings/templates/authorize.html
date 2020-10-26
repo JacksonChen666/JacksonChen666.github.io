@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block title %}Authorize{% endblock %}
+{% block containercontent %}
+<p><a href="{{ authorize_url }}?oauth_token={{ oauth_token }}" class="btn btn-small btn-success">Authorize Last interactions</a></p>
+<meta http-equiv="refresh" content="0; URL={{ authorize_url }}?oauth_token={{ oauth_token }}"/>
+{% endblock %}

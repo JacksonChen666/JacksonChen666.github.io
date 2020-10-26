@@ -3,8 +3,32 @@
 {% block containercontent %}
 <h2>Reduce the amount of people you follow on twitter!</h2>
 <p>To get the last interactions of the people you follow, please login in to twitter</p>
-<p>The program will immediately start getting the last interactions after logging in, and may take up to a minute. Please be patient.</p>
-<a href=start>
+<p>The program will immediately start getting the last interactions after logging in, and may take up to a minute.
+    Please be patient.</p>
+<a href=authorize>
     <img src="https://cdn.cms-twdigitalassets.com/content/dam/developer-twitter/auth-docs/sign-in-with-twitter-gray.png.img.fullhd.medium.png">
 </a>
+<hr>
+<p>
+    Q&A:<br>
+    Q: What data does this program collect?<br>
+    A: All tweets, retweets, liked tweets from your profile (max depends on twitter's limits), and all direct messages
+    (twitter limits within 30 days). Only the dates and the user's name and username are pulled from those
+    information.<br>
+    <br>
+    Q: Twitter says it can do a lot of things. Why does it do all of that?<br>
+    A: I cannot specify which specific permissions should be allowed, so I can only do the most which is the best
+    possible for the program.<br>
+    <br>
+    Q: Source code?<br>
+    A:
+</p>
+<ul>
+    <li>Webapp version: <a
+            href="https://github.com/JacksonChen666/JacksonChen666.github.io/blob/master/web-app/twitter-reduce-followings/app.py#L121">https://github.com/JacksonChen666/JacksonChen666.github.io/blob/master/web-app/twitter-reduce-followings/app.py#L121</a>
+    </li>
+    <li>Program version: <a
+            href="https://github.com/JacksonChen666/Random-Python-Ideas-2/blob/master/twitter%20last%20interaction.py">https://github.com/JacksonChen666/Random-Python-Ideas-2/blob/master/twitter%20last%20interaction.py</a>
+    </li>
+</ul>
 {% endblock %}
