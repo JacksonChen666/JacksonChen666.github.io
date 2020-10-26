@@ -94,7 +94,7 @@ def hello():
 def start():
     # note that the external callback URL must be added to the whitelist on
     # the developer.twitter.com portal, inside the app settings
-    app_callback_url = url_for('last-interactions', _external=True)
+    app_callback_url = url_for('last_interactions', _external=True)
 
     # Generate the OAuth request tokens, then display them
     consumer = oauth.Consumer(
@@ -118,7 +118,7 @@ def start():
 
 
 @app.route('/last-interactions')
-def callback():
+def last_interactions():
     global username
     # Accept the callback params, get the token and call the API to
     # display the logged-in user's name and handle
@@ -161,16 +161,40 @@ def callback():
     auth.set_access_token(real_oauth_token, real_oauth_token_secret)
     api = tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
 
+    utcfromtimestamp = datetime.datetime.utcfromtimestamp
+
     lastInteracted = []
     username = auth.get_username()
+    user = api.get_user(screen_name=username)
 
     followings = [u for u in tweepy.Cursor(api.friends, count=200).items()]
 
+    dms = [dm for dm in tweepy.Cursor(api.list_direct_messages, count=50).items()]
     tweets = [t for t in tweepy.Cursor(api.user_timeline, id=username, count=200, include_rts=True).items()]
     tweets.extend([t for t in tweepy.Cursor(api.favorites, id=username, count=200, include_rts=True).items()])
 
-    interactedUsersTweets = filterTweets(tweets)
-    users = [user for tweet, user, datetime_time in interactedUsersTweets.values()]
+    interactions = filterTweets(tweets)
+
+    cached_users = {}  # continuously fetching the users will increase the time and api usage
+    for dm in dms:
+        user_id = dm.message_create["target"]["recipient_id"] if dm.message_create["sender_id"] == user.id else \
+            dm.message_create["sender_id"]
+        dm_user = cached_users[user_id] if user_id in cached_users.keys() else api.get_user(id=user_id)
+        cached_users[user_id] = dm_user
+        if not dm_user.following:
+            continue
+        creation_time = utcfromtimestamp(int(dm.created_timestamp[:-3]))
+        if dm_user.screen_name in interactions.keys():
+            now = datetime.datetime.utcnow()
+            old_creation_time = interactions[dm_user.screen_name][0].created_at if isinstance(
+                interactions[dm_user.screen_name][0], tweepy.Status) else utcfromtimestamp(
+                int(interactions[dm_user.screen_name][0].created_timestamp[:-3]))
+            if ((now - old_creation_time) - (now - creation_time)).total_seconds() < 0:
+                continue
+        interactions[dm_user.screen_name] = (dm, dm_user, datetime.datetime.utcnow() - creation_time)
+    del cached_users
+
+    users = [user for tweet, user, time in interactions.values()]
     noInteractFollowings = [u for u in followings if u.following and u not in users]
 
     if noInteractFollowings:
@@ -178,8 +202,8 @@ def callback():
             lastInteracted.append(
                 f"<a href=\"https://twitter.com/{user.screen_name}\">\"{user.name}\" (@{user.screen_name}, "
                 f"Last interaction: Undetermined)</a>")
-    if interactedUsersTweets:
-        temp = {datetime_time: user for tweet, user, datetime_time in interactedUsersTweets.values()}
+    if interactions:
+        temp = {datetime_time: user for tweet, user, datetime_time in interactions.values()}
         temp = {k: temp[k] for k in reversed(sorted(temp))}
         for time, user in temp.items():
             lastInteracted.append(
@@ -199,4 +223,4 @@ def internal_server_error(e):
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
