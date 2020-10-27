@@ -85,8 +85,7 @@ def authorize():
         "oauth_callback": app_callback_url}))
 
     if resp['status'] != '200':
-        error_message = 'Invalid response, status {status}, {message}'.format(
-            status=resp['status'], message=content.decode('utf-8'))
+        error_message = f'Invalid response, status {resp["status"]}, {content.decode("utf-8")}'
         return render_template('error.html', error_message=error_message)
 
     request_token = dict(urllib.parse.parse_qsl(content))
@@ -251,13 +250,13 @@ def last_interactions():
     # don't keep this token and secret in memory any longer
     del oauth_store[oauth_token]
 
-    resp = make_response(redirect("please-wait"))
-    resp.set_cookie('id', temp_hash)
+    response = make_response(redirect("please-wait"))
+    response.set_cookie('id', temp_hash)
 
     temp = threading.Thread(target=process_last_interactions, args=[temp_hash])
     temp.start()
     in_progress[temp_hash] = temp, 0, 0, 0
-    return resp
+    return response
 
 
 @app.errorhandler(500)
