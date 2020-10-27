@@ -33,7 +33,7 @@ app.config.from_pyfile('config.cfg', silent=True)
 oauth_store = {}
 
 temp_data = {}  # cookie identifier: data
-in_progress = {}  # cookie identifier: thread
+in_progress = {}  # cookie identifier: thread, step, processing n of thing, amount to process
 
 
 def strf_runningtime(tdelta, round_period='second'):
@@ -132,13 +132,16 @@ def last_interactions():
                     interactedTweet, _user, datetime.datetime.utcnow() - interactedTweet.created_at)
 
             _interacted_users = {}
+            in_progress[cookie_data][3] = len(tweetsList)
             for _tweet in tweetsList:
+                in_progress[cookie_data][2] += 1
                 if _tweet.author == username and _tweet.in_reply_to_screen_name and _tweet.entities:
                     for entity in _tweet.entities:
                         if _tweet.in_reply_to_screen_name == entity.screen_name:
                             addToList(_tweet, entity)
                 elif _tweet.retweeted or _tweet.favorited:
                     addToList(_tweet, _tweet.author)
+            in_progress[cookie_data][2] = 0
             return _interacted_users
 
         auth = tweepy.OAuthHandler(app.config["APP_CONSUMER_KEY"], app.config["APP_CONSUMER_SECRET"])
@@ -147,19 +150,26 @@ def last_interactions():
 
         utcfromtimestamp = datetime.datetime.utcfromtimestamp
 
+        in_progress[cookie_data][1] += 1
         username = auth.get_username()
         user = api.get_user(screen_name=username)
 
+        in_progress[cookie_data][1] += 1
         followings = [u for u in tweepy.Cursor(api.friends, count=200).items()]
 
+        in_progress[cookie_data][1] += 1
         dms = [dm for dm in tweepy.Cursor(api.list_direct_messages, count=50).items()]
         tweets = [t for t in tweepy.Cursor(api.user_timeline, id=username, count=200, include_rts=True).items()]
         tweets.extend([t for t in tweepy.Cursor(api.favorites, id=username, count=200, include_rts=True).items()])
 
+        in_progress[cookie_data][1] += 1
         interactions = filterTweets(tweets)
 
+        in_progress[cookie_data][1] += 1
         cached_users = {}  # continuously fetching the users will increase the time and api usage
+        in_progress[cookie_data][3] = len(dms)
         for dm in dms:
+            in_progress[cookie_data][2] += 1
             user_id = dm.message_create["target"]["recipient_id"] if dm.message_create["sender_id"] == user.id else \
                 dm.message_create["sender_id"]
             dm_user = cached_users[user_id] if user_id in cached_users.keys() else api.get_user(id=user_id)
@@ -177,9 +187,11 @@ def last_interactions():
             interactions[dm_user.screen_name] = (dm, dm_user, datetime.datetime.utcnow() - creation_time)
         del cached_users
 
+        in_progress[cookie_data][1] += 1
         users = [user for tweet, user, time in interactions.values()]
         noInteractFollowings = [u for u in followings if u.following and u not in users]
 
+        in_progress[cookie_data][1] += 1
         lastInteractions = []
 
         if noInteractFollowings:
@@ -244,13 +256,13 @@ def last_interactions():
 
     temp = threading.Thread(target=process_last_interactions, args=[temp_hash])
     temp.start()
-    in_progress[temp_hash] = temp
+    in_progress[temp_hash] = temp, 0, 0, 0
     return resp
 
 
 @app.errorhandler(500)
 def internal_server_error(e):
-    return render_template('error.html', error_message='uncaught exception'), 500
+    return render_template('error.html', error_message=f'uncaught exception {str(e)}'), 500
 
 
 if __name__ == '__main__':
