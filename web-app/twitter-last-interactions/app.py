@@ -12,8 +12,6 @@ from flask import Flask, make_response, render_template, request, url_for, redir
 
 app = Flask(__name__)
 
-app.debug = True
-
 request_token_url = 'https://api.twitter.com/oauth/request_token'
 access_token_url = 'https://api.twitter.com/oauth/access_token'
 authorize_url = 'https://api.twitter.com/oauth/authorize'
@@ -109,7 +107,8 @@ def please_wait():
     if cookie in temp_data.keys():
         return redirect("last-interactions")
     elif cookie in in_progress.keys():
-        return render_template("please-wait.html")
+        step, item_n, item_max = in_progress[cookie][1:]
+        return render_template("please-wait.html", step=step, item_n=item_n, item_max=item_max)
     else:
         return redirect("/")
 
@@ -194,14 +193,14 @@ def last_interactions():
 
         if noInteractFollowings:
             for user in noInteractFollowings:
-                lastInteractions.append(f"<a href=\"https://twitter.com/{user.screen_name}\">{user.name} (@"
+                lastInteractions.append(f"<a href=\"https://twitter.com/{user.screen_name}\" target=\"_blank\">{user.name} (@"
                                         f"{user.screen_name}, Last interaction: Undetermined)</a>")
         if interactions:
             _temp = {datetime_time: user for tweet, user, datetime_time in interactions.values()}
             _temp = {k: _temp[k] for k in reversed(sorted(_temp))}
             for time, user in _temp.items():
                 lastInteractions.append(
-                    f"<a href=\"https://twitter.com/{user.screen_name}\">{user.name} (@{user.screen_name}, "
+                    f"<a href=\"https://twitter.com/{user.screen_name}\" target=\"_blank\">{user.name} (@{user.screen_name}, "
                     f"Last interaction: {strf_runningtime(time, 'minute')})</a>")
         temp_data[cookie_data] = "<br>".join(lastInteractions)
         del in_progress[cookie_data]
@@ -253,8 +252,8 @@ def last_interactions():
     response.set_cookie('id', temp_hash)
 
     temp = threading.Thread(target=process_last_interactions, args=[temp_hash])
+    in_progress[temp_hash] = [temp, 0, 0, 0]
     temp.start()
-    in_progress[temp_hash] = temp, 0, 0, 0
     return response
 
 
@@ -264,4 +263,4 @@ def internal_server_error(e):
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host="0.0.0.0")

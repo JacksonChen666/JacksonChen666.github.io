@@ -1,8 +1,18 @@
 {% extends "base.html" %}
 {% block title %}Waiting...{% endblock %}
 {% block containercontent %}
-<meta http-equiv="refresh" content="10;"/>
+<meta http-equiv="refresh" content="5;"/>
 <p>Please wait while the server is still processing...</p>
 <p>Step {{ step }}/7</p>
 <p>Item {{ item_n }}/{{ item_max }}</p>
+<p>Steps reference:</p>
+<ul>
+    <li>Step 1: Get username.</li>
+    <li>Step 2: Get all the users you follow (Slow).</li>
+    <li>Step 3: Get all tweeted tweets, liked tweets, and direct messages (Slow).</li>
+    <li>Step 4: Process collected tweets.</li>
+    <li>Step 5: Process collected direct messages.</li>
+    <li>Step 6: Collect users you haven't interacted in a long time.</li>
+    <li>Step 7: Compiling all users into links with reference of time.</li>
+</ul>
 {% endblock %}
