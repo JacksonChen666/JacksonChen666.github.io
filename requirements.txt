@@ -1,0 +1,4 @@
+oauth2
+tweepy
+Flask
+Werkzeug

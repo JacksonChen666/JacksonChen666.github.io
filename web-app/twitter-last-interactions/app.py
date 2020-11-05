@@ -8,8 +8,7 @@ import urllib.request
 
 import oauth2 as oauth
 import tweepy
-from flask import Flask, make_response, render_template, request, url_for
-from werkzeug.utils import redirect
+from flask import Flask, make_response, render_template, request, url_for, redirect
 
 app = Flask(__name__)
 
