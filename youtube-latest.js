@@ -8,11 +8,13 @@ var reqURL = "https://www.youtube.com/feeds/videos.xml?channel_id=";
 // });
 
 // Fetching: https://www.codegrepper.com/code-examples/javascript/get+json+data+from+url+javascript
-fetch("https://api.rss2json.com/v1/api.json?rss_url=" + encodeURIComponent(reqURL) + channelID)
-.then(res => res.json())
-.then((data) => {
-  var link = data.items[0].link;
-  var id = link.substr(link.indexOf("=")+1);
-  document.querySelector("#youtube_video").setAttribute("src","https://www.youtube-nocookie.com/embed/"+ id + "?showinfo=0&rel=0");
-})
-.catch(err => { throw err });
+function getLatestVideo(after) {
+    fetch("https://api.rss2json.com/v1/api.json?rss_url=" + encodeURIComponent(reqURL) + channelID)
+    .then(res => res.json())
+    .then((data) => {
+        var link = data.items[0].link;
+        var id = link.substr(link.indexOf("=")+1);
+        after(id);
+    })
+    .catch(err => { throw err });
+}
