@@ -1,4 +1,5 @@
 body{min-height: 100vh; margin: 0;}
 footer{position: absolute; bottom: 0; width: 100%; height: 4rem; text-align: center;}
-.typing{text-align: center; padding-top: 10%}
-.typing #input{height: 30px; width: 90%; font-family: monospace; font-size: 1.8rem;}
+.typing{text-align: center; padding-top: 10%;}
+.typing #input{height: 30px; width: 90%;}
+.typing, .typing #input{font-family: monospace; font-size: 1.8rem}
