@@ -1,5 +1,12 @@
-body{min-height: 100vh; margin: 0;}
+body{min-height: 100vh; margin: 0; font-size: 1.2rem;}
 footer{position: absolute; bottom: 0; width: 100%; height: 4rem; text-align: center;}
-.typing{text-align: center; padding-top: 10%;}
-.typing #input{height: 30px; width: 90%;}
-.typing, .typing #input{font-family: monospace; font-size: 1.8rem}
+#typing{text-align: center; padding-top: 18vh; display: flex; flex-direction: column; justify-content: center; align-items: center;}
+#typing #toType{align-self: left;}
+#typing #outputTyping{margin-top: 100px; width: 80%; height: 20vh; font-size: 1.25rem;}
+#typing #output{width: 100%; height: 100%; resize: none;}
+#typing #input{height: 30px; width: 90%;}
+#typing, #typing #input{font-family: monospace; font-size: 1.8rem}
+
+@media (prefers-color-scheme: dark){ /* dark reader, only for existing and working stuff */
+    html, body, input, textarea{background-color: #181a1b;border-color: #575757;color: #e8e6e3;}
+}
