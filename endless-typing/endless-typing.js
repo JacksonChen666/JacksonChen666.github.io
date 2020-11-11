@@ -1,5 +1,6 @@
+"use strict";
 let inputBox = document.querySelector("#input");
-let toTypeText = document.querySelector("#toType");
+let toType = document.querySelector("#toType");
 let outputTyping = document.querySelector("#output");
 let wpmCount = document.querySelector("#wpm");
 let wordsAmount = 10;
@@ -16,8 +17,7 @@ function getWords() {
 
 let words = getWords();
 
-function randomWords(existing) {
-    var wordsChoice = existing;
+function randomWords(wordsChoice) {
     while (wordsChoice.length != wordsAmount) {
         wordsChoice.push(words[parseInt(Math.random() * words.length + 1)]);
     }
@@ -31,29 +31,27 @@ function calculateWPM() {
     wpmCount.innerText = Math.round((charactersTyped / 5) / ((Date.now() - startTime) / 1000 / 60), 0);
 }
 
-toTypeText.innerText = randomWords([]);
+toType.innerText = randomWords([]);
 inputBox.addEventListener('keyup', e => {
     if (e.keyCode === 13) { // skip word
-        var temp = toTypeText.innerText.split(" ");
+        var temp = toType.innerText.split(" ");
         temp.shift();
         inputBox.value = "";
-        toTypeText.innerText = randomWords(temp);
+        toType.innerText = randomWords(temp);
         outputTyping.value += "<Skip>";
         return;
     }
     else if (e.key === " ") {
-        var temp = toTypeText.innerText.split(" ");
-        var wordsTyped = inputBox.value.split(" ");
-        for (i in wordsTyped) {
-            if (temp[i] == wordsTyped[i]) {
-                temp.shift();
-                wordsTyped.shift();
-            }
+        var toTypeWords = toType.innerText.split(" ");
+        var wordsTyped = inputBox.value.split(" ").filter(word => word.length > 0);
+        while (wordsTyped.length > 0 && toTypeWords[0] === wordsTyped[0]) {
+            toTypeWords.shift();
+            wordsTyped.shift();
         }
-        toTypeText.innerText = randomWords(temp);
+        toType.innerText = randomWords(toTypeWords);
         inputBox.value = wordsTyped.join(" ");
     }
-    if (e.keyCode < 32) {
+    if (e.key.length !== 1) {
         outputTyping.value += `<${e.key}>`
     }
     else {
@@ -65,4 +63,4 @@ inputBox.addEventListener('keyup', e => {
         charactersTyped++;;
     }
 });
-setInterval(calculateWPM, 100)
+setInterval(calculateWPM, 100);
