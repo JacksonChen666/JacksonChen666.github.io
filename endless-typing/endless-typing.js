@@ -33,7 +33,15 @@ function calculateWPM() {
 
 toTypeText.innerText = randomWords([]);
 inputBox.addEventListener('keyup', e => {
-    if (e.key === " ") {
+    if (e.keyCode == 13) { // skip word
+        var temp = toTypeText.innerText.split(" ");
+        temp.shift();
+        inputBox.value = "";
+        toTypeText.innerText = randomWords(temp);
+        outputTyping.value += "<Skip>";
+        return;
+    }
+    else if (e.key === " ") {
         var temp = toTypeText.innerText.split(" ");
         var wordsTyped = inputBox.value.split(" ");
         for (i in wordsTyped) {
