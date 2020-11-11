@@ -1,6 +1,11 @@
 let inputBox = document.querySelector("#input");
 let toTypeText = document.querySelector("#toType");
+let outputTyping = document.querySelector("#output");
+let wpmCount = document.querySelector("#wpm");
 let wordsAmount = 10;
+var charactersTyped = 0;
+var started = false;
+var startTime;
 
 function getWords() {
     var xmlHttp = new XMLHttpRequest();
@@ -19,6 +24,13 @@ function randomWords(existing) {
     return wordsChoice.join(" ");
 }
 
+function calculateWPM() {
+    if (!started) {
+        return;
+    }
+    wpmCount.innerText = Math.round((charactersTyped / 5) / ((Date.now() - startTime) / 1000 / 60), 0);
+}
+
 toTypeText.innerText = randomWords([]);
 inputBox.addEventListener('keyup', e => {
     if (e.key === " ") {
@@ -33,5 +45,16 @@ inputBox.addEventListener('keyup', e => {
         toTypeText.innerText = randomWords(temp);
         inputBox.value = wordsTyped.join(" ");
     }
-    console.log(`keyup event fired for key: ${e.key}`);
+    if (e.keyCode < 32) {
+        outputTyping.value += `<${e.key}>`
+    }
+    else {
+        outputTyping.value += e.key;
+        if (!started) {
+            started = true;
+            startTime = Date.now();
+        }
+        charactersTyped++;;
+    }
 });
+setInterval(calculateWPM, 100)
