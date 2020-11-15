@@ -7,8 +7,7 @@ let wordsAmount = 10;
 var charactersTyped = 0;
 var started = false;
 var startTime;
-const replaceCorrect = /<\/span><span class='correct'>/g;
-const replaceIncorrect = /<\/span><span class='incorrect'>/g;
+var held = [];
 
 function getWords() {
     var xmlHttp = new XMLHttpRequest();
@@ -20,14 +19,13 @@ function getWords() {
 function highlight(text) {
     var input = inputBox.value;
     var newInnerHTML = "";
-    for (var i in text) {
+    for (var i = 0; text.length > i; i++) {
         if (parseInt(i) + 1 > input.length) {
-            newInnerHTML += text[i];
+            break;
         }
-        else {
-            newInnerHTML += `<span class='${input[i] === text[i] ? "correct" : "incorrect"}'>${text[i]}</span>`;
-        }
+        newInnerHTML += `<span class='${input[i] === text[i] ? "correct" : "incorrect"}'>${text[i]}</span>`;
     }
+    newInnerHTML += text.substring(parseInt(i));
     toType.innerHTML = newInnerHTML;
 }
 
@@ -50,6 +48,7 @@ function calculateWPM() {
 
 toType.innerText = randomWords();
 inputBox.addEventListener('keyup', e => {
+    held[e.keyCode] = false;
     highlight(toType.innerText);
     if (toType.innerText + " " === inputBox.value) {
         toType.innerText = randomWords();
@@ -67,4 +66,11 @@ inputBox.addEventListener('keyup', e => {
         charactersTyped++;;
     }
 });
+inputBox.addEventListener('keydown', e => {
+    if (held[e.keyCode] && e.keyCode > 32) {
+        e.preventDefault();
+        return;
+    }
+    held[e.keyCode] = true;
+})
 setInterval(calculateWPM, 100);
