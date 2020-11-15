@@ -7,6 +7,8 @@ let wordsAmount = 10;
 var charactersTyped = 0;
 var started = false;
 var startTime;
+const replaceCorrect = /<\/span><span class='correct'>/g;
+const replaceIncorrect = /<\/span><span class='incorrect'>/g;
 
 function getWords() {
     var xmlHttp = new XMLHttpRequest();
@@ -15,9 +17,24 @@ function getWords() {
     return xmlHttp.responseText.split("\n");
 }
 
+function highlight(text) {
+    var input = inputBox.value;
+    var newInnerHTML = "";
+    for (var i in text) {
+        if (parseInt(i) + 1 > input.length) {
+            newInnerHTML += text[i];
+        }
+        else {
+            newInnerHTML += `<span class='${input[i] === text[i] ? "correct" : "incorrect"}'>${text[i]}</span>`;
+        }
+    }
+    toType.innerHTML = newInnerHTML;
+}
+
 let words = getWords();
 
-function randomWords(wordsChoice) {
+function randomWords() {
+    var wordsChoice = [];
     while (wordsChoice.length != wordsAmount) {
         wordsChoice.push(words[parseInt(Math.random() * words.length + 1)]);
     }
@@ -31,25 +48,12 @@ function calculateWPM() {
     wpmCount.innerText = Math.round((charactersTyped / 5) / ((Date.now() - startTime) / 1000 / 60), 0);
 }
 
-toType.innerText = randomWords([]);
+toType.innerText = randomWords();
 inputBox.addEventListener('keyup', e => {
-    if (e.keyCode === 13) { // skip word
-        var temp = toType.innerText.split(" ");
-        temp.shift();
+    highlight(toType.innerText);
+    if (toType.innerText + " " === inputBox.value) {
+        toType.innerText = randomWords();
         inputBox.value = "";
-        toType.innerText = randomWords(temp);
-        outputTyping.value += "<Skip>";
-        return;
-    }
-    else if (e.key === " ") {
-        var toTypeWords = toType.innerText.split(" ");
-        var wordsTyped = inputBox.value.split(" ").filter(word => word.length > 0);
-        while (wordsTyped.length > 0 && toTypeWords[0] === wordsTyped[0]) {
-            toTypeWords.shift();
-            wordsTyped.shift();
-        }
-        toType.innerText = randomWords(toTypeWords);
-        inputBox.value = wordsTyped.join(" ");
     }
     if (e.key.length !== 1) {
         outputTyping.value += `<${e.key}>`
