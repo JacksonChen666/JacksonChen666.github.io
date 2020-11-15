@@ -10,7 +10,7 @@ var startTime;
 
 function getWords() {
     var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open("GET", "https://raw.githubusercontent.com/first20hours/google-10000-english/master/google-10000-english.txt", false);
+    xmlHttp.open("GET", "https://gist.githubusercontent.com/deekayen/4148741/raw/98d35708fa344717d8eee15d11987de6c8e26d7d/1-1000.txt", false);
     xmlHttp.send(null);
     return xmlHttp.responseText.split("\n");
 }
