@@ -70,7 +70,7 @@ inputBox.addEventListener('keyup', e => {
     }
 });
 inputBox.addEventListener('keydown', e => {
-    if (held[e.keyCode] && e.keyCode > 32) {
+    if (held[e.keyCode] && e.keyCode >= 32) {
         e.preventDefault();
         return;
     }
