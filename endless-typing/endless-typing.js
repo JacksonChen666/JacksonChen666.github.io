@@ -1,6 +1,7 @@
 "use strict";
 let inputBox = document.querySelector("#input");
 let toType = document.querySelector("#toType");
+let toTypeNext = document.querySelector("#toTypeNext");
 let outputTyping = document.querySelector("#output");
 let wpmCount = document.querySelector("#wpm");
 let wordsAmount = 10;
@@ -47,11 +48,13 @@ function calculateWPM() {
 }
 
 toType.innerText = randomWords();
+toTypeNext.innerText = randomWords();
 inputBox.addEventListener('keyup', e => {
     held[e.keyCode] = false;
     highlight(toType.innerText);
     if (toType.innerText + " " === inputBox.value) {
-        toType.innerText = randomWords();
+        toType.innerText = toTypeNext.innerText;
+        toTypeNext.innerText = randomWords();
         inputBox.value = "";
     }
     if (e.key.length !== 1) {
