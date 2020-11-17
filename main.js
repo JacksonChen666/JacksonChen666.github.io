@@ -1,3 +1,4 @@
+'use strict';
 function setCookie(cname, cvalue, exdays) {
     var d = new Date();
     d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
@@ -22,7 +23,7 @@ function getCookie(cname) {
 }
 
 function toggleTheme() {
-    lightMode = (function() { return getCookie("lightTheme"); })();
+    var lightMode = (function() { return getCookie("lightTheme"); })();
     if (lightMode == "true") {
         document.body.setAttribute('theme', 'dark');
         setCookie("lightTheme", false, 10000);
@@ -42,7 +43,7 @@ function toggleTheme() {
 }
 
 function checkTheme() {
-    lightMode = (function() { return getCookie("lightTheme"); })();
+    var lightMode = (function() { return getCookie("lightTheme"); })();
     if (lightMode == "true") { document.body.setAttribute('theme', 'light'); }
     return lightMode;
 }
