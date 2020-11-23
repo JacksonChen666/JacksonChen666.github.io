@@ -219,7 +219,7 @@
 <script>
     const dateRegex = /^(\d{4})\/(\d{2})\/(\d{2})/;
     function addDate(e) {
-        if e.id == "note" {
+        if (e.id == "note") {
             let dates = dateRegex.exec(e.innerHTML);
             dates.shift();
             e.name = dates.join("-");
