@@ -45,7 +45,7 @@ function writeFile($Type, $TextToWrite) {
 	echo $exists;
 	if ($exists == 0) {
 		if ($Type == "Question" || $Type == "Idea") {
-			fwrite($file, "Unix Time," . $FileName . ",Response\n");
+			fwrite($file, "Unix Time," . $Type . ",Response\n");
 		} else {
 			fwrite($file, "Unix Time, Data\n");
 		}
