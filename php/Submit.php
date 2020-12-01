@@ -1,5 +1,5 @@
 <!DOCTYPE php>
-<html>
+<html lang="en">
 <head>
 <title>JacksonChen666 - Submittion</title>
 <link rel="stylesheet" type="text/css" href="https://jacksonchen666.github.io/main.css">
@@ -31,12 +31,11 @@ else if (isset($_POST['i'])) {
 	$submission = writeFile("Idea", $_POST['i']);
 }
 else {
-	echo("<h2>tip of the day</h2><p>try and actually type something</p>" . $back);
+	echo "<h2>tip of the day</h2><p>try and actually type something</p>" . $back;
 	error_log("Submit.php: empty submission found", 0);
 	exit;
 }
-echo("<h2>thank</h2><p>i will check</p>" . $back);
-// error_log("Submit.php: submission: " . $submission, 0);
+echo "<h2>thank</h2><p>i will check</p>" . $back;
 exit;
 
 function writeFile($Type, $TextToWrite) {
@@ -45,7 +44,7 @@ function writeFile($Type, $TextToWrite) {
 	$file = fopen($FileName . ".csv", "a") or die("can't open file F");
 	echo $exists;
 	if ($exists == 0) {
-		if ($Type == "Question" or $Type == "Idea") {
+		if ($Type == "Question" || $Type == "Idea") {
 			fwrite($file, "Unix Time," . $FileName . ",Response\n");
 		} else {
 			fwrite($file, "Unix Time, Data\n");
