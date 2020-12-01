@@ -42,7 +42,6 @@ function writeFile($Type, $TextToWrite) {
 	$FileName = "../stuff/" . $Type;
 	$exists = file_exists($FileName . ".csv");
 	$file = fopen($FileName . ".csv", "a") or die("can't open file F");
-	echo $exists;
 	if ($exists == 0) {
 		if ($Type == "Question" || $Type == "Idea") {
 			fwrite($file, "Unix Time," . $Type . ",Response\n");
