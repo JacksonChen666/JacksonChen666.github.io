@@ -50,7 +50,7 @@ function writeFile($Type, $TextToWrite) {
 			fwrite($file, "Unix Time, Data\n");
 		}
 	}
-	fwrite($file, time().",{$TextToWrite},\n");
+	fwrite($file, time().",\"{$TextToWrite}\",\"\"\n");
 	fclose($file);
 	chmod($FileName . ".csv", 0777);
 	return $TextToWrite;
