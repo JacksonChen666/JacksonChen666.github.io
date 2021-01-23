@@ -17,20 +17,19 @@
             var fileCMD = [];
 
             var preVid = outOrNull(form.preVideo.value);
-            var preVidSec = toSeconds(form.preVideoLength.value);
+            var preVidMS = toMS(form.preVideoLength.value);
 
             var loopVid = form.loopVideo.value;
-            var loopVidSec = toSeconds(form.loopVideoLength.value);
+            var loopVidMS = toMS(form.loopVideoLength.value);
 
             var postVid = outOrNull(form.postVideo.value);
-            var postVidSec = toSeconds(form.postVideoLength.value);
+            var postVidMS = toMS(form.postVideoLength.value);
 
-            var totalSec = toSeconds(form.videoLength.value);
-            var curSec = 0;
+            var totalMS = toMS(form.videoLength.value);
+            var curMS = 0;
 
             var outName = form.outName.value;
             var processSub = form.proSub.checked;
-            var lossTrigger = form.triggerLoss.value;
             var extraOptions = outOrNull(form.extraOptions.value);
             var TEMP = null;
 
@@ -44,47 +43,20 @@
                     TEMP += " >> concat.txt";
                 }
                 fileCMD.push(TEMP);
-                curSec += preVidSec;
+                curMS += preVidMS;
             }
             if (postVid) {
-                curSec += postVidSec;
+                curMS += postVidMS;
             }
 
-            var tt = totalSec - curSec;
-            // tt = !(loopVidSec % 1) ? tt / loopVidSec : tt * loopVidSec; // i mean, it's the greatest i've done
-            tt /= loopVidSec;
-            curSec += tt;
-            // There is a slight issue when the looping video length is .75 seconds and the target is a minute, it gives only 45 loops (which is less than a minute)
-            console.log("Total seconds:")
-            console.log(totalSec);
-            console.log("Current seconds:");
-            console.log(curSec);
-
-            // var loss = -((100 / totalSec) * curSec) + 100;
-            // if (loss >= lossTrigger || -loss >= lossTrigger) {
-            //     console.log("%cLOSS START", "font-size:1.2rem;");
-            //     // But this thing is able to fix the .75 seconds problem by continuing to loop until it's the closest (the math is kept because that easily gets us closer to what we want)
-            //     while (totalSec > curSec) {
-            //         tt += 1;
-            //         curSec += loopVidSec;
-            //     }
-
-            //     console.log("Total seconds:")
-            //     console.log(totalSec);
-            //     console.log("Current seconds:");
-            //     console.log(curSec);
-
-            //     while (totalSec < curSec) {
-            //         tt -= 1;
-            //         curSec -= loopVidSec;
-            //     }
-
-            //     console.log("Total seconds:")
-            //     console.log(totalSec);
-            //     console.log("Current seconds:");
-            //     console.log(curSec);
-            //     console.log("%cLOSS END", "font-size:1.2rem;");
-            // }
+            var tt = totalMS - curMS;
+            // tt = !(loopVidMS % 1) ? tt / loopVidMS : tt * loopVidMS; // i mean, it's the greatest i've done
+            tt /= loopVidMS;
+            curMS += tt;
+            console.log("Total ms:")
+            console.log(totalMS);
+            console.log("Current ms:");
+            console.log(curMS);
 
             if (!processSub) {
                 fileCMD.push("for i in {0.." + Math.round(tt) + "}; do echo \"file '" + loopVid + "'\" >> concat.txt; done");
@@ -113,6 +85,8 @@
                 command.push("concat.txt");
             }
 
+            command.push("-fflags +genpts -t " + form.videoLength.value);
+
             if (extraOptions) { 
                 command.push(form.extraOptions.value);
             }
@@ -125,16 +99,15 @@
                 "Command array: " + command + "\n" +
                 "File command array" + fileCMD + "\n" +
                 "Pre-video name: " + preVid + "\n" +
-                "Pre-video length: " + preVidSec + "\n" +
+                "Pre-video length: " + preVidMS + "\n" +
                 "Loop-video name: " + loopVid + "\n" +
-                "Loop-video length: " + loopVidSec + "\n" +
+                "Loop-video length: " + loopVidMS + "\n" +
                 "Post-video name: " + postVid + "\n" +
-                "Post-video length: " + postVidSec + "\n" +
-                "User requested seconds: " + totalSec + "\n" +
-                "Current seconds: " + curSec + "\n" +
+                "Post-video length: " + postVidMS + "\n" +
+                "User requested ms: " + totalMS + "\n" +
+                "Current ms: " + curMS + "\n" +
                 "Output name: " + outName + "\n" +
                 "Process substitution supported: " + processSub + "\n" +
-                "Loss percent trigger: " + lossTrigger + "\n" +
                 "Extra options: " + extraOptions + "\n" +
                 "Output command: " + output.value + "\n" +
                 "TEMP: " + TEMP + "\n"
@@ -145,13 +118,13 @@
 
         function validation(form) {
             var preVid = outOrNull(form.preVideo.value);
-            var preVidSec = outOrNull(form.preVideoLength.value);
+            var preVidMS = outOrNull(form.preVideoLength.value);
 
             var postVid = outOrNull(form.postVideo.value);
-            var postVidSec = outOrNull(form.postVideoLength.value);
+            var postVidMS = outOrNull(form.postVideoLength.value);
 
             if (preVid != null) {
-                var t = preVidSec == null;
+                var t = preVidMS == null;
                 if (t) {
                     form.preVideoLength.focus();
                     form.preVideoLength.style.backgroundColor = "red";
@@ -161,7 +134,7 @@
                 return t;
             }
             else if (postVid != null) {
-                var t = postVidSec == null;
+                var t = postVidMS == null;
                 if (t) {
                     form.postVideoLength.focus();
                     form.postVideoLength.style.backgroundColor = "red";
@@ -177,7 +150,7 @@
             return input == "" ? null : input;
         }
 
-        function toSeconds(string) {
+        function toMS(string) {
             if (outOrNull(string) == null) {
                 return null;
             }
@@ -186,7 +159,7 @@
             for (var i = 1; i < t.length; i++) {
                 t[i] = parseInt(t[i]);
             }
-            return (t[1] * 60 + t[2]) * 60 + t[3] + (parseFloat("0." + t[4].toString()));
+            return ((t[1] * 60 + t[2]) * 60 + t[3]) * 1000 + t[4];
         }
 
         function auto_grow(element) {
@@ -212,10 +185,8 @@
         <br>
         <label>Total wanted video length</label><input type="text" name="videoLength" pattern="\d{2,}:\d{2,}:\d{2,}[.,]\d{2,}" required placeholder="hh:mm:ss.ms"><br>
         <label>Output file name</label><input type="text" name="outName" required><br>
-        <!-- <label>Fix loops if over </label><input type="number" name="triggerLoss" placeholder="%" min="0" max="100" value="20" id="percent"><label>% of time is lost</label><br> -->
         <label>Shell supports <a href="https://superuser.com/a/1060002">process substitution</a> (bash and zsh works, also requires full path to file)</label><input type="checkbox" name="proSub"><br>
         <label>Custom extra ffmpeg options</label><input type="text" name="extraOptions"><br>
-        <p>Note: This isn't perfect. I can't tell why at all.</p>
         <input type="submit" value="Create command">
     </form>
     <textarea readonly placeholder="Output command. Click to copy." onclick="this.setSelectionRange(0, this.value.length);document.execCommand('copy');" id="output"></textarea>
