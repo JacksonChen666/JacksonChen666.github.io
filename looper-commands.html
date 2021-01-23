@@ -17,6 +17,10 @@
             return string.substring(0, index);
         }
 
+        function oppositeRound(float) { // rounding in the opposite way
+            return float - parseInt(float) >= 5 ? Math.floor(float) : Math.ceil(float);
+        }
+
         function createCommand(form) {
             "use strict";
             console.log("%cScreenshot should start here", "font-size:1.5rem;");
@@ -38,8 +42,10 @@
 
             var loops = userRequestedMS / loopVidMS;
 
-            command.push(`ffmpeg -stream_loop ${Math.round(loops)} -i "${loopVid !== mkvLoopVid ? "temp.mkv" : mkvLoopVid}"`);
-            command.push(`-t ${form.videoLength.value}`);
+            command.push(`ffmpeg -stream_loop ${oppositeRound(loops)} -i "${loopVid !== mkvLoopVid ? "temp.mkv" : mkvLoopVid}"`);
+            if (form.forceEnd.checked) {
+                command.push(`-t ${form.videoLength.value}`);
+            }
             if (extraOptions) {
                 command.push(form.extraOptions.value);
             }
@@ -57,6 +63,7 @@
                 `Loop-video length: ${loopVidMS}\n` +
                 `User requested ms: ${userRequestedMS}\n` +
                 `Loops: ${loops}\n` +
+                `Opposite Rounded Loops: ${oppositeRound(loops)}\n` +
                 `Output name: ${outName}\n` +
                 `Extra options: ${extraOptions}\n` +
                 `Output command: ${output.value}\n`
@@ -98,6 +105,7 @@
         <br>
         <label>Total wanted video length</label><input type="text" name="videoLength" pattern="\d{2,}:\d{2,}:\d{2,}[.,]\d{2,}" required placeholder="hh:mm:ss.ms"><br>
         <label>Output file name</label><input type="text" name="outName" required><br>
+        <label>Force the video to end at specified length</label><input type="checkbox" name="forceEnd"><br>
         <label>Custom extra ffmpeg options</label><input type="text" name="extraOptions"><br>
         <input type="submit" value="Create command">
     </form>
