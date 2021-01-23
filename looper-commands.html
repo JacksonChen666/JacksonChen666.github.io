@@ -6,144 +6,63 @@
     <style type="text/css">
         html{font-family:arial;font-size:1.2rem;}
         input:invalid{background-color:red;}
+        input[type=text]{width: 200px;}
         textarea{width:99%;height:17px;resize:none;max-height:200px;}
         #percent{width:40px;}
     </style>
     <script type="text/javascript">
+        function rsplit(string, split) {
+            var index;
+            if ((index = string.lastIndexOf(".")) === -1) return string;
+            return string.substring(0, index);
+        }
+
         function createCommand(form) {
             "use strict";
             console.log("%cScreenshot should start here", "font-size:1.5rem;");
             var command = [];
-            var fileCMD = [];
-
-            var preVid = outOrNull(form.preVideo.value);
-            var preVidMS = toMS(form.preVideoLength.value);
 
             var loopVid = form.loopVideo.value;
+            var mkvLoopVid = rsplit(loopVid, '.') + '.mkv';
             var loopVidMS = toMS(form.loopVideoLength.value);
 
-            var postVid = outOrNull(form.postVideo.value);
-            var postVidMS = toMS(form.postVideoLength.value);
-
-            var totalMS = toMS(form.videoLength.value);
-            var curMS = 0;
+            var userRequestedMS = toMS(form.videoLength.value);
 
             var outName = form.outName.value;
-            var processSub = form.proSub.checked;
+            var newOutName = rsplit(outName, '.');
             var extraOptions = outOrNull(form.extraOptions.value);
-            var TEMP = null;
 
-            if (!processSub) {
-                fileCMD.push(": > concat.txt");
-            }
-
-            if (preVid) {
-                TEMP = `echo \`file '${preVid}'\``;
-                if (!processSub) {
-                    TEMP += " >> concat.txt";
-                }
-                fileCMD.push(TEMP);
-                curMS += preVidMS;
-            }
-            if (postVid) {
-                curMS += postVidMS;
+            if (loopVid !== mkvLoopVid) {
+                command.push(`ffmpeg -i "${loopVid}" -c copy "temp.mkv";`);
             }
 
-            var tt = totalMS - curMS;
-            // tt = !(loopVidMS % 1) ? tt / loopVidMS : tt * loopVidMS; // i mean, it's the greatest i've done
-            tt /= loopVidMS;
-            curMS += tt;
-            console.log("Total ms:")
-            console.log(totalMS);
-            console.log("Current ms:");
-            console.log(curMS);
+            var loops = userRequestedMS / loopVidMS;
 
-            if (!processSub) {
-                fileCMD.push(`for i in {0..${Math.round(tt)}}; do echo "file '${loopVid}'" >> concat.txt; done`);
-            }
-            else {
-                fileCMD.push(`for i in {0..${Math.round(tt)}}; do echo "file '${loopVid}'"; done`);
-            }
-
-            if (postVid) {
-                TEMP = `echo \`file '${postVid}'\``
-                if (!processSub) {
-                    TEMP += " >> concat.txt";
-                }
-                fileCMD.push(TEMP);
-            }
-
-            fileCMD = fileCMD.join("; ");
-            if (!processSub) {
-                command.push(`${fileCMD};`);
-            }
-            command.push("ffmpeg -f concat -safe 0 -i");
-            if (processSub) {
-                command.push(`<(${fileCMD})`);
-            }
-            else {
-                command.push("concat.txt");
-            }
-
-            command.push(`-fflags +genpts -t ${form.videoLength.value}`);
-
-            if (extraOptions) { 
+            command.push(`ffmpeg -stream_loop ${Math.round(loops)} -i "${loopVid !== mkvLoopVid ? "temp.mkv" : mkvLoopVid}"`);
+            command.push(`-t ${form.videoLength.value}`);
+            if (extraOptions) {
                 command.push(form.extraOptions.value);
             }
-            command.push(`\"${outName}\"`);
+            command.push(`"${newOutName}.mkv";`)
+            if (loopVid !== mkvLoopVid) {
+                command.push(`rm temp.mkv`);
+            }
 
             var output = document.getElementById("output");
             output.value = command.join(" ");
             console.debug(
                 "Variables:\n" +
                 `Command array: ${command}\n` +
-                `File command array${fileCMD}\n` +
-                `Pre-video name: ${preVid}\n` +
-                `Pre-video length: ${preVidMS}\n` +
                 `Loop-video name: ${loopVid}\n` +
                 `Loop-video length: ${loopVidMS}\n` +
-                `Post-video name: ${postVid}\n` +
-                `Post-video length: ${postVidMS}\n` +
-                `User requested ms: ${totalMS}\n` +
-                `Current ms: ${curMS}\n` +
+                `User requested ms: ${userRequestedMS}\n` +
+                `Loops: ${loops}\n` +
                 `Output name: ${outName}\n` +
-                `Process substitution supported: ${processSub}\n` +
                 `Extra options: ${extraOptions}\n` +
-                `Output command: ${output.value}\n` +
-                `TEMP: ${TEMP}\n`
+                `Output command: ${output.value}\n`
             );
             console.log("%cScreenshot should end here", "font-size:1.5rem;");
             auto_grow(output);
-        }
-
-        function validation(form) {
-            var preVid = outOrNull(form.preVideo.value);
-            var preVidMS = outOrNull(form.preVideoLength.value);
-
-            var postVid = outOrNull(form.postVideo.value);
-            var postVidMS = outOrNull(form.postVideoLength.value);
-
-            if (preVid != null) {
-                var t = preVidMS == null;
-                if (t) {
-                    form.preVideoLength.focus();
-                    form.preVideoLength.style.backgroundColor = "red";
-                    alert("You are missing the length for the pre-video.");
-                    setTimeout(function() { document.formLol.preVideoLength.style.backgroundColor = null; }, 5000);
-                }
-                return t;
-            }
-            else if (postVid != null) {
-                var t = postVidMS == null;
-                if (t) {
-                    form.postVideoLength.focus();
-                    form.postVideoLength.style.backgroundColor = "red";
-                    alert("You are missing the length for the post-video.");
-                    setTimeout(function() { document.formLol.postVideoLength.style.backgroundColor = null; }, 5000);
-                }
-                return t;
-            }
-            return true;
         }
 
         function outOrNull(input) {
@@ -171,21 +90,14 @@
 <body>
     <h1>Looper commands</h1>
     <h3>What's this?</h3>
-    <p>Basically for a video on <a href="https://youtu.be/mXWGVZVrAig">how to loop something extremely long (and also high quality, e.g. Yoshi 1 hours).</a> I used the command line to do the looping, but I think there are some people who want to do this, and may not be familiar with the command line (and I hate it when they don't know how to use tech). So I made this exact tool that "generates" a command that would help the user loop a video. <small>i also made this at 2 am it's fine</small></p>
+    <p>Basically for a video on <a href="https://youtu.be/mXWGVZVrAig">how to loop something extremely long (and also high quality, e.g. Yoshi 1 hour).</a> I used the command line to do the looping, but I think there are some people who want to do this, and may not be familiar with the command line (and I hate it when they don't know how to use tech). So I made this exact tool that "generates" a command that would help the user loop a video. <small>i also made this at 2 am it's fine</small></p>
     <p>do note that this will only work with the most common bash and zsh, so if you're on windows, you might want to write it into a file.</p>
-    <form action="javascript:createCommand(this.formLol);" method="post" name="formLol" onsubmit="validation(this);">
-        <label>Pre-video file name / path (Optional)</label><input type="text" name="preVideo"><br>
-        <label>Pre-video length (Required if pre-video is included)</label><input type="text" pattern="\d{2,}:\d{2,}:\d{2,}[.,]\d{2,}" placeholder="hh:mm:ss.ms" name="preVideoLength"><br>
-        <br>
+    <form action="javascript:createCommand(this.formLol);" method="post" name="formLol">
         <label>Looping video file name / path</label><input type="text" name="loopVideo" required><br>
         <label>Looping video length</label><input type="text" pattern="\d{2,}:\d{2,}:\d{2,}[.,]\d{2,}" placeholder="hh:mm:ss.ms" name="loopVideoLength" required><br>
         <br>
-        <label>Post-video file name / path (Optional)</label><input type="text" name="postVideo"><br>
-        <label>Post-video length (Required if post-video included)</label><input type="text" pattern="\d{2,}:\d{2,}:\d{2,}[.,]\d{2,}" placeholder="hh:mm:ss.ms" name="postVideoLength"><br>
-        <br>
         <label>Total wanted video length</label><input type="text" name="videoLength" pattern="\d{2,}:\d{2,}:\d{2,}[.,]\d{2,}" required placeholder="hh:mm:ss.ms"><br>
         <label>Output file name</label><input type="text" name="outName" required><br>
-        <label>Shell supports <a href="https://superuser.com/a/1060002">process substitution</a> (bash and zsh works, also requires full path to file)</label><input type="checkbox" name="proSub"><br>
         <label>Custom extra ffmpeg options</label><input type="text" name="extraOptions"><br>
         <input type="submit" value="Create command">
     </form>
@@ -193,13 +105,11 @@
     <script>
         var devMode = false;
         function sleep(ms) {
-          return new Promise(resolve => setTimeout(resolve, ms));
+            return new Promise(resolve => setTimeout(resolve, ms));
         }
         async function autoSubmit() {
-            document.formLol.loopVideo.value = "Yoshi.mp4";
-            document.formLol.loopVideoLength.value = "00:00:00.75";
+            document.formLol.loopVideo.value = "in.mp4";
             document.formLol.loopVideoLength.value = "00:00:00.99";
-            document.formLol.videoLength.value = "00:00:21.00";
             document.formLol.videoLength.value = "00:01:00.00";
             document.formLol.outName.value = "out.mp4";
             document.formLol.submit();
