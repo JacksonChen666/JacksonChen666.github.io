@@ -38,7 +38,7 @@
             }
 
             if (preVid) {
-                TEMP = "echo \"file '" + preVid + "'\"";
+                TEMP = `echo \`file '${preVid}'\``;
                 if (!processSub) {
                     TEMP += " >> concat.txt";
                 }
@@ -59,14 +59,14 @@
             console.log(curMS);
 
             if (!processSub) {
-                fileCMD.push("for i in {0.." + Math.round(tt) + "}; do echo \"file '" + loopVid + "'\" >> concat.txt; done");
+                fileCMD.push(`for i in {0..${Math.round(tt)}}; do echo "file '${loopVid}'" >> concat.txt; done`);
             }
             else {
-                fileCMD.push("for i in {0.." + Math.round(tt) + "}; do echo \"file '" + loopVid + "'\"; done");
+                fileCMD.push(`for i in {0..${Math.round(tt)}}; do echo "file '${loopVid}'"; done`);
             }
 
             if (postVid) {
-                TEMP = "echo \"file '" + postVid + "'\""
+                TEMP = `echo \`file '${postVid}'\``
                 if (!processSub) {
                     TEMP += " >> concat.txt";
                 }
@@ -75,42 +75,42 @@
 
             fileCMD = fileCMD.join("; ");
             if (!processSub) {
-                command.push(fileCMD + ";");
+                command.push(`${fileCMD};`);
             }
             command.push("ffmpeg -f concat -safe 0 -i");
             if (processSub) {
-                command.push("<(" + fileCMD + ")");
+                command.push(`<(${fileCMD})`);
             }
             else {
                 command.push("concat.txt");
             }
 
-            command.push("-fflags +genpts -t " + form.videoLength.value);
+            command.push(`-fflags +genpts -t ${form.videoLength.value}`);
 
             if (extraOptions) { 
                 command.push(form.extraOptions.value);
             }
-            command.push("\"" + outName + "\"");
+            command.push(`\"${outName}\"`);
 
             var output = document.getElementById("output");
             output.value = command.join(" ");
             console.debug(
                 "Variables:\n" +
-                "Command array: " + command + "\n" +
-                "File command array" + fileCMD + "\n" +
-                "Pre-video name: " + preVid + "\n" +
-                "Pre-video length: " + preVidMS + "\n" +
-                "Loop-video name: " + loopVid + "\n" +
-                "Loop-video length: " + loopVidMS + "\n" +
-                "Post-video name: " + postVid + "\n" +
-                "Post-video length: " + postVidMS + "\n" +
-                "User requested ms: " + totalMS + "\n" +
-                "Current ms: " + curMS + "\n" +
-                "Output name: " + outName + "\n" +
-                "Process substitution supported: " + processSub + "\n" +
-                "Extra options: " + extraOptions + "\n" +
-                "Output command: " + output.value + "\n" +
-                "TEMP: " + TEMP + "\n"
+                `Command array: ${command}\n` +
+                `File command array${fileCMD}\n` +
+                `Pre-video name: ${preVid}\n` +
+                `Pre-video length: ${preVidMS}\n` +
+                `Loop-video name: ${loopVid}\n` +
+                `Loop-video length: ${loopVidMS}\n` +
+                `Post-video name: ${postVid}\n` +
+                `Post-video length: ${postVidMS}\n` +
+                `User requested ms: ${totalMS}\n` +
+                `Current ms: ${curMS}\n` +
+                `Output name: ${outName}\n` +
+                `Process substitution supported: ${processSub}\n` +
+                `Extra options: ${extraOptions}\n` +
+                `Output command: ${output.value}\n` +
+                `TEMP: ${TEMP}\n`
             );
             console.log("%cScreenshot should end here", "font-size:1.5rem;");
             auto_grow(output);
