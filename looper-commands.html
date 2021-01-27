@@ -41,8 +41,9 @@
             }
 
             var loops = userRequestedMS / loopVidMS;
+            var roundedLoops = oppositeRound(loops);
 
-            command.push(`ffmpeg -stream_loop ${oppositeRound(loops)} -i "${loopVid !== mkvLoopVid ? "temp.mkv" : mkvLoopVid}"`);
+            command.push(`ffmpeg -stream_loop ${roundedLoops} -i "${loopVid !== mkvLoopVid ? "temp.mkv" : mkvLoopVid}"`);
             if (form.forceEnd.checked) {
                 command.push(`-t ${form.videoLength.value}`);
             }
@@ -63,7 +64,7 @@
                 `Loop-video length: ${loopVidMS}\n` +
                 `User requested ms: ${userRequestedMS}\n` +
                 `Loops: ${loops}\n` +
-                `Opposite Rounded Loops: ${oppositeRound(loops)}\n` +
+                `Rounded Loops: ${roundedLoops}\n` +
                 `Output name: ${outName}\n` +
                 `Extra options: ${extraOptions}\n` +
                 `Output command: ${output.value}\n`
@@ -98,15 +99,14 @@
     <h1>Looper commands</h1>
     <h3>What's this?</h3>
     <p>Basically for a video on <a href="https://youtu.be/mXWGVZVrAig">how to loop something extremely long (and also high quality, e.g. Yoshi 1 hour).</a> I used the command line to do the looping, but I think there are some people who want to do this, and may not be familiar with the command line (and I hate it when they don't know how to use tech). So I made this exact tool that "generates" a command that would help the user loop a video. <small>i also made this at 2 am it's fine</small></p>
-    <p>do note that this will only work with the most common bash and zsh, so if you're on windows, you might want to write it into a file.</p>
+    <p>do note that this will only work with the most common bash and zsh. If you're on windows, well then sorry.</p>
     <form action="javascript:createCommand(this.formLol);" method="post" name="formLol">
         <label>Looping video file name / path</label><input type="text" name="loopVideo" required><br>
         <label>Looping video length</label><input type="text" pattern="\d{2,}:\d{2,}:\d{2,}[.,]\d{2,}" placeholder="hh:mm:ss.ms" name="loopVideoLength" required><br>
-        <br>
         <label>Total wanted video length</label><input type="text" name="videoLength" pattern="\d{2,}:\d{2,}:\d{2,}[.,]\d{2,}" required placeholder="hh:mm:ss.ms"><br>
         <label>Output file name</label><input type="text" name="outName" required><br>
-        <label>Force the video to end at specified length</label><input type="checkbox" name="forceEnd"><br>
         <label>Custom extra ffmpeg options</label><input type="text" name="extraOptions"><br>
+        <label>Force cut off video</label><input type="checkbox" name="forceEnd"><br>
         <input type="submit" value="Create command">
     </form>
     <textarea readonly placeholder="Output command. Click to copy." onclick="this.setSelectionRange(0, this.value.length);document.execCommand('copy');" id="output"></textarea>
@@ -121,7 +121,7 @@
             document.formLol.videoLength.value = "00:01:00.00";
             document.formLol.outName.value = "out.mp4";
             document.formLol.submit();
-            await sleep(5000);
+            await sleep(10000);
             location.reload();
         }
         if (devMode) {
