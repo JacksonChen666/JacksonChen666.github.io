@@ -45,13 +45,7 @@
         On this website you can find stuff like <a href="life.html">my life</a> where you could learn more about
         me.<br>
         <div id="latest_video">
-            Oh hey, I think you should check out my latest video here<br>
-            <iframe id="youtube_video" width="560" height="315" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe><br>
-            <style>
-                @media (hover: none) and (pointer: coarse) {
-                    #youtube_video{width:96vw;height:40vh;}
-                }
-            </style>
+            <a id="latestVideoLink">Oh hey, you should check out my maybe new video here</a>
         </div>
         <noscript><style>#latest_video{display:none}</style><a href="https://www.youtube.com/channel/UCut1u2mQy5LMZw5UKgOQKjA" target="_blank">Oh hey, you could check out my youtube channel</a><br></noscript>
         <br>
@@ -94,7 +88,7 @@
     constantRandomQuotes(quotesLists, endQuotes);
     randomQuotes(["Welcome to my new domain!"], "JacksonChen666");
     getLatestVideo(function(id) {
-        document.querySelector("#youtube_video").setAttribute("src", "https://www.youtube-nocookie.com/embed/"+ id + "?showinfo=0&rel=0");
+        document.querySelector("#latestVideoLink").setAttribute("href", "https://youtu.be/" + id);
     });
 </script>
 </body>
