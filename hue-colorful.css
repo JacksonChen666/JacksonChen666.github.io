@@ -1,0 +1,10 @@
+@keyframes hue-colorful { /* This is the animation. */
+    0% {
+        color: red;
+    }
+    100% {
+        filter: hue-rotate(360deg);
+        color: red;
+    }
+}
+.colorful{animation: hue-colorful 5s linear infinite} /* This is how you put the animation in. */

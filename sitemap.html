@@ -11,13 +11,12 @@
     <meta name="description" content="Site index">
     <style type="text/css">
         div ul li{list-style:none;margin-left:-39px;}
-        .q{color:red;}
-        .w{color:orange;}
-        .e{color:yellow;}
-        .r{color:green;}
-        .t{color:blue;}
-        .y{color:purple;}
-        .u{color:blueviolet;}
+        @keyframes fake-hue-colorful {
+            100% {
+                filter: hue-rotate(360deg);
+            }
+        }
+        #colorful{animation: fake-hue-colorful 300s linear normal}
     </style>
 </head>
 <body>
@@ -49,7 +48,7 @@
         <li><p><a href="animation-testing.html">Animation testing</a></p></li>
         <li><p><a href="top-secret.html">Top secret</a></p></li>
         <li><p><a href="sitemap.html">Site Index (itself)</a></p></li>
-        <li><p><a href="colorful.html"><font class="q">R</font><font class="w">a</font><font class="e">i</font><font class="r">n</font><font class="t">b</font><font class="y">o</font><font class="u">w</font></a></p></li>
+        <li><p id='colorful'><a href="colorful.html">colorful</a></p></li>
         <li><p><a href="credits.html">Credits</a></p></li>
     </ul>
 </div>
