@@ -18,7 +18,7 @@
         }
 
         function oppositeRound(float) { // rounding in the opposite way
-            return float - parseInt(float) >= 5 ? Math.floor(float) : Math.ceil(float);
+            return float - parseInt(float) >= 0.5 ? Math.floor(float) : Math.ceil(float);
         }
 
         function createCommand(form) {
