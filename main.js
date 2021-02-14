@@ -23,7 +23,7 @@ function getCookie(cname) {
 }
 
 function toggleTheme() {
-    var lightMode = (function () { return getCookie("lightTheme"); })();
+    var lightMode = (function() { return getCookie("lightTheme"); })();
     if (lightMode == "true") {
         document.body.setAttribute('theme', 'dark');
         setCookie("lightTheme", false, 10000);
@@ -43,7 +43,7 @@ function toggleTheme() {
 }
 
 function checkTheme() {
-    var lightMode = (function () { return getCookie("lightTheme"); })();
+    var lightMode = (function() { return getCookie("lightTheme"); })();
     if (lightMode == "true") { document.body.setAttribute('theme', 'light'); }
     return lightMode;
 }
@@ -72,32 +72,4 @@ window.addEventListener("load", checkTheme);
 if (!(getCookie("requireHTML") == "true" || location.protocol == "file:" || location.host == "localhost" || location.host == "127.0.0.1")) {
     document.addEventListener("load", antiHTML);
     document.addEventListener("load", removeHTML);
-}
-
-function includeHTML() {
-    var z, i, elmnt, file, xhttp;
-    /* Loop through a collection of all HTML elements: */
-    z = document.getElementsByTagName("*");
-    for (i = 0; i < z.length; i++) {
-        elmnt = z[i];
-        /*search for elements with a certain atrribute:*/
-        file = elmnt.getAttribute("w3-include-html");
-        if (file) {
-            /* Make an HTTP request using the attribute value as the file name: */
-            xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function () {
-                if (this.readyState == 4) {
-                    if (this.status == 200) { elmnt.innerHTML = this.responseText; }
-                    if (this.status == 404) { elmnt.innerHTML = "Page not found."; }
-                    /* Remove the attribute, and call this function once more: */
-                    elmnt.removeAttribute("w3-include-html");
-                    includeHTML();
-                }
-            }
-            xhttp.open("GET", file, true);
-            xhttp.send();
-            /* Exit the function: */
-            return;
-        }
-    }
 }
