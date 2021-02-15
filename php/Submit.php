@@ -2,8 +2,8 @@
 <html lang="en">
 	<head>
 		<title>JacksonChen666 - Submittion</title>
-		<link rel="stylesheet" type="text/css" href="https://jacksonchen666.github.io/main.css">
-		<link rel="stylesheet" type="text/css" href="https://jacksonchen666.github.io/nav.css">
+		<link rel="stylesheet" type="text/css" href="https://jacksonchen666.com/main.css">
+		<link rel="stylesheet" type="text/css" href="https://jacksonchen666.com/nav.css">
 	</head>
 	<body>
 		<nav class="navbar">
