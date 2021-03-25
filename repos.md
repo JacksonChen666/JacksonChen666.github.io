@@ -6,5 +6,5 @@ layout: default
 ## Repositories made by JacksonChen666 (who made this page and the website)
 
 {% for repository in site.github.public_repositories %}
-  - [{{ repository.name }}]({{ repository.html_url }}){% if repository.description %}: {{ repository.description if repository.description else "asdfasdf" }}{% endif %}
+- [{{ repository.name }}]({{ repository.html_url }}){% if repository.description %}: {{ repository.description }}{% endif %}
 {% endfor %}
