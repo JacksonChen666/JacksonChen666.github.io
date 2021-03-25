@@ -11,7 +11,7 @@ layout: default
 Website made by Jackson. Big love and support to Jackson
 
 Just another person on the planet you say that likes weird stuff right? No I am more than that. I like lots of stuff some might not like, and expect.<br>
-I was born in Hungary, and I come from a Chinese culture which is a bit differnet, but I like food that is not Chinese for some reason.<br>
+I was born in Hungary, and I come from a Chinese culture which is a bit different, but I like food that is not Chinese for some reason.<br>
 On this website, you can find stuff like [my life](life.html) where you could learn more about me.
 
 <div id="latest_video">
