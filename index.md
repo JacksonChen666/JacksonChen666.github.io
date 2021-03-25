@@ -2,6 +2,8 @@
 title: Home
 layout: default
 ---
+<script src="randomQuotes.js"></script>
+<script src="youtube-latest.js"></script>
 
 ### Hello, My name is Jackson
 <small id="random_quotes"><noscript>"Please enable JavaScript to view these quotes" -JacksonChen666</noscript></small>
@@ -15,7 +17,7 @@ On this website, you can find stuff like [my life](life.html) where you could le
 <div id="latest_video">
 	<a id="latestVideoLink">Oh hey, you should check out my maybe new video here</a>
 </div>
-<noscript><style>#latest_video{displat:none}</style>[Oh hey, you could check out my youtube channel](https://youtube.com/JacksonChen666)</noscript>
+<!-- <noscript><style>#latest_video{displat:none}</style>[Oh hey, you could check out my youtube channel](https://youtube.com/JacksonChen666)</noscript> -->
 
 That's all for here, you can continue exploring as I continue creating and expanding this website lol.<br>
 While you are here, you might as well help me give some ideas so I can continue creating. You can also use [GitHub](https://github.com) for it.
