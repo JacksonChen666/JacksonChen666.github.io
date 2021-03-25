@@ -30,6 +30,9 @@ github_username:  JacksonChen666
 theme: minima
 plugins:
   - jekyll-feed
+  - jekyll-github-metadata
+
+repository: JacksonChen666/JacksonChen666.github.io
 
 # Exclude from processing.
 # The following items will not be processed, by default.
