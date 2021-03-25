@@ -48,21 +48,6 @@ function checkTheme() {
     return lightMode;
 }
 
-function antiHTML() {
-    history.replaceState("", "", location.pathname.replace(".html", ""));
-}
-
-function removeHTML() {
-    function removingHTML(e) {
-        var temp1 = e.href.toLowerCase();
-        var loc = location.origin.toLowerCase();
-        if (temp1.indexOf(loc) !== -1 && temp1.indexOf(".html") !== -1) {
-            e.href = e.href.replace(".html", "");
-        }
-    }
-    Array.prototype.slice.call(document.links).forEach(removingHTML);
-}
-
 function requireHTML(HTMLrequired) {
     setCookie("requireHTML", HTMLrequired, 10000);
     return HTMLrequired;

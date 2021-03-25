@@ -12,7 +12,7 @@ Website made by Jackson. Big love and support to Jackson
 
 Just another person on the planet you say that likes weird stuff right? No I am more than that. I like lots of stuff some might not like, and expect.<br>
 I was born in Hungary, and I come from a Chinese culture which is a bit different, but I like food that is not Chinese for some reason.<br>
-On this website, you can find stuff like [my life](life.html) where you could learn more about me.
+On this website, you can find stuff like [my life](life) where you could learn more about me.
 
 <div id="latest_video">
 	<a id="latestVideoLink">Oh hey, you should check out my maybe new video here</a>
@@ -22,7 +22,7 @@ On this website, you can find stuff like [my life](life.html) where you could le
 That's all for here, you can continue exploring as I continue creating and expanding this website lol.<br>
 While you are here, you might as well help me give some ideas so I can continue creating. You can also use [GitHub](https://github.com) for it.
 
-[Website suggestions and ideas](ideas.html)
+[Website suggestions and ideas](ideas)
 
 [Website issues](https://github.com/JacksonChen666/JacksonChen666.github.io/issues)
 

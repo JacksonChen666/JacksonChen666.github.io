@@ -21,7 +21,7 @@ layout: default
     </p>
     <p>
         <a id="note">2020/11/23:</a><br>
-        I made a <a href="portfolio.html">portfolio page</a> and didn't really realize how much stuff I actually made.
+        I made a <a href="portfolio">portfolio page</a> and didn't really realize how much stuff I actually made.
     </p>
     <p>
         <a id="note">2020/10/17:</a><br>
@@ -114,7 +114,7 @@ layout: default
     </p>
     <p>
         <a id="note">2020/03/31:</a><br>
-        i've spent too much time on the <a href="Live-HTML-Editor.html">HTML editor</a> but it's actually good<br>
+        i've spent too much time on the <a href="Live-HTML-Editor">HTML editor</a> but it's actually good<br>
         <del>i am too lazy to check my questions submission forms and stuff someone send help</del> i think im an idiot i just did it<br>
         </small>again, im going to try to fulfill the notes</small>
     </p>
@@ -164,12 +164,12 @@ layout: default
     <p>
         <a id="note">2020/03/08:</a><br>
         I am disappointed at myself<br>
-        was out of ideas so I came up with the <a href="ideas.html">idea giver</a><br>
+        was out of ideas so I came up with the <a href="ideas">idea giver</a><br>
     </p>
     <p>
         <a id="note">2020/03/06:</a><br>
         im confused<br>
-        ok the <a href="questions.html">questions</a> page works now yay<br>
+        ok the <a href="questions">questions</a> page works now yay<br>
         got an app that does not let the mac sleep so now i can enjoy peace of no sleep even if it's closed<br>
         Power out, still got cellular (20:05)<br>
         Power in, feels weird (20:24)<br>

@@ -11,7 +11,7 @@ layout: default
 I actually like programming stuff. So far, I've learned 4 total languages (and more counting): Python, HTML (and related), Java, and AppleScript<br>
 AppleScript is for mac only. If you are on other OS, it won't work properly.
 
-[AppleScript URL Encoder](applescript-gen.html)
+[AppleScript URL Encoder](applescript-gen)
 
 Here is where I'll share my AppleScript scripts (hover to see code):<noscript>You'll need javascript to open code from links</noscript><br>
 <a href="#random-output-volume" onclick="openAppleScript();">Random Output Volume</a><br>
