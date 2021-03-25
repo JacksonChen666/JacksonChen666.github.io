@@ -94,7 +94,7 @@ layout: default
         element.style.height = (element.scrollHeight) + "px";
     }
 </script>
-# Looper commands
+## Looper commands
 ### What's this?
 Basically for a video on [how to loop something extremely long (and also high quality, e.g. Yoshi 1 hour).](https://youtu.be/mXWGVZVrAig) I used the command line to do the looping, but I think there are some people who want to do this, and may not be familiar with the command line (and I hate it when they don't know how to use tech). So I made this exact tool that "generates" a command that would help the user loop a video. <small>i also made this at 2 am it's fine</small><br>
 do note that this will only work with the most common bash and zsh. If you're on windows, well then sorry.
