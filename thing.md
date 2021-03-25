@@ -3,7 +3,6 @@ title: Thing
 description: Space bar and something happens
 layout: default
 ---
-
 <style>
     button{margin-left:5px}
     #text1{text-align:center;font-size:23px;}

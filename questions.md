@@ -3,7 +3,6 @@ title: Questions
 descriptions: Questions for JacksonChen666
 layout: default
 ---
-
 <form action="https://jacksonchen666.000webhostapp.com/submit.php" method="post">
     <textarea name="q" maxlength="10000" cols="40" rows="10" for='questions' placeholder="Questions"></textarea><br>
     <input type="submit" value="ASK" name="formSubmit" for='questions'>

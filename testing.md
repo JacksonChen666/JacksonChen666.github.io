@@ -2,7 +2,6 @@
 title: testing
 layout: default
 ---
-
 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod<br>
 tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,<br>
 quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo<br>

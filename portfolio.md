@@ -3,7 +3,6 @@ title: Portfolio
 description: Portfolio of things I made in the programming world
 layout: default
 ---
-
 ## Portfolio
 **Disclaimer:** Most of these projects were done with the help of the internet and existing solutions. Please don't expect me to make something powerful from scratch without knowledge on the topic.
 - **Python**

@@ -3,7 +3,6 @@ title: Old Questions
 description: Old questions asked by the people of idk
 layout: default
 ---
-
 [Back to questions](questions)<br>
 [More recent questions](questions)<br>
 [Previous questions](old-questions)

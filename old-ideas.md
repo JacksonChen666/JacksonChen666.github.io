@@ -3,7 +3,6 @@ title: Old Ideas
 description: Old suggested ideas
 layout: default
 ---
-
 [Newer ideas](ideas)
 
 <div id="GIVE-IDEA">

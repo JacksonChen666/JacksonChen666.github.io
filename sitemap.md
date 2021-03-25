@@ -3,7 +3,6 @@ title: Site Idex
 description: The site's pages
 layout: default
 ---
-
 <style type="text/css">
     @keyframes hue-colorful {
         100% {

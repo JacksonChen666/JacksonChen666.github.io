@@ -3,7 +3,6 @@ title: Whateveries
 description: Whateveries of words
 layout: default
 ---
-
 <style>
     .big{font-size:2rem;}
     .small{font-size:0.75rem;}

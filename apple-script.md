@@ -3,7 +3,6 @@ title: Applescript
 description: Page of applescript
 layout: default
 ---
-
 <style>
     a+pre{display:none;}
     a:hover+pre,pre:hover{display:block;}
