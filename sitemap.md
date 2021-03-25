@@ -22,7 +22,7 @@ layout: default
 - [AppleScript](apple-script)
 - [Social Media](social-media)
 - [Memes](memes)
-- [Notes](whateveries)
+- [Whateveries](whateveries)
 - [Thing](thing)
 - [Portfolio](portfolio)
 - [Endless typing](endless-typing)
