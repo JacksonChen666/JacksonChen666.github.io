@@ -1,7 +1,10 @@
+---
+title: Looper Commands
+---
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>JacksonChen666 - Looper Commands</title>
     <meta name="viewport" content="width=device-width initial-scale=1">
     <style type="text/css">
         html{font-family:arial;font-size:1.2rem;}
@@ -96,10 +99,10 @@
     </script>
 </head>
 <body>
-    <h1>Looper commands</h1>
-    <h3>What's this?</h3>
-    <p>Basically for a video on <a href="https://youtu.be/mXWGVZVrAig">how to loop something extremely long (and also high quality, e.g. Yoshi 1 hour).</a> I used the command line to do the looping, but I think there are some people who want to do this, and may not be familiar with the command line (and I hate it when they don't know how to use tech). So I made this exact tool that "generates" a command that would help the user loop a video. <small>i also made this at 2 am it's fine</small></p>
-    <p>do note that this will only work with the most common bash and zsh. If you're on windows, well then sorry.</p>
+    # Looper commands
+    ### What's this?
+    Basically for a video on [how to loop something extremely long (and also high quality, e.g. Yoshi 1 hour).](https://youtu.be/mXWGVZVrAig) I used the command line to do the looping, but I think there are some people who want to do this, and may not be familiar with the command line (and I hate it when they don't know how to use tech). So I made this exact tool that "generates" a command that would help the user loop a video. <small>i also made this at 2 am it's fine</small></p>
+    do note that this will only work with the most common bash and zsh. If you're on windows, well then sorry.
     <form action="javascript:createCommand(this.formLol);" method="post" name="formLol">
         <label>Looping video file name / path</label><input type="text" name="loopVideo" required><br>
         <label>Looping video length</label><input type="text" pattern="\d{2,}:\d{2,}:\d{2,}[.,]\d{2,}" placeholder="hh:mm:ss.ms" name="loopVideoLength" required><br>
