@@ -14,7 +14,7 @@ layout: default
 
 ## Site Index
 - [Home](/)
-- [My life](my-life)
+- [My life](life)
 - [Questions](questions)
 - [Old questions](old-questions)
 - [Ideas](ideas)
@@ -22,8 +22,7 @@ layout: default
 - [AppleScript](apple-script)
 - [Social Media](social-media)
 - [Memes](memes)
-- [Notes](notes)
-- [Ideas](ideas)
+- [Notes](whateveries)
 - [Thing](thing)
 - [Portfolio](portfolio)
 - [Endless typing](endless-typing)
