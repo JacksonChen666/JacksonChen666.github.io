@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>JacksonChen666 - </title>
+    <title>{{ site.title }} - {{ page.title }}</title>
+    <meta name="google-site-verification" content="F07ZPniaA5zDRDgqVDMcvGqginMOIKnKhHtwVS49Irg">
     <link rel="preload" href="main.css" as="style">
     <link rel="preload" href="nav.css" as="style">
     <link rel="stylesheet" type="text/css" href="main.css">
@@ -9,7 +10,7 @@
     <link rel="preload" href="main.js" as="script">
     <script src="main.js"></script>
     <meta name="viewport" content="width=device-width initial-scale=1">
-    <meta name="description" content="Template">
+    <meta name="description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
 </head>
 <body>
 <nav class="navbar">
@@ -25,7 +26,7 @@
 </nav>
 <main>
 <h1>Jackson Chen</h1>
-
+{{ content }}
 </main>
 </body>
 </html>

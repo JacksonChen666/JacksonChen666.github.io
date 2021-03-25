@@ -1,3 +1,6 @@
 .DS_Store
-venv
-web-app/twitter-last-interactions/config.cfg
+_site
+.sass-cache
+.jekyll-cache
+.jekyll-metadata
+vendor
