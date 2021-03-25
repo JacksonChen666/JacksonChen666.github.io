@@ -21,7 +21,7 @@ layout: default
 - [Ideas](ideas)
 - [Old ideas](old-ideas)
 - [AppleScript](apple-script)
-- [Social Media](social-kedia)
+- [Social Media](social-media)
 - [Memes](memes)
 - [Notes](notes)
 - [Ideas](ideas)
