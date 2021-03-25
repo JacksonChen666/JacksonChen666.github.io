@@ -12,7 +12,7 @@
     <link rel="preload" href="main.js" as="script">
     <script src="main.js"></script>
     <meta name="viewport" content="width=device-width initial-scale=1">
-    <!-- <meta name="description" content="Template"> -->
+    <meta name="description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
 </head>
 <body>
 <nav class="navbar">
