@@ -1,6 +1,7 @@
 ---
 title: FPS test
 description: Seeing your browser FPS
+layout: none
 ---
 <html lang="en">
 <head>
