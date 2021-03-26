@@ -1,5 +1,6 @@
 ---
 title: AppleScript to URL
+layout: none
 ---
 <html lang="en">
 <head>
