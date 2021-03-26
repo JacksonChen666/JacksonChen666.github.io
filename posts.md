@@ -3,6 +3,7 @@ title: Posts
 description: Blog posts by JacksonChen666 basically
 layout: default
 ---
+[RSS](/feed.xml)
 {% for post in site.posts %}
 - ## [{{ post.title }} - {{ post.date | date_to_string }}]({{ post.url }}) {% if post.draft %}(Draft){% endif %}
     {{ post.excerpt }}
