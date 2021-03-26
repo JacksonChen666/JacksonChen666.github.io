@@ -13,22 +13,6 @@ layout: default
 </style>
 
 ## Site Index
-- [Home](/)
-- [My life](life)
-- [Questions](questions)
-- [Old questions](old-questions)
-- [Ideas](ideas)
-- [Old ideas](old-ideas)
-- [AppleScript](apple-script)
-- [Social Media](social-media)
-- [Memes](memes)
-- [Whateveries](whateveries)
-- [Thing](thing)
-- [Portfolio](portfolio)
-- [Endless typing](endless-typing)
-- [Browser FPS](fps)
-- [Animation testing](animation-testing)
-- [Top secret](top-secret)
-- [Site Index (itself)](sitemap)
-- <span id='colorful'>[colorful](colorful)</span>
-- [Credits](credits)
+
+{% for i in site.pages %}{% if i.name contains ".md" %}
+- [{{i.name | replace: "-", " " | replace: ".md", "" | capitalize}}]({{i.url | replace: ".html", ""}}){% endif %}{% endfor %}

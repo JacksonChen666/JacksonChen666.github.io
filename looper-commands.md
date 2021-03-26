@@ -4,7 +4,7 @@ description: Loops ffmpeg
 layout: default
 ---
 <style type="text/css">
-    html{font-family:arial;font-size:1.2rem;}
+    main{font-family:arial;font-size:1.2rem;}
     input:invalid{background-color:red;}
     input[type=text]{width: 200px;}
     textarea{width:99%;height:17px;resize:none;max-height:200px;}
