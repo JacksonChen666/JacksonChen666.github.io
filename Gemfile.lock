@@ -59,6 +59,7 @@ GEM
       jekyll-feed (~> 0.9)
       jekyll-seo-tag (~> 2.1)
     multipart-post (2.1.1)
+    netrc (0.11.0)
     octokit (4.20.0)
       faraday (>= 0.9)
       sawyer (~> 0.8.0, >= 0.5.3)
@@ -89,6 +90,7 @@ DEPENDENCIES
   jekyll-feed (~> 0.12)
   jekyll-github-metadata
   minima (~> 2.5)
+  netrc
   tzinfo (~> 1.2)
   tzinfo-data
   wdm (~> 0.1.1)
