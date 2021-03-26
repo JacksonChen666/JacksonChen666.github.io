@@ -1,7 +1,9 @@
-<!DOCTYPE html>
+---
+title: FPS test
+description: Seeing your browser FPS
+---
 <html lang="en">
 <head>
-    <title>FPS test</title>
     <style>
         html {
             font-family: Arial, Helvetica, sans-serif;
