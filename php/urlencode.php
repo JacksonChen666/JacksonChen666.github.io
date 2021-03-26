@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <meta charset="utf-8">
-        <link rel="stylesheet" type="text/css" href="https://jacksonchen666.github.io/main.css">
+        <link rel="stylesheet" type="text/css" href="{{ site.url }}{{ site.baseurl }}main.css">
         <meta description="">
         <meta keywords="">
         <style>
             body *{margin-left:5px;}
         </style>
-        <title>JacksonChen666 - URL Encoder</title>
+        <title>{{ site.title }} - URL Encoder</title>
     </head>
     <body>
     <h1>URL Encoder</h1>
@@ -24,7 +24,7 @@
     error_reporting(0);
     $txt = $_POST["encode"];
     function urlEncoding($contents) {
-        echo (urlencode($contents));
+        echo(urlencode($contents));
     }
     urlEncoding($txt);
 ?>
