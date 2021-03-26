@@ -1,9 +1,8 @@
-<!DOCTYPE html>
+---
+title: AppleScript to URL
+---
 <html lang="en">
 <head>
-	<title>AppleScript to URL</title>
-	<h1>AppleScript to URL</h1>
-	<noscript>This place won't work without JavaScript. <a href="https://jacksonchen666.000webhostapp.com/applescript.php">Convert without using JavaScript Here</a></noscript>
 	<style>
 		body {
 			background: black;
@@ -22,6 +21,8 @@
 </head>
 <body>
 
+<h1>AppleScript to URL</h1>
+<noscript>This place won't work without JavaScript. <a href="https://jacksonchen666.000webhostapp.com/applescript.php">Convert without using JavaScript Here</a></noscript>
 <textarea id="applescript" placeholder="AppleScript as text" rows="20" cols="50" spellcheck="false" autofocus="true"></textarea><br>
 <button onclick="convertToURLAndAS('applescript','outputURL')">Change to URL</button>
 <p id="outputURL"></p>
