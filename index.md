@@ -34,7 +34,7 @@ While you are here, you might as well help me give some ideas so I can continue 
         "hi youtube",
         "Wait, am I a developer?",
         "Wait, am I a programmer?",
-        "I have reached the state of unmotivated depression",
+        "I have reached the state of unmotivated boredom",
         "Coding is fun",
         "Why are still alive",
         "<a href='https://twitter.com/jacksonchen666/status/1303089255007350787'>Mark Rober</a>",
@@ -48,7 +48,9 @@ While you are here, you might as well help me give some ideas so I can continue 
         "why won't this WORK",
         "new video coming soon. maybe. maybe not. maybe i'm gone. idk",
         "no, I would rather destroy humanity other than signing up for an email list",
-        "Please enable JavaScript to view these quotes"
+        "Please enable JavaScript to view these quotes",
+        "RSS in 2021",
+        "Posts? Yeah blogs but like it's something"
     ]
     var endQuotes = "JacksonChen666";
     addQuotesListener("click", "random_quotes", quotesLists, endQuotes);
@@ -58,7 +60,6 @@ While you are here, you might as well help me give some ideas so I can continue 
         document.querySelector("#latestVideoLink").setAttribute("href", "https://youtu.be/" + id);
     });
 </script>
-
 <hr>
 
 {% for post in site.posts limit: 10 %}
