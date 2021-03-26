@@ -56,8 +56,8 @@
 
 <?php 
         function urlEncoding($contents) {
-            echo("Your script:");
-            echo("<a href=\"applescript://com.apple.scripteditor?action=new&script=" . urlencode($contents) . "\">applescript://com.apple.scripteditor?action=new&script=" . urlencode($contents) . "</a>");
+            echo "Your script:";
+            echo "<a href=\"applescript://com.apple.scripteditor?action=new&script=" . urlencode($contents) . "\">applescript://com.apple.scripteditor?action=new&script=" . urlencode($contents) . "</a>";
         }
         if (!empty($_GET)){
             $txt = $_GET["script"];

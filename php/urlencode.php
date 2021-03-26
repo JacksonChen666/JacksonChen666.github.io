@@ -24,7 +24,7 @@
     error_reporting(0);
     $txt = $_POST["encode"];
     function urlEncoding($contents) {
-        echo(urlencode($contents));
+        echo urlencode($contents);
     }
     urlEncoding($txt);
 ?>
