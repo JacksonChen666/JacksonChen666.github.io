@@ -1,3 +1,6 @@
+---
+layout: none
+---
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -8,7 +11,7 @@
         <style>
             body *{margin-left:5px;}
         </style>
-        <title>{{ site.title }} - URL Encoder</title>
+        <title>{{ site.title }} (External) - URL Encoder</title>
     </head>
     <body>
     <h1>URL Encoder</h1>
