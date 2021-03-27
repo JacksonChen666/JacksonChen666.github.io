@@ -2,13 +2,11 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-        <link rel="stylesheet" type="text/css" href="{{ site.url }}{{ site.baseurl }}main.css">
-		<meta description="">
-		<meta keywords="">
+        <link rel="stylesheet" type="text/css" href="{{ 'main.css' | absolute_url }}">
         <style>
             body * {margin-left: 5px;}
         </style>
-		<title>{{ site.title }} - AppleScript URL Encoder</title>
+		<title>{{ site.title }} (External) - AppleScript URL Encoder</title>
 	</head>
 	<body>
     <h1>AppleScript URL Encoder (<a href="urlencode.php">URL Encoder</a>)</h1>

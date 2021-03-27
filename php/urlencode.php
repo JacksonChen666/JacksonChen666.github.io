@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <link rel="stylesheet" type="text/css" href="{{ site.url }}{{ site.baseurl }}main.css">
+        <link rel="stylesheet" type="text/css" href="{{ 'main.css' | absolute_url }}">
         <meta description="">
         <meta keywords="">
         <style>
