@@ -1,5 +1,5 @@
-defaultQList = ["<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/n0XaSvhTYd4?autoplay=1&controls=0&fs=0&loop=1&modestbranding=1&iv_load_policy=3\" frameborder=\"0\" allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>"]
-defaultEQuote = "bill wurtz"
+var defaultQList = ["<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/n0XaSvhTYd4?autoplay=1&controls=0&fs=0&loop=1&modestbranding=1&iv_load_policy=3\" frameborder=\"0\" allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>"]
+var defaultEQuote = "bill wurtz"
 
 function randomQuotes(quotesList=defaultQList, endQuote=defaultEQuote, ElementId="random_quotes"){
 	var quote = quotesList[Math.floor(Math.random() * quotesList.length)];
