@@ -5,4 +5,4 @@ layout: default
 ---
 ## Credits for most of this website's design:
 [Sidebar](https://youtu.be/biOMz4puGt8): [Fireship](https://www.youtube.com/channel/UCsBjURrPoezykLs9EqgamOA)<br>
-Sidebar svg icons: [css.gg](https://css.gg)
+Sidebar svg icons: [css.gg](https://css.gg) (except for questions. it's just a question mark lol)
