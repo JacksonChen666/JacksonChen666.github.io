@@ -3,9 +3,7 @@ title: Old Questions
 description: Old questions asked by the people of idk
 layout: default
 ---
-[Back to questions](questions)<br>
-[More recent questions](questions)<br>
-[Previous questions](old-questions)
+[Back to recent questions](questions)<br>
 
 <div id="AS">
     <form action="https://JacksonChen666.000webhostapp.com/submit.php" method="post">
@@ -14,11 +12,8 @@ layout: default
     </form>
 </div>
 
-<div id="old-q-list">
-    <p>
-        All time stamps are in UTC timezone<br>
-        No old questions :/<br>
-        Example:<br>
-        <a href="/">[Date YYYY/MM]</a><br>
-    </p>
-</div>
+{% if site.data.question.count >= 100 %}
+{% include questions_ideas_csv.md csv_file=site.data.question amount=900 offset=100 %}
+{% else %}
+Hey, there's less than a hundred questions. Leave me alone.
+{% endif %}

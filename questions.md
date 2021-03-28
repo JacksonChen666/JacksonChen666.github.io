@@ -8,14 +8,15 @@ layout: default
     <input type="submit" value="ASK" name="formSubmit" for='questions'>
 </form>
 
+All time stamps are in UTC (+0000) timezone<br>
+Date format: [YYYY/MM/DD @ hh:mm:ss]<br>
 
-All time stamps are in UTC (+0) timezone<br>
-Date format: [MM/DD/YYYY @ hh:mm am/pm]
+{% if site.data.question.count != 0 %}
+{% include questions_ideas_csv.md csv_file=site.data.question amount=100 offset=0 %}
+{% else %}
+Ummmm, something might be wrong. Please contact the website owner for more about no questions at all.
+{% endif %}
 
-03/11/2020 @ 12:56pm: why are you gay<br>
-A: <del>yes</del> no
-
-03/09/2020 @ 7:30am: h?<br>
-A: h
-
-[Older questions](old-questions)
+{% if site.data.quesiton.count >= 100 %}
+[More questions](questions-2)
+{% endif %}
