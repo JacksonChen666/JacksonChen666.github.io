@@ -20,5 +20,5 @@ Ummmm, something might be wrong. Please contact the website owner for more about
 {% endif %}
 
 {% if site.data.idea.count >= 100 %}
-[More ideas](ideas-2)
+[More ideas](more-ideas)
 {% endif %}

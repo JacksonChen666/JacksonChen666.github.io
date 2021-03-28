@@ -18,5 +18,5 @@ Ummmm, something might be wrong. Please contact the website owner for more about
 {% endif %}
 
 {% if site.data.quesiton.count >= 100 %}
-[More questions](questions-2)
+[More questions](more-questions)
 {% endif %}
