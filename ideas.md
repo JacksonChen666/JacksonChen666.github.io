@@ -10,13 +10,14 @@ layout: default
     </form>
 </div>
 
-All time stamps are in UTC (+0) timezone<br>
-Date format: [MM/DD/YYYY @ hh:mm am/pm]<br>
+All time stamps are in UTC (+0000) timezone<br>
+Date format: [YYYY/MM/DD @ hh:mm:ss]<br>
 
-01/20/2021 @ 1:06pm: ADD MORE MEMESSSSS<br>
-A (02/16/2021 @ 12:41pm): no, memes is dead<br>
-
-03/09/2020 @ 7:34am: random games button and when you click on it it just takes you to the worst possible game.<br>
-A: Status of that: <del>Not now but minesweeperonline.com</del> nvm, nowhere to put it<br>
+{% for idea in site.data.idea %}
+  {% if idea.output != "" %}
+{{ idea.input_unix_time | date: "%F @ %H:%M:%S"}}: {{ idea.input }}<br>
+A{% if idea.output_unix_time != "" %} ({{ idea.output_unix_time | date: "%F @ %H:%M:%S"}}){% endif %}: {{ idea.output }}
+  {% endif %}
+{% endfor %}
 
 [Old ideas](old-ideas)
