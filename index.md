@@ -62,7 +62,4 @@ While you are here, you might as well help me give some ideas so I can continue 
 </script>
 <hr>
 
-{% for post in site.posts limit: 10 %}
-- ### [{{ post.title }} - {{ post.date | date_to_string }}]({{ post.url }}) {% if post.draft %}(Draft){% endif %}
-    {{ post.excerpt }}
-{% endfor %}
+{% include post_list.md amount=10 %}
