@@ -13,11 +13,6 @@ layout: default
 All time stamps are in UTC (+0000) timezone<br>
 Date format: [YYYY/MM/DD @ hh:mm:ss]<br>
 
-{% for idea in site.data.idea %}
-  {% if idea.output != "" %}
-{{ idea.input_unix_time | date: "%F @ %H:%M:%S"}}: {{ idea.input }}<br>
-A{% if idea.output_unix_time != "" %} ({{ idea.output_unix_time | date: "%F @ %H:%M:%S"}}){% endif %}: {{ idea.output }}
-  {% endif %}
-{% endfor %}
+{% include questions_ideas_csv.md csv_file=site.data.idea %}
 
 [Old ideas](old-ideas)
