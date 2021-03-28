@@ -3,11 +3,7 @@ title: Questions
 descriptions: Questions for JacksonChen666
 layout: default
 ---
-<form action="https://jacksonchen666.000webhostapp.com/Submit.php" method="post">
-    <textarea name="q" maxlength="10000" cols="40" rows="10" for='questions' placeholder="Questions"></textarea><br>
-    <input type="submit" value="ASK" name="formSubmit" for='questions'>
-</form>
-
+{% include post_text.md textarea_name=q textarea_max_length=10000 textarea_columns=40 textarea_rows=10 textarea_placeholder="Questions" submit_value="ASK" %}
 All time stamps are in UTC (+0000) timezone<br>
 Date format: [YYYY/MM/DD @ hh:mm:ss]<br>
 

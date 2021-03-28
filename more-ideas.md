@@ -5,13 +5,9 @@ layout: default
 ---
 [More current ideas](ideas)
 
-<div id="GIVE-IDEA">
-    <form action="https://JacksonChen666.000webhostapp.com/submit.php" method="post">
-        <textarea name="i" maxlength="100000" cols="40" rows="10" placeholder="Idea or Suggestions"></textarea><br>
-        <input type="submit" value="GIVE IDEA" name="formSubmit">
-    </form>
-</div>
-All time stamps are in UTC (+0) timezone
+{% include post_text.md textarea_name=i textarea_max_length=100000 textarea_columns=40 textarea_rows=10 textarea_placeholder="Ideas or Suggestions" submit_value="GIVE IDEA" %}
+All time stamps are in UTC (+0000) timezone<br>
+Date format: [YYYY/MM/DD @ hh:mm:ss]<br>
 
 {% if site.data.idea.count >= 100 %}
 {% include questions_ideas_csv.md csv_file=site.data.idea amount=900 offset=100 %}
