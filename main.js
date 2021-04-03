@@ -11,7 +11,7 @@ function toggleTheme() {
     var lightMode = (function() { return getData("lightTheme"); })();
     if (lightMode == "true") {
         setData.body.setAttribute('theme', 'dark');
-        setCookie("lightTheme", false);
+        setData("lightTheme", false);
     } else {
         document.body.setAttribute('theme', 'light');
         setData("lightTheme", true);
@@ -20,7 +20,7 @@ function toggleTheme() {
 }
 
 function checkTheme() {
-    var lightMode = (function() { return getCookie("lightTheme"); })();
+    var lightMode = (function() { return getData("lightTheme"); })();
     if (lightMode == "true") { document.body.setAttribute('theme', 'light'); }
     return lightMode;
 }
