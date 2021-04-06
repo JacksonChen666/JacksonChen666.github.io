@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+Disallow: /life.html
+Disallow: /life
+Disallow: /memes
+Disallow: /memes.html
+Disallow: /fps
+Disallow: /fps.html
+Disallow: /testing
+Disallow: /testing.html
+Disallow: /top-secret
+Disallow: /top-secret.html
