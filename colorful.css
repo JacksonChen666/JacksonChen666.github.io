@@ -1,0 +1,3 @@
+:root{--animation-time:10s;}
+@keyframes colorful{0%{}100%{filter:hue-rotate(360deg);}}
+html,*{background-color:red;margin:0px;animation:colorful var(--animation-time)linear};
