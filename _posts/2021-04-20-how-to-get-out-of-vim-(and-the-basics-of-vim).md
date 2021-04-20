@@ -4,9 +4,9 @@ layout: post
 date: '2021-04-20 15:42:29 +0200'
 category: Vim
 author: JacksonChen666
----
-## Stuck in vim
+--- 
 Oops, you were accidetally dropped in vim and now can't out. But don't hesitate and close the terminal window, you can get out.
+
 To get out of vim, first confirm you're in normal mode (of vim):
 
 - Use the `ESC` key to go back to normal mode
