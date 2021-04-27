@@ -37,6 +37,7 @@ While you are here, you might as well help me give some ideas so I can continue 
         "I have reached the state of unmotivated boredom",
         "Coding is fun",
         "Why are still alive",
+        "the third worst thing to ever happen to those orphans", // the orphans were killed
         "<a href='https://twitter.com/jacksonchen666/status/1303089255007350787'>Mark Rober</a>",
         "What a nice day",
         "I am not interesting...",
