@@ -33,3 +33,5 @@ gem "wdm", "~> 0.1.1", :platforms => [:mingw, :x64_mingw, :mswin]
 
 # For GitHub token. More info at https://github.com/jekyll/github-metadata/blob/master/docs/authentication.md
 gem 'netrc'
+
+gem "webrick", "~> 1.7"
