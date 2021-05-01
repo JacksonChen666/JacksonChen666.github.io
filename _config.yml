@@ -27,7 +27,7 @@ twitter_username: JacksonChen666
 github_username:  JacksonChen666
 
 # Build settings
-theme: minima
+theme: jekyll-theme-minimal
 plugins:
   - jekyll-feed
   - jekyll-github-metadata
