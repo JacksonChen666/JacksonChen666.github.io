@@ -1,13 +1,74 @@
-:root{--main-bg:#181a1b;--secondory-bg:#000;--main-color:#e8e6e3;--secondory-color:#fff;}
-[theme="dark"]{--main-bg:#181a1b;--secondory-bg:#000;--main-color:#e8e6e3;--secondory-color:#fff;}
-[theme="light"]{--main-bg:#fff;--secondory-bg:#ddd;--main-color:#000;--secondory-color:#222;}
-body{background:var(--main-bg);color:var(--main-color);overflow-wrap:break-word;word-wrap:break-word;hyphens:auto;font-family:Arial;font-size:18px;margin:0;padding:0}
-a:not(#aname){color:#ff6a00;cursor:pointer;}
-a:link:not(#aname){color:orange}
-a:visited:not(#aname){color:#ff6a00}
-a:hover:not(#aname){color:red}
-a:active:not(#aname){color:green}
-hr{color:var(--main-color)}
-textarea{background-color:var(--secondory-bg);color:var(--main-color);}
-button,input{background-color:var(--secondory-bg);color:var(--secondory-color);border:0 solid transparent;border-radius:2px}
-small{font-size:12px;}
+:root {
+    --main-bg: #181a1b;
+    --secondory-bg: #000;
+    --main-color: #e8e6e3;
+    --secondory-color: #fff;
+}
+
+[theme="dark"] {
+    --main-bg: #181a1b;
+    --secondory-bg: #000;
+    --main-color: #e8e6e3;
+    --secondory-color: #fff;
+}
+
+[theme="light"] {
+    --main-bg: #fff;
+    --secondory-bg: #ddd;
+    --main-color: #000;
+    --secondory-color: #222;
+}
+
+body {
+    background: var(--main-bg);
+    color: var(--main-color);
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    hyphens: auto;
+    font-family: Arial;
+    font-size: 18px;
+    margin: 0;
+    padding: 0
+}
+
+a:not(#aname) {
+    color: #ff6a00;
+    cursor: pointer;
+}
+
+a:link:not(#aname) {
+    color: orange
+}
+
+a:visited:not(#aname) {
+    color: #ff6a00
+}
+
+a:hover:not(#aname) {
+    color: red
+}
+
+a:active:not(#aname) {
+    color: green
+}
+
+hr {
+    color: var(--main-color)
+}
+
+textarea {
+    background-color: var(--secondory-bg);
+    color: var(--main-color);
+}
+
+button,
+input {
+    background-color: var(--secondory-bg);
+    color: var(--secondory-color);
+    border: 0 solid transparent;
+    border-radius: 2px
+}
+
+small {
+    font-size: 12px;
+}
