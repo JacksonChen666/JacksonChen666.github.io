@@ -3,7 +3,7 @@ title: Ideas
 description: Giving ideas to JacksonChen666 on this page since i don't know
 layout: default
 ---
-{% include post_text.md textarea_name=i textarea_max_length=100000 textarea_columns=80 textarea_rows=20 textarea_placeholder="Ideas or Suggestions" submit_value="GIVE IDEA" %}
+{% include post_text.md textarea_name="i" textarea_max_length=100000 textarea_columns=80 textarea_rows=20 textarea_placeholder="Ideas or Suggestions" submit_value="GIVE IDEA" %}
 All time stamps are in UTC (+0000) timezone<br>
 Date format: [YYYY/MM/DD @ hh:mm:ss]<br>
 
