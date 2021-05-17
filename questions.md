@@ -7,12 +7,12 @@ layout: default
 All time stamps are in UTC (+0000) timezone<br>
 Date format: [YYYY/MM/DD @ hh:mm:ss]<br>
 
-{% if site.data.question.count != 0 %}
+{% if site.data.question.size != 0 %}
 {% include questions_ideas_csv.md csv_file=site.data.question amount=100 offset=0 %}
 {% else %}
 Ummmm, something might be wrong. Please contact the website owner for more about no questions at all.
 {% endif %}
 
-{% if site.data.quesiton.count >= 100 %}
+{% if site.data.question.size >= 100 %}
 [More questions](more-questions)
 {% endif %}
