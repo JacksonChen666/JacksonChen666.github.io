@@ -17,7 +17,7 @@ echo "<h2>thank</h2><p>i will check</p>" . $back;
 exit;
 
 function writeFile($Type, $TextToWrite) {
-	$FileName = "./stuff/" . $Type; 
+	$FileName = "../stuff/" . $Type; 
 	$exists = file_exists($FileName . ".csv");
 	$file = fopen($FileName . ".csv", "a") or die("can't open file F");
 	if ($exists == 0) {
