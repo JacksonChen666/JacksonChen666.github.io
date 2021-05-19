@@ -8,7 +8,7 @@ layout: default
 ## Hello, My name is Jackson
 <small id="random_quotes"><noscript>"Please enable JavaScript to view these quotes" -JacksonChen666</noscript></small>
 
-Website made by Jackson. Big love and support to Jackson
+Website made by Jackson. Big love and support to Jackson.
 
 Just another person on the planet you say that likes weird stuff right? No I am more than that. I like lots of stuff some might not like, and expect.<br>
 I was born in Hungary, and I come from a Chinese culture which is a bit different, but I like food that is not Chinese for some reason.<br>
