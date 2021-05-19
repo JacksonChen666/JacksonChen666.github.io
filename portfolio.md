@@ -4,7 +4,7 @@ description: Portfolio of things I made in the programming world
 layout: default
 ---
 ## Portfolio
-**Disclaimer:** Most of these projects were done with the help of the internet and existing solutions. Please don't expect me to make something powerful from scratch without knowledge on the topic.
+**Note:** Most of these projects were done with the help of internet resources and existing solutions. Please don't expect me to make something powerful from scratch without knowledge on the topic, or the internet help.
 - **Python**
     - *Twitter API*
         - [Last interactions](https://github.com/JacksonChen666/TwitterLastInteractions)
