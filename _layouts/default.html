@@ -4,8 +4,8 @@
     <title>{{ site.title }} - {{ page.title }}</title>
     <meta name="google-site-verification" content="F07ZPniaA5zDRDgqVDMcvGqginMOIKnKhHtwVS49Irg">
     <link rel="preload" href="/main.css" as="style">
-    <link rel="preload" href="/nav.css" as="style">
     <link rel="stylesheet" type="text/css" href="/main.css">
+    <link rel="preload" href="/nav.css" as="style">
     <link rel="stylesheet" type="text/css" href="/nav.css">
     <meta name="viewport" content="width=device-width initial-scale=1">
     <meta name="description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
@@ -27,6 +27,9 @@
 <article>
 {{ content }}
 </article>
+<!-- <foorter>
+<!-- todo: footer with social icons, which turn to full color when highlighted but gray of one color (alpha channel may be needed) when not highlighed, with a zoom that goes a bit farther than normal, then back -->
+</foorter> -->
 </main>
 </body>
 </html>
