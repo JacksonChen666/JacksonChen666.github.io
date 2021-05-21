@@ -19,7 +19,8 @@
 main {
     margin: 0 auto;
     margin-bottom: 5.1rem !important;
-    width: clamp(10vw, 80%, 80vw);
+    width: clamp(30ch, 75%, 75ch);
+    text-rendering: optimizespeed;
 }
 
 .navbar-nav {
