@@ -14,7 +14,7 @@ Now, the people of Arch Linux (or the community) has created a wiki page entirel
 
 - [Downloading packages for offline installation](https://wiki.archlinux.org/index.php/Pacman/Tips_and_tricks#Installing_packages_from_a_CD/DVD_or_USB_stick)
 - [Adding more to the normal ISOs](https://wiki.archlinux.org/index.php/Archiso#Prepare_a_custom_profile)
-- [Building an entire ISO that can be used like offical ISOs](https://wiki.archlinux.org/index.php/Archiso#Build_the_ISO) (except they are not offical)
+- [Building an entire ISO that can be used like official ISOs](https://wiki.archlinux.org/index.php/Archiso#Build_the_ISO) (except they are not official)
 
 With the wiki pages in existance, I could possibly build an ISO with scripts assisting the installation, and make the installation depend on the ISO only.
 Maybe even make an entire post out of it to show how simple (in my opinion) it is to make an installation.
@@ -37,7 +37,7 @@ It contains two profiles.
 But, what is a profile?
 
 A profile contains folders and files and files instructing what to install with the live system, and what to put on the ISO root file system.
-Default profiles are either `baseline` (the *almost* bare ISO which is about half the size of the usual), and `releng` (offical ISOs).
+Default profiles are either `baseline` (the *almost* bare ISO which is about half the size of the usual), and `releng` (official ISOs).
 
 If you don't want deal with a huge mess, then I **highly** recommend that you go with the `releng` profile.
 The `baseline` profile is missing some key things compared to `releng` (editors, populated pacman-keys, etc.) that makes it easy to install.
