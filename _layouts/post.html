@@ -4,6 +4,8 @@ layout: bare
 <head>
     <link rel="stylesheet" type="text/css" href="/nav-post.css">
 </head>
-<p>{{ page.date }} - Written by {{ page.author }}</p>
+{{ page.date | strip_html }} {% if page.last_modified_date %}(last updated {{ page.last_modified_date | strip_html }}){% endif %} - Written by {{ page.author }}
 
+<article itemprop="articleBody">
 {{ content }}
+</article>
