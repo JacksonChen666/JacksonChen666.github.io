@@ -13,7 +13,7 @@ Unknown Authors often are often mistakes made again (reeeeeeeee). You should [ma
 Please include evidence and proof that you are when submitting an issue.
 
 Evidence and proof are required to be:
-- Online and present, primarily **NOT** via the [time machine](https://web.archive.org) (unless the page is no longer avaliable).
+- Online and present, primarily **NOT** via the [time machine](https://web.archive.org) (unless the page is no longer available).
 - Not from yourself (not being very strict here, exceptions are git commits on this [site]({{ site.github.repository_url }}))
 
 ## What happens when submitting and issue
