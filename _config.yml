@@ -46,7 +46,7 @@ defaults:
       type: "posts" # previously `post` in Jekyll 2.2.
     values:
       layout: "post"
-      author: "<a href='/unknown-author'>Unknown Author</a>"
+      author: "[Unknown Author](/unknown-author)"
 
 # Exclude from processing.
 # The following items will not be processed, by default.
