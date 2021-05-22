@@ -1,7 +1,6 @@
 ---
 title: Applescript
 description: Page of applescript
-layout: default
 ---
 <style>
     a+pre{display:none;}

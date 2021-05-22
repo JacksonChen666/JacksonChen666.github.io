@@ -1,7 +1,6 @@
 ---
 title: Memes
 description: Best of memes*
-layout: default
 ---
 <style>
     .headline{font-size:1.75rem;}

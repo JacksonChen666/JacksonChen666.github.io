@@ -1,7 +1,6 @@
 ---
 title: Thing
 description: Space bar and something happens
-layout: default
 ---
 <style>
     button{margin-left:5px}

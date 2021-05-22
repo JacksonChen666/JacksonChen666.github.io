@@ -1,7 +1,6 @@
 ---
 title: Site Idex
 description: The site's pages
-layout: default
 ---
 ## Site Index
 

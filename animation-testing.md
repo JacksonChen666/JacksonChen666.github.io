@@ -1,7 +1,6 @@
 ---
 title: Web animation testing
 description: Animation testing of JacksonChen666 website
-layout: default
 ---
 <style>
     @keyframes crazy{0%{margin-top:-10vh;}100%{margin-top:90vh;}}

@@ -1,7 +1,6 @@
 ---
 title: Repos
 description: Repositories that JacksonChen666 has made on github
-layout: default
 ---
 ## Repositories made by JacksonChen666 (who made this page and the website)
 

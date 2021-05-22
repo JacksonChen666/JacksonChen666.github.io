@@ -1,7 +1,6 @@
 ---
 title: Old Ideas
 description: Old suggested ideas
-layout: default
 ---
 [More current ideas](ideas)
 

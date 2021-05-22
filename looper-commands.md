@@ -1,7 +1,6 @@
 ---
 title: Looper Commands
 description: Loops ffmpeg
-layout: default
 ---
 <style type="text/css">
     main{font-family:arial;font-size:1.2rem;}

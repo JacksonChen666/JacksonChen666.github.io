@@ -1,6 +1,5 @@
 ---
 title: Home
-layout: default
 ---
 <script src="randomQuotes.js"></script>
 <script src="youtube-latest.js"></script>

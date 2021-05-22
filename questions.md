@@ -1,7 +1,6 @@
 ---
 title: Questions
 descriptions: Questions for JacksonChen666
-layout: default
 ---
 {% include post_text.md textarea_name="q" textarea_max_length=10000 textarea_columns=40 textarea_rows=10 textarea_placeholder="Questions" submit_value="ASK" %}
 All time stamps are in UTC (+0000) timezone<br>

@@ -1,7 +1,6 @@
 ---
 title: Portfolio
 description: Portfolio of things I made in the programming world
-layout: default
 ---
 ## Portfolio
 **Note:** Most of these projects were done with the help of internet resources and existing solutions. Please don't expect me to make something powerful from scratch without knowledge on the topic, or the internet help.

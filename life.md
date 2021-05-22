@@ -1,6 +1,5 @@
 ---
 title: My life
-layout: default
 ---
 <style>
     #aname{fond-color:white;}

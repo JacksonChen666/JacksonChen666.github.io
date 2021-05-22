@@ -1,7 +1,6 @@
 ---
 title: Social Media
 description: Social medias for JacksonChen666
-layout: default
 ---
 <style>
     .srt{font-size:1px;margin:0px;}

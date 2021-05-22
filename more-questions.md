@@ -1,7 +1,6 @@
 ---
 title: Old Questions
 description: Old questions asked by the people of idk
-layout: default
 ---
 [Back to recent questions](questions)
 
