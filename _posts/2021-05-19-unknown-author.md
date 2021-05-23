@@ -16,7 +16,7 @@ Evidence and proof are required to be:
 - Online and present, primarily **NOT** via the [time machine](https://web.archive.org) (unless the page is no longer available).
 - Not from yourself (not being very strict here, exceptions are git commits on this [site]({{ site.github.repository_url }}))
 
-## What happens when submitting and issue
+## What happens when submitting an issue
 When you submit an issue for a missing author, whoever gets assigned to the issue will try their best to trace back who commited the post to the repository, via git history, online sources, etc.
 If they find the author and confirm that it really is that person, they will add the author to the post, and close the issue.
 
