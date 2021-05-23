@@ -20,7 +20,6 @@ main {
     margin: 0 auto;
     margin-bottom: 5.1rem !important;
     width: clamp(30ch, 91%, 75ch);
-    font-size: min(4vw, 18px);
     line-height: 1.7em;
 }
 
