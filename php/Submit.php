@@ -29,7 +29,7 @@ function writeFile($Type, $TextToWrite) {
 	}
 	fwrite($file, time().",\"{$TextToWrite}\",,\"\"\n");
 	fclose($file);
-	chmod($FileName . ".csv", 0777);
+	chmod($FileName . ".csv", 0600);
 	return $TextToWrite;
 }
 ?>
