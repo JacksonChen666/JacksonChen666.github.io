@@ -34,7 +34,7 @@ plugins:
   - jekyll-mentions
 
 jekyll-mentions:
-  base_url: "https://jacksonchen666.com"
+  base_url: "https://github.com"
 
 repository: JacksonChen666/JacksonChen666.github.io
 
