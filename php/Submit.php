@@ -1,5 +1,5 @@
 ---
-title: Submittion
+title: Submission
 layout: external
 ---
 <?php
