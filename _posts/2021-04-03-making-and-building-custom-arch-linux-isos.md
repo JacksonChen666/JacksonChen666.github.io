@@ -16,7 +16,7 @@ Now, the people of Arch Linux (or the community) has created a wiki page entirel
 - [Adding more to the normal ISOs](https://wiki.archlinux.org/index.php/Archiso#Prepare_a_custom_profile)
 - [Building an entire ISO that can be used like official ISOs](https://wiki.archlinux.org/index.php/Archiso#Build_the_ISO) (except they are not official)
 
-With the wiki pages in existance, I could possibly build an ISO with scripts assisting the installation, and make the installation depend on the ISO only.
+With the wiki pages in existence, I could possibly build an ISO with scripts assisting the installation, and make the installation depend on the ISO only.
 Maybe even make an entire post out of it to show how simple (in my opinion) it is to make an installation.
 
 ## Installing the Required Tools
@@ -143,7 +143,7 @@ If you have encountered any issues, please contact me on [twitter][twitter_conta
 [^profile_ls]: The list is taken from [this readme](https://gitlab.archlinux.org/archlinux/archiso/-/blob/master/README.profile.rst), and may not contain up-to-date/correct information. Plus, a few were modified to be more accurate (if it is).
 [^consistent_reference]: I will be assuming you were following the exact commands, so you might have to change a few command arguments if you did change any. If the command prefix is `#`, execute as root/use sudo. If the command prefix is `$`, then you can execute as yourself or root.
 [^offline]: Commands were taken from [this page of the wiki](https://wiki.archlinux.org/index.php/Pacman/Tips_and_tricks#Installing_packages_from_a_CD/DVD_or_USB_stick).
-[^unconfirmed]: I cannot confirm if the statement is true or false. If you do encounter any issues, please contant me on [twitter][twitter_contact].
+[^unconfirmed]: I cannot confirm if the statement is true or false. If you do encounter any issues, please contact me on [twitter][twitter_contact].
 [^every_package]: Everything is not limited to things you can download from pacman. The custom repository can also include [AUR packages](https://wiki.archlinux.org/index.php/Arch_User_Repository) (AUR packages are not built on install. They must be built during the making of the custom repository.)
 [^repository_name]: The `[custom]` is dependent on which database you chose when executing the `repo-add`.
 [^architecture]: The architecture of the system you built it on. As of 2021, it is most likely x86_64.

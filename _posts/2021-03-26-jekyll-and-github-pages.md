@@ -7,7 +7,7 @@ author: JacksonChen666
 ---
 I'd like to test this new thing that I currently have. Maybe i'll put more metadata on it. Why not.
 
-I've known about flask's extending template pages, and I've wanted to do that. Except, when I came across Jekyll, I may have finally achived true page extending with usability. [^1]
+I've known about flask's extending template pages, and I've wanted to do that. Except, when I came across Jekyll, I may have finally achieved true page extending with usability. [^1]
 
 |Software|Functionality|Hosting ability|
 |---------|----------------|

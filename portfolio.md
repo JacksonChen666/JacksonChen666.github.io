@@ -7,7 +7,7 @@ description: Portfolio of things I made in the programming world
 - **Python**
     - *Twitter API*
         - [Last interactions](https://github.com/JacksonChen666/TwitterLastInteractions)
-        - [Bill wurtz might quit song lyrics on a twitter thread](https://github.com/JacksonChen666/BillWurtzMightQuitTwitter)
+        - [Bill Wurtz might quit song lyrics on a twitter thread](https://github.com/JacksonChen666/BillWurtzMightQuitTwitter)
     - *Discord bots*
         - [Discord bot full of features that discord has as commands](https://github.com/JacksonChen666/Discords-Essentials)
         - [Assign roles based on the level up messages on MEE6 bot.](https://github.com/JacksonChen666/AutoRole)

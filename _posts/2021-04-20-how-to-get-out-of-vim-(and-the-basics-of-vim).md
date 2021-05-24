@@ -5,7 +5,7 @@ date: '2021-04-20 15:42:29 +0200'
 category: Vim
 author: JacksonChen666
 --- 
-Oops, you were accidetally dropped in vim and now can't out. But don't hesitate and close the terminal window, you can get out.
+Oops, you were accidentally dropped in vim and now can't out. But don't hesitate and close the terminal window, you can get out.
 
 To get out of vim, first confirm you're in normal mode (of vim):
 
@@ -24,7 +24,7 @@ You can also check if it's in normal mode when the bottom left of vim/terminal d
 - `i` to start putting whatever you type at whatever your cursor location is.
 - `I` to move the cursor to the start of the line (usually after indenting) and start editing.
 - `A` is same as `I` but moves cursor to the end.
-- `a` to move the cursor right to comphensate the cursor moving left one character.
+- `a` to move the cursor right to compensate the cursor moving left one character.
 
 Now, the said keys puts your vim session in `INSERT` mode, which lets you type text and any characters.
 
@@ -52,4 +52,4 @@ Pressing enter/return on command mode after running a shell command will return 
 You learned how to exit vim, and how to actually use vim at hopefully a basic level.
 I hope you found this helpful, and learned how to exit vim while learning how to use it.
 
-Next time you find yourself in vim again while commiting another change, you might want to consider changing your editor to be nano if you're willing to spend time making that change, if you don't like having to use vim.
+Next time you find yourself in vim again while committing another change, you might want to consider changing your editor to be nano if you're willing to spend time making that change, if you don't like having to use vim.
