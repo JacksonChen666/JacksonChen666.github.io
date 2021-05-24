@@ -6,7 +6,7 @@ custom_nav: true
     <link rel="stylesheet" type="text/css" href="/post.css">
 </head>
 <h2 itemprop="title">{{ page.title }}</h2>
-<span itemprop="date">{{ page.date | strip_html }} {% if page.last_modified_date %}(last updated {{ page.last_modified_date | strip_html }}){% endif %}</span> - Written by <span itemprop="author">{{ page.author }}</span>
+<span itemprop="date">{{ page.date | strip_html }} {% if page.last_modified_date %}(last updated {{ page.last_modified_date | strip_html }}){% endif %}</span> - Written by <span itemprop="author">{% unless page.author contains "<a href='/unknown-author'>Unknown Author</a>" %}@{% endunless %}{{ page.author }}</span> <!-- unless author contains unknown author is confusing -->
 <hr>
 <article itemprop="articleBody">
 {{ content }}
