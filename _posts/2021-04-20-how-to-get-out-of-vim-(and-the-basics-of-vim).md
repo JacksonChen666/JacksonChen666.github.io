@@ -2,6 +2,7 @@
 title: How to get out of Vim (and the basics of Vim)
 layout: post
 date: '2021-04-20 15:42:29 +0200'
+last_modified_date: '2021-05-26 18:11:44 +0200'
 category: Vim
 author: JacksonChen666
 --- 
@@ -11,8 +12,8 @@ To get out of vim, first confirm you're in normal mode (of vim):
 
 - Use the `ESC` key to go back to normal mode
 
-Then, you type the following characters in vim: `:q`.
-If for some reason you are still in vim (because it told you it had unsaved work), then now try to type `:q!` and press return/enter key, losing any unsaved work (which could've contained bad work).
+Then, you type the following characters in vim: `:qa`.
+If for some reason you are still in vim (because it told you it had unsaved work), then now try to type `:qa!` and press return/enter key, losing any unsaved work (which could've contained bad work).
 
 OK, you're out of vim.
 Do you want to continue and learn how to use vim at a basic level? Yes?
