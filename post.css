@@ -1,3 +1,7 @@
+body {
+    hyphens: none;
+}
+
 :root {
     --text-primary: #b6b6b6;
     --text-secondory: #ececec;
@@ -6,7 +10,6 @@
 }
 
 .navbar {
-    hyphens: none;
     bottom: 0;
     width: 100vw;
     height: 3rem;
