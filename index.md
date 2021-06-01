@@ -14,7 +14,7 @@ I was born in Hungary, and I come from a Chinese culture which is a bit differen
 On this website, you can find stuff like [my life](life) where you could learn more about me.
 
 <div id="latest_video">
-	<a id="latestVideoLink">Oh hey, you should check out my maybe new video here</a>
+	<a id="latestVideoLink">Oh hey, you should check out my latest video here</a>
 </div>
 <!-- <noscript><style>#latest_video{displat:none}</style>[Oh hey, you could check out my youtube channel](https://youtube.com/JacksonChen666)</noscript> -->
 
