@@ -91,8 +91,15 @@ main h1, footer {
     flex-shrink: 0;
 }
 
-main article *:first-child {
-    margin-top: 0; /* no i don't want more space, so heres a kinda hacky line i guess */
+main article h1,
+main article h2,
+main article h3,
+main article h4,
+main article h5,
+main article h6,
+main article p,
+main article a {
+    margin-top: 0; /* no i don't want more space, so heres repetition */
 }
 /* end of assisted help */
 footer {
