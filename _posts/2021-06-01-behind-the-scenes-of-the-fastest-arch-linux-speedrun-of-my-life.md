@@ -4,6 +4,7 @@ title: Behind the Scenes of the Fastest Arch Linux Install Speedrun of My Life
 author: JacksonChen666
 category: behind-the-scenes
 date: 2021-06-01 20:51 +0200
+last_modified_date: 2021-06-02 16:46 +0200
 ---
 OK so, 55.6 seconds. And all you did is nothing during the install. HOW?
 
@@ -30,7 +31,7 @@ Guess I'll have to copy paste a file to the systemd folder of services and wants
 
 ### Automating the Installation
 "How did you do nothing during the install and it worked?" Well, pacman still outputs warning (despite the fact I told it to not output), so there is something going on.
-But what is actually going on is simple enough as releasing the "[[source code][source]][source]" of the ISO (there seems to be parts of it licensed as GPLv3, guess I'll die if I don't release to requests of [[source code][source]][source]), or just actually explaining like a normal person.
+But what is actually going on is simple enough as releasing the "[source code][source]" of the ISO (there seems to be parts of it licensed as GPLv3, guess I'll die if I don't release to requests of [source code][source]), or just actually explaining like a normal person.
 
 #### Launching the script
 The script must be launched after the user automatically logs in, which can be done using some files that the bash shell would execute on execution of bash.
