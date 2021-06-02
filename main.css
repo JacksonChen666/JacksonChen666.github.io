@@ -76,3 +76,36 @@ input {
 small {
     font-size: 12px;
 }
+/* https://developer.mozilla.org/en-US/docs/Web/CSS/Layout_cookbook/Sticky_footers */
+main {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main article {
+    flex-grow: 1;
+}
+
+main h1, footer {
+    flex-shrink: 0;
+}
+
+main article *:first-child {
+    margin-top: 0; /* no i don't want more space, so heres a kinda hacky line i guess */
+}
+/* end of assisted help */
+footer {
+    display: flex;
+    justify-content: center;
+    grid-gap: 1rem;
+}
+
+footer a {
+    color: gray !important;
+    transition: color 0.2s ease-in-out;
+}
+
+footer a:hover {
+    color: currentColor !important;
+}
