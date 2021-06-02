@@ -85,10 +85,10 @@ small {
 }
 
 #scal_div footer a {
-    color: gray;
+    color: gray !important;
     transition: color 0.2s ease-in-out;
 }
 
 #scal_div footer a:hover {
-    color: inherit;
+    color: currentColor !important;
 }
