@@ -1,10 +1,6 @@
 ---
 title: My life
 ---
-<style>
-    #aname{fond-color:white;}
-</style>
-
 ## My life
 
 **EDIT:** i have no life

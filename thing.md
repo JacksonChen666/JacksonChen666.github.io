@@ -2,12 +2,12 @@
 title: Thing
 description: Space bar and something happens
 ---
+<noscript>This page requires javascript to run (!!!!!!!!!!!!!!!!!!!!!!!)</noscript>
 <style>
     button{margin-left:5px}
     #text1{text-align:center;font-size:23px;}
     #cheatText{text-align:center}
 </style>
-<noscript>This page requires javascript to run (!!!!!!!!!!!!!!!!!!!!!!!)</noscript>
 <br><br>
 <div id="thing">
     <p id="text1"></p>
