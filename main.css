@@ -1,20 +1,20 @@
 :root {
     --main-bg: #181a1b;
-    --secondory-bg: #000;
+    --secondary-bg: #000;
     --main-color: #e8e6e3;
     --secondory-color: #fff;
 }
 
 [theme="dark"] {
     --main-bg: #181a1b;
-    --secondory-bg: #000;
+    --secondary-bg: #000;
     --main-color: #e8e6e3;
     --secondory-color: #fff;
 }
 
 [theme="light"] {
     --main-bg: #fff;
-    --secondory-bg: #ddd;
+    --secondary-bg: #ddd;
     --main-color: #000;
     --secondory-color: #222;
 }
@@ -62,13 +62,13 @@ hr {
 }
 
 textarea {
-    background-color: var(--secondory-bg);
+    background-color: var(--secondary-bg);
     color: var(--main-color);
 }
 
 button,
 input {
-    background-color: var(--secondory-bg);
+    background-color: var(--secondary-bg);
     color: var(--secondory-color);
     border: 0 solid transparent;
     border-radius: 2px

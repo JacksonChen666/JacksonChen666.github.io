@@ -4,9 +4,9 @@ body {
 
 :root {
     --text-primary: #b6b6b6;
-    --text-secondory: #ececec;
+    --text-secondary: #ececec;
     --bg-primary: #23232e;
-    --bg-secondory: #141418;
+    --bg-secondary: #141418;
 }
 
 .navbar {
