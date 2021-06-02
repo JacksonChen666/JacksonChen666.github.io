@@ -7,3 +7,4 @@ layout: null
         location.replace("https://youtube.com/watch?v=" + id);
     });
 </script>
+<noscript>Just because you have javascript disabled doesn't mean you can be redirected to my new video. <a href="https://youtube.com/JacksonChen666">Here's the channel link anyways.</a></noscript>
