@@ -77,7 +77,25 @@ input {
 small {
     font-size: 12px;
 }
+/* https://developer.mozilla.org/en-US/docs/Web/CSS/Layout_cookbook/Sticky_footers */
+main {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
 
+main article {
+    flex-grow: 1;
+}
+
+main h1, footer {
+    flex-shrink: 0;
+}
+
+main h1 {
+    margin-bottom: 0; /* no i don't want more space, so i just did a hacky thing */
+}
+/* end of assisted help */
 footer {
     display: flex;
     justify-content: center;
