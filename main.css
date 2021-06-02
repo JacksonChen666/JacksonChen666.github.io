@@ -92,8 +92,8 @@ main h1, footer {
     flex-shrink: 0;
 }
 
-main h1 {
-    margin-bottom: 0; /* no i don't want more space, so i just did a hacky thing */
+main article *:first-child {
+    margin-top: 0; /* no i don't want more space, so heres a kinda hacky line i guess */
 }
 /* end of assisted help */
 footer {
