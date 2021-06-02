@@ -13,10 +13,7 @@ Just another person on the planet you say that likes weird stuff right? No I am 
 I was born in Hungary, and I come from a Chinese culture which is a bit different, but I like food that is not Chinese for some reason.<br>
 On this website, you can find stuff like [my life](life) where you could learn more about me.
 
-<div id="latest_video">
-	<a id="latestVideoLink">Oh hey, you should check out my latest video here</a>
-</div>
-<!-- <noscript><style>#latest_video{displat:none}</style>[Oh hey, you could check out my youtube channel](https://youtube.com/JacksonChen666)</noscript> -->
+[Oh hey, you should check out my latest video here](/latest-video)
 
 That's all for here, you can continue exploring as I continue creating and expanding this website lol.<br>
 While you are here, you might as well help me give some ideas so I can continue creating. You can also use [GitHub](https://github.com) for it.
@@ -56,9 +53,6 @@ While you are here, you might as well help me give some ideas so I can continue 
     addQuotesListener("click", "random_quotes", quotesLists, endQuotes);
     constantRandomQuotes(quotesLists, endQuotes);
     randomQuotes(["Welcome to my new domain!"], "JacksonChen666");
-    getLatestVideoID(function(id) {
-        document.querySelector("#latestVideoLink").setAttribute("href", "https://youtu.be/" + id);
-    });
 </script>
 <hr>
 
