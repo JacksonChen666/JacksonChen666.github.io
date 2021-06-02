@@ -15,8 +15,9 @@ permalink: /feed.xml
 				<author>{{ post.author | strip_html | xml_escape }}</author>
 				<description>{{ post.content | xml_escape }}</description>
 				<pubDate>{{ post.date | date_to_rfc822 }}</pubDate>
-				<link>{{ site.url }}{{ post.url }}</link>
-				<guid isPermaLink="true">{{ site.url }}{{ post.url }}</guid>
+				<update>{{ post.last_modified_date | date_to_rfc822 }}</update>
+				<link>{{ post.url | absolute_url }}</link>
+				<guid>{{ post.url | absolute_url }}</guid>
 			</item>
 		{% endfor %}
 	</channel>
