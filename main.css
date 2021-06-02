@@ -78,8 +78,17 @@ small {
     font-size: 12px;
 }
 
-footer {
+#scal_div footer {
     display: flex;
     justify-content: center;
     grid-gap: 1rem;
+}
+
+#scal_div footer a {
+    color: gray;
+    transition: color 0.2s ease-in-out;
+}
+
+#scal_div footer a:hover {
+    color: inherit;
 }
