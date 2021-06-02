@@ -32,6 +32,10 @@ body {
     hyphens: none;
 }
 
+main {
+    margin-right: 10px;
+}
+
 a:not(#aname) {
     color: #ff6a00;
     cursor: pointer;
