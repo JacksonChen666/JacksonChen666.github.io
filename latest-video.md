@@ -1,4 +1,5 @@
 ---
+layout: null
 ---
 <script src="youtube-latest.js"></script>
 <script>
