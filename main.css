@@ -98,7 +98,8 @@ main article h4,
 main article h5,
 main article h6,
 main article p,
-main article a {
+main article a,
+main #content *:first-child {
     margin-top: 0; /* no i don't want more space, so heres repetition */
 }
 /* end of assisted help */
