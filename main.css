@@ -83,7 +83,7 @@ main {
     flex-direction: column;
 }
 
-main article {
+main article, main #content {
     flex-grow: 1;
 }
 

@@ -4,8 +4,13 @@ custom_nav: true
 ---
 <head>
     <link rel="stylesheet" type="text/css" href="/post.css">
+    <style>
+        main {
+            min-height: calc(100vh - 5.1rem) !important;
+        }
+    </style>
 </head>
-<div>
+<div id="content">
 <h2 itemprop="title">{{ page.title }}</h2>
 <span itemprop="date">{{ page.date | strip_html }} {% if page.last_modified_date %}(last updated {{ page.last_modified_date | strip_html }}){% endif %}</span> - Written by {% unless page.author contains "<a href='/unknown-author'>Unknown Author</a>" %}@{% endunless %}{{ page.author }}
 <hr>
