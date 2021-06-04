@@ -28,7 +28,7 @@ body {
     overflow-wrap: break-word;
     hyphens: auto;
     font-family: Arial;
-    font-size: min(4vw, 18px);
+    font-size: #{'min(4vw, 18px)'};
     margin: 0;
     padding: 0;
     hyphens: none;
@@ -41,26 +41,22 @@ main {
 a:not(#aname) {
     color: #ff6a00;
     cursor: pointer;
-}
-
-a:link:not(#aname) {
-    color: orange
-}
-
-a:visited:not(#aname) {
-    color: #ff6a00
-}
-
-a:hover:not(#aname) {
-    color: red
-}
-
-a:active:not(#aname) {
-    color: green
+    &:link {
+        color: orange;
+    }
+    &:visited {
+        color: #ff6a00;
+    }
+    &:hover {
+        color: red;
+    }
+    &:active {
+        color: green;
+    }
 }
 
 hr {
-    color: var(--main-color)
+    color: var(--main-color);
 }
 
 textarea {
@@ -68,8 +64,7 @@ textarea {
     color: var(--main-color);
 }
 
-button,
-input {
+button, input {
     background-color: var(--secondary-bg);
     color: var(--secondory-color);
     border: 0 solid transparent;
@@ -80,43 +75,31 @@ small {
     font-size: 12px;
 }
 /* https://developer.mozilla.org/en-US/docs/Web/CSS/Layout_cookbook/Sticky_footers */
-main {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
-
-main article, main #content {
-    flex-grow: 1;
-}
-
 main h1, footer {
     flex-shrink: 0;
 }
 
-main article h1,
-main article h2,
-main article h3,
-main article h4,
-main article h5,
-main article h6,
-main article p,
-main article a,
-main #content *:first-child {
-    margin-top: 0; /* no i don't want more space, so heres repetition */
+main {
+    article, #content {
+        h1, h2, h3, h4, h5, h6, p, a {
+            margin-top: 0;
+        }
+        flex-grow: 1;
+    }
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 /* end of assisted help */
 footer {
     display: flex;
     justify-content: center;
     grid-gap: 1rem;
-}
-
-footer a {
-    color: gray !important;
-    transition: color 0.2s ease-in-out;
-}
-
-footer a:hover {
-    color: currentColor !important;
+    a {
+        color: gray !important;
+        transition: color 0.2s ease-in-out;
+        &:hover {
+            color: currentColor !important;
+        }
+    }
 }
