@@ -17,6 +17,9 @@
     padding-bottom: 30px !important;
     background-color: #23232e;
     text-decoration: none;
+    .link-text {
+        display: none;
+    }
 }
 
 main {
@@ -34,14 +37,9 @@ main {
 
 .nav-item {
     width: 100%;
-}
-
-.nav-item:last-child {
-    margin-top: auto;
-}
-
-.navbar .link-text {
-    display: none;
+    &:last-child {
+        margin-top: auto;
+    }
 }
 
 .nav-link {
@@ -49,18 +47,17 @@ main {
     align-items: center;
     height: 5rem;
     text-decoration: none !important;
+    svg {
+        min-width: 1.5rem;
+        margin: 0 1.5rem;
+        width: 24px;
+        height: 24px;
+    }
 }
 
 .link-text {
     display: none;
     margin-left: 1rem;
-}
-
-.nav-link svg {
-    min-width: 1.5rem;
-    margin: 0 1.5rem;
-    width: 24px;
-    height: 24px;
 }
 
 @media only screen and (max-width:600px) {
@@ -93,13 +90,11 @@ main {
         width: 5rem;
         height: 100vh;
         overflow-y: auto;
-    }
-
-    .navbar:hover {
-        width: 16rem;
-    }
-
-    .navbar:hover .link-text {
-        display: inline;
+        &:hover {
+            width: 16rem;
+            .link-text {
+                display: inline;
+            }
+        }
     }
 }
