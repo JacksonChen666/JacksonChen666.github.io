@@ -33,6 +33,9 @@ plugins:
   - jekyll-github-metadata
   - jekyll-mentions
 
+sass:
+    style: compressed
+
 jekyll-mentions:
   base_url: "https://github.com"
 
