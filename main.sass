@@ -7,13 +7,13 @@
     --main-color: #e8e6e3
     --secondory-color: #fff
 
-[theme="dark"] 
+[theme="dark"]
     --main-bg: #181a1b
     --secondary-bg: #000
     --main-color: #e8e6e3
     --secondory-color: #fff
 
-[theme="light"] 
+[theme="light"]
     --main-bg: #fff
     --secondary-bg: #ddd
     --main-color: #000
@@ -30,10 +30,10 @@ body
     padding: 0
     hyphens: none
 
-main 
+main
     margin-right: 10px
 
-a:not(#aname) 
+a:not(#aname)
     color: #ff6a00
     cursor: pointer
     &:link
@@ -45,40 +45,40 @@ a:not(#aname)
     &:active
         color: green
 
-hr 
+hr
     color: var(--main-color)
 
-textarea 
+textarea
     background-color: var(--secondary-bg)
     color: var(--main-color)
 
-button, input 
+button, input
     background-color: var(--secondary-bg)
     color: var(--secondory-color)
     border: 0 solid transparent
     border-radius: 2px
 
-small 
+small
     font-size: 12px
 /* https://developer.mozilla.org/en-US/docs/Web/CSS/Layout_cookbook/Sticky_footers */
-main h1, footer 
+main h1, footer
     flex-shrink: 0
 
-main 
-    article, #content 
-        h1, h2, h3, h4, h5, h6, p, a 
+main
+    article, #content
+        h1, h2, h3, h4, h5, h6, p, a
             margin-top: 0
         flex-grow: 1
     min-height: 100vh
     display: flex
     flex-direction: column
 /* end of assisted help */
-footer 
+footer
     display: flex
     justify-content: center
     grid-gap: 1rem
-    a 
+    a
         color: gray !important
         transition: color 0.2s ease-in-out
-        &:hover 
+        &:hover
             color: currentColor !important
