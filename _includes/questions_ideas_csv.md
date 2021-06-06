@@ -6,8 +6,7 @@
 <div>
 {% capture stuff %}
 {{ thing.input_unix_time | date_to_rfc822}}: {{ thing.input | strip_html }}
-A{% if thing.output_unix_time %} ({{ thing.output_unix_time | date_to_rfc822}}){% endif %}: {{ thing.output }}
-{% endcapture %}
+A{% if thing.output_unix_time %} ({{ thing.output_unix_time | date_to_rfc822}}){% endif %}: {{ thing.output }}{% endcapture %}
 {{ stuff | newline_to_br }}
 </div>
   {% endif %}
