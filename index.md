@@ -2,7 +2,6 @@
 title: Home
 ---
 <script src="randomQuotes.js"></script>
-<script src="youtube-latest.js"></script>
 
 ## Hello, My name is Jackson
 <small id="random_quotes"><noscript>"Please enable JavaScript to view these quotes" -JacksonChen666</noscript></small>
