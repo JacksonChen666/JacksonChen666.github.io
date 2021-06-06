@@ -3,7 +3,7 @@
 {% for i in (loopLimit..loopOffset) reversed %}
 {% assign thing = include.csv_file[i] %}
   {% if thing.output %}
-{{ thing.input_unix_time | date_to_rfc822}}: {{ thing.input | strip_html | newline_to_br }}<br>
-A{% if thing.output_unix_time %} ({{ thing.output_unix_time | date_to_rfc822}}){% endif %}: {{ thing.output | newline_to_br }}
+{{ thing.input_unix_time | date_to_rfc822}}: {{ thing.input | strip_html }}<br>
+A{% if thing.output_unix_time %} ({{ thing.output_unix_time | date_to_rfc822}}){% endif %}: {{ thing.output }}
   {% endif %}
 {% endfor %}
