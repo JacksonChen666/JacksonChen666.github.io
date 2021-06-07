@@ -1,8 +1,9 @@
 ---
 layout: post
-title: 'Life advise to reduce potentially wasted time: Barely care about spam'
+title: 'Life Advice to Reduce Potentially Wasted Time: Barely Care About Spam'
 author: JacksonChen666
 date: 2021-06-06 13:11 +0200
+last_modified_date: 2021-06-07 9:53:09 +0200
 ---
 Today, I've decided to care about my ideas and questions because I was reminded by myself about submission in ideas.
 After syncing with the server that deals with saving the questions and ideas that are sent, I found that the questions file has grew to a kilobyte, which meant a new question.
