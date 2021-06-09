@@ -1,5 +1,4 @@
 @keyframes colorful {
-    0%{}
     100%{
         filter:hue-rotate(360deg);
     }
