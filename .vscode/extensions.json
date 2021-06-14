@@ -1,5 +1,7 @@
 {
     "recommendations": [
-        "sissel.shopify-liquid"
+        "sissel.shopify-liquid",
+        "streetsidesoftware.code-spell-checker",
+        "dedsec727.jekyll-run"
     ]
 }
