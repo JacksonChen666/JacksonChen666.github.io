@@ -11,10 +11,10 @@ Limited to 10000 characters because people would have not much, and I need my ti
     #video {
         resize: none;
     }
-    input[type=url], textarea:invalid {
+    input[type=url]:invalid, textarea:invalid {
         border: 2px dashed red;
     }
-    input[type=url], textarea:valid {
+    input[type=url]:valid, textarea:valid {
         border: 2px solid lime;
     }
 </style>
