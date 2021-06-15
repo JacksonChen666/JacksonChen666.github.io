@@ -5,7 +5,6 @@ description: Page of applescript
 I actually like programming stuff. So far, I've learned 4 total languages (and more counting): Python, HTML (and related), Java, and AppleScript<br>
 AppleScript is for mac only. If you are on other OS, it won't work properly.
 
-[AppleScript URL Encoder](applescript-gen)
 <style>
     a+pre{display:none;}
     a:hover+pre,pre:hover{display:block;}
