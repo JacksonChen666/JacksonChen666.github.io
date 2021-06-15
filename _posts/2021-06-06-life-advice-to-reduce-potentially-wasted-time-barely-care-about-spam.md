@@ -3,11 +3,11 @@ layout: post
 title: 'Life Advice to Reduce Potentially Wasted Time: Barely Care About Spam'
 author: JacksonChen666
 date: 2021-06-06 13:11 +0200
-last_modified_date: 2021-06-07 9:53:09 +0200
+last_modified_date: 2021-06-15 20:51:21 +0200
 ---
 Today, I've decided to care about my ideas and questions because I was reminded by myself about submission in ideas.
 After syncing with the server that deals with saving the questions and ideas that are sent, I found that the questions file has grew to a kilobyte, which meant a new question.
-Finishing dealing with ideas (writing responses and then never going back to it again for the next whenever whatever), I met questions to a surprising amount of spam: 1 ~~question~~ submission about business sending messages whatever, at some cost blah blah yada yada...
+Finishing dealing with ideas (writing responses and then never going back to it again for the next whatever whenever), I met questions to a surprising amount of spam: 1 ~~question~~ submission about business sending messages whatever, at some cost blah blah yada yada...
 
 I was surprised, to receive spam, on a non-commercial website about an individual.
 About himself, by himself, for everyone, including that automated spam.
