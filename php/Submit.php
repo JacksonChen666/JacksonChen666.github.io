@@ -5,11 +5,11 @@ layout: external
 <?php
 $back = "<a href='javascript:history.back();'>back</a>";
 if (isset($_POST['q'])) {
-	$submission = writeFile("question", $_POST['q']);
+	writeFile("question", $_POST['q']);
 } else if (isset($_POST['i'])) {
-	$submission = writeFile("idea", $_POST['i']);
+	writeFile("idea", $_POST['i']);
 } else if (isset($_POST['f'])) {
-	$submission = writeFile("feedback", $_POST['f']);
+	writeFile("feedback", $_POST['f']);
 } else {
 	echo "<h2>tip of the day</h2><p>try and actually type something</p>" . $back;
 	error_log("Submit.php: empty submission found", 0);
