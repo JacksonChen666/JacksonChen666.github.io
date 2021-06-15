@@ -26,5 +26,6 @@ Limited to 10000 characters because people would have not much, and I need my ti
     <input type="submit" value="Feedback" name="formSubmit">
 </form>
 <script>
-    document.getElementById("video").value = "";
+    document.getElementById("video").value = new URLSearchParams(window.location.search).get("video");
+    document.getElementById("feedback").value = "";
 </script>
