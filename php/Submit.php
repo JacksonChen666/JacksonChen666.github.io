@@ -18,20 +18,16 @@ if (isset($_POST['q'])) {
 echo "<h2>thank</h2><p>i will check</p>" . $back;
 exit;
 
-function writeFile($Type, $TextToWrite) {
-	$FileName = "../stuff/" . $Type; 
+function writeFile($type, $userInput) {
+	$FileName = "../stuff/" . $type; 
 	$exists = file_exists($FileName . ".csv");
 	$file = fopen($FileName . ".csv", "a") or die("can't open file F");
 	if ($exists == 0) {
-		fwrite($file, "input_unix_time,input");
-		if ($Type == "question" || $Type == "idea") {
-			fwrite($file, ",output_unix_time,output");
-		}
-		fwrite($file, "\n");
+		fwrite($file, "input_unix_time,input,output_unix_time,output\n");
 	}
-	fwrite($file, time().",\"{$TextToWrite}\",,\"\"\n");
+	fwrite($file, time().",\"{$userInput}\",,\"\"\n");
 	fclose($file);
 	chmod($FileName . ".csv", 0600);
-	return $TextToWrite;
+	return $userInput;
 }
 ?>
