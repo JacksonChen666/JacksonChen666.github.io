@@ -29,3 +29,11 @@ Limited to 10000 characters because people would have not much, and I need my ti
     document.getElementById("video").value = new URLSearchParams(window.location.search).get("video");
     document.getElementById("feedback").value = "";
 </script>
+<br>
+{% if site.data.feedback.size %}
+{% include questions_ideas_csv.md csv_file=site.data.feedback amount=100 offset=0 %}
+{% else %}
+**Note:** As of 2021/06/15, absolutely nothing is wrong other than there's no feedback as it's new.
+
+Ummmm, something might be wrong. Please contact the website owner for more about no feedback at all.
+{% endif %}
