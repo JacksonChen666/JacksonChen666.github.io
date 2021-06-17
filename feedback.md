@@ -17,6 +17,9 @@ Limited to 10000 characters because people would have not much, and I need my ti
     input[type=url]:valid, textarea:valid {
         border: 2px solid lime;
     }
+    form textarea {
+        width: min(99%, 705px);
+    }
 </style>
 <form action="https://JacksonChen666.000webhostapp.com/Submit.php" method="post">
     <label>youtu.be video link to give feedback about</label><br>
