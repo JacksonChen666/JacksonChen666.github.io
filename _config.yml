@@ -30,6 +30,9 @@ github_username:  JacksonChen666
 theme: minima
 plugins:
   - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-compose
+  - jekyll-seo-tag
   - jekyll-github-metadata
   - jekyll-mentions
 
