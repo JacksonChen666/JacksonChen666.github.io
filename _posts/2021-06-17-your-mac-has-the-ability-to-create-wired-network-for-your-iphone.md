@@ -3,6 +3,7 @@ layout: post
 title: Your Mac has the ability to create wired network for your iPhone
 author: JacksonChen666
 date: 2021-06-17 20:19 +0200
+category: apple
 ---
 Clickbait? No clue, but it's possible for anyone to hook up your iPhone's charger to charge it, and enable the wired network sharing for your iPhone on the Mac, and I will show you how to do so.
 
