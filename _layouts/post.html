@@ -12,7 +12,7 @@ custom_nav: true
 </head>
 <div id="content">
 <h2 itemprop="title">{{ page.title }}</h2>
-<span itemprop="date">{{ page.date | strip_html }} {% if page.last_modified_date %}(last updated {{ page.last_modified_date | strip_html }}){% endif %}</span> - Written by {% unless page.author contains "<a href='/unknown-author'>Unknown Author</a>" %}@{% endunless %}{{ page.author }}
+<span itemprop="date">{{ page.date | date_to_rfc822 | strip_html }} {% if page.last_modified_date %}(last updated {{ page.last_modified_date | date_to_rfc822 | strip_html }}){% endif %}</span> - Written by {% unless page.author contains "<a href='/unknown-author'>Unknown Author</a>" %}@{% endunless %}{{ page.author }}
 <hr>
 <article itemprop="articleBody">
 {{ content }}
