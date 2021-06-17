@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href="{{ '/nav.css' | relative_url }}">{% endif %}
     <meta name="viewport" content="width=device-width initial-scale=1">
     <meta name="description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
+    {% seo %}
 </head>
 <body>
 <nav class="navbar">
