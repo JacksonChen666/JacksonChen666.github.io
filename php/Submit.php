@@ -1,9 +1,8 @@
 ---
-title: Submission
-layout: external
+layout: none
 ---
 <?php
-$back = "<a href='javascript:history.back();'>back</a>";
+header("Cache-Control: no-cache", TRUE);
 if (!empty($_POST['q'])) {
 	writeSubmission("question", $_POST['q']);
 } else if (!empty($_POST['i'])) {
@@ -11,11 +10,11 @@ if (!empty($_POST['q'])) {
 } else if (!empty($_POST['user_feedback']) && !empty($_POST['feedback_video'])) {
 	writeSubmission("feedback", $_POST['user_feedback'], $_POST['feedback_video']);
 } else {
-	echo "<h2>tip of the day</h2><p>try and actually type something</p>" . $back;
+	header("Location: https://youtu.be/dQw4w9WgXcQ", TRUE, 302);
 	error_log("Submit.php: empty submission found", 0);
 	exit;
 }
-echo "<h2>thank</h2><p>i will check</p>" . $back;
+header("Location: {{ '/submitted' | absolute_url }}", TRUE, 302);
 exit;
 
 function writeSubmission($type, $userInput, $youtubeVideo = null) {
