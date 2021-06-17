@@ -7,17 +7,19 @@
     --main-color: #e8e6e3
     --secondory-color: #fff
 
-[theme="dark"]
-    --main-bg: #181a1b
-    --secondary-bg: #000
-    --main-color: #e8e6e3
-    --secondory-color: #fff
+@media (prefers-color-scheme: dark)
+    \:root
+        --main-bg: #181a1b
+        --secondary-bg: #000
+        --main-color: #e8e6e3
+        --secondory-color: #fff
 
-[theme="light"]
-    --main-bg: #dcdad7
-    --secondary-bg: #c4c1bc
-    --main-color: #181a1b
-    --secondory-color: #303436
+@media (prefers-color-scheme: light)
+    \:root
+        --main-bg: #dcdad7
+        --secondary-bg: #c4c1bc
+        --main-color: #181a1b
+        --secondory-color: #303436
 
 body
     background: var(--main-bg)
