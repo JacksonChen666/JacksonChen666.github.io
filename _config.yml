@@ -42,6 +42,12 @@ sass:
 jekyll-mentions:
   base_url: "https://github.com"
 
+compress_html:
+  clippings: all
+  comments: all
+  ignore:
+    envs: [local]
+
 repository: JacksonChen666/JacksonChen666.github.io
 
 defaults:
