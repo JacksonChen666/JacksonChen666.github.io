@@ -30,7 +30,7 @@ if (
 	(empty($content) || empty($type)) ||
 	($type === 'feedback' && !empty($extra))
 ) {
-	header('Location: https://youtu.be/dQw4w9WgXcQ', TRUE, 302);
+	header('Location: https://youtu.be/dQw4w9WgXcQ', TRUE, 303);
 	error_log('Submit.php: empty submission found', 0);
 	exit;
 }
@@ -41,7 +41,7 @@ if ($type === 'feedback') {
 	writeSubmission($typeMapping[$type], $content);
 }
 
-header("Location: {{ '/submitted' | absolute_url }}", TRUE, 302);
+header("Location: {{ '/submitted' | absolute_url }}", TRUE, 303);
 exit;
 
 function writeSubmission($type, $userInput, $youtubeVideo = null) {
