@@ -1,8 +1,7 @@
 <form action="https://JacksonChen666.000webhostapp.com/Submit.php" method="post">
-    <textarea name="{{ include.textarea_name }}" maxlength="{{ include.textarea_max_length }}" cols="{{ include.textarea_columns }}" rows="{{ include.textarea_rows }}" placeholder="SUBMISSIONS ARE CLOSED. {{ include.textarea_placeholder }}" required id="input"></textarea><br>
-    <input type="submit" id="post_text" value="{{ include.submit_value }}" name="formSubmit">
+    <textarea name="{{ include.textarea_name }}" maxlength="{{ include.textarea_max_length }}" cols="{{ include.textarea_columns }}" rows="{{ include.textarea_rows }}" placeholder="{{ include.textarea_placeholder }}" required id="input"></textarea><br>
+    <input type="submit" value="{{ include.submit_value }}" name="formSubmit">
 </form>
 <script>
     document.getElementById("input").value = "";
-    document.getElementById("post_text").remove();
 </script>

@@ -2,8 +2,6 @@
 layout: none
 ---
 <?php
-header("Location: https://youtu.be/JzvDoyW5u5g", TRUE, 302);
-exit();
 header("Cache-Control: no-cache", TRUE);
 if (!empty($_POST['q'])) {
 	writeSubmission("question", $_POST['q']);
