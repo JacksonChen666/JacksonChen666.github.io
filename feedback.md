@@ -6,7 +6,7 @@ Maybe you can influence my video style to what more people would say as a more e
 
 Limited to 10000 characters because people would have not much, and I need my time too.
 
-**Note:** Misuse of this page will result in deletion of your submission, if not remotely related to my YouTube channel or content.
+**Note:** Misuse of this page will result in deletion of your submission, if not remotely related to my YouTube channel, content, or your feedback completely pointless.
 <style>
     #video {
         resize: none;
