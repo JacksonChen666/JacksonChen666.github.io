@@ -41,7 +41,7 @@ function writeSubmission($type, $userInput, $youtubeVideo = null) {
 	$filename = "../stuff/" . $type;
 	$exists = file_exists($filename . ".csv");
 	$file = fopen($filename . ".csv", "a") or die("can't open file F");
-	if ($exists == 0) {
+	if ($exists === 0) {
 		fwrite($file, "input_unix_time,input,output_unix_time,output");
 		if ($type === "feedback") {
 			fwrite($file, ",youtube_video");
