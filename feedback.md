@@ -30,7 +30,9 @@ Limited to 10000 characters because people would have not much, and I need my ti
     <input type="submit" value="Feedback" name="formSubmit">
 </form>
 <script>
-    document.getElementById("video").value = new URLSearchParams(window.location.search).get("video");
+    videoID = new URLSearchParams(window.location.search).get("video")
+    if (videoID != null)
+        document.getElementById("video").value = `https://youtu.be/${videoID}`;
     document.getElementById("feedback").value = "";
 </script>
 <br>
